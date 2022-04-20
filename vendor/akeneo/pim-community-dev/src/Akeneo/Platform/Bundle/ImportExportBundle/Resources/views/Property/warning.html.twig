@@ -1,0 +1,4 @@
+{% set counter = 'FAILED' == record.getValue('exitStatus').exitCode ? 1 : value %}
+{% set counterValue = counter > 0 ? counter : '-' %}
+
+{{ counterValue }}

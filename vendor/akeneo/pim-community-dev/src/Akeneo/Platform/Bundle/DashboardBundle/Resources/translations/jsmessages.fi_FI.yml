@@ -1,0 +1,6 @@
+pim_dashboard:
+  widget:
+    completeness:
+      load_more: 'Lataa lisää...'
+pim_title:
+  pim_dashboard_index: Ohjauspaneeli
