@@ -1,0 +1,84 @@
+parameters:
+    webkul_magento2.reader.category_import.class: Webkul\Magento2Bundle\Connector\Reader\Import\CategoryReader
+    webkul_magento2.reader.attribute_import.class: Webkul\Magento2Bundle\Connector\Reader\Import\AttributeReader
+    webkul_magento2.reader.attribute_option_import.class: Webkul\Magento2Bundle\Connector\Reader\Import\AttributeOptionReader
+    webkul_magento2.reader.attribute_group_import.class: Webkul\Magento2Bundle\Connector\Reader\Import\AttributeGroupReader
+    webkul_magento2.reader.family_import.class: Webkul\Magento2Bundle\Connector\Reader\Import\FamilyReader
+    webkul_magento2.reader.product_import.class: Webkul\Magento2Bundle\Connector\Reader\Import\ProductReader
+    webkul_magento2.reader.product_model_import.class: Webkul\Magento2Bundle\Connector\Reader\Import\ProductModelReader
+    webkul_magento2.reader.product_model_association_import.class: Webkul\Magento2Bundle\Connector\Reader\Import\ProductModelAssociationReader
+    webkul_magento2.reader.product_association_import.class: Webkul\Magento2Bundle\Connector\Reader\Import\ProductAssociationReader
+services:
+    webkul_magento2.reader.category_import:
+        class: '%webkul_magento2.reader.category_import.class%'
+        arguments:
+            - '@magento2.connector.service'
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.temp_path.provider'
+            - '@akeneo_file_storage.file_storage.file.file_storer'
+            - '@akeneo_file_storage.repository.file_info'
+
+    webkul_magento2.reader.attribute_group_import:
+        class: '%webkul_magento2.reader.attribute_group_import.class%'
+        arguments:
+            - '@magento2.connector.service'
+            - '@doctrine.orm.entity_manager'
+
+    webkul_magento2.reader.attribute_import:
+        class: '%webkul_magento2.reader.attribute_import.class%'
+        arguments:
+            - '@magento2.connector.service'
+            - '@doctrine.orm.entity_manager'
+
+    webkul_magento2.reader.attribute_option_import:
+        class: '%webkul_magento2.reader.attribute_option_import.class%'
+        arguments:
+            - '@magento2.connector.service'
+            - '@doctrine.orm.entity_manager'
+
+    webkul_magento2.reader.family_import:
+        class: '%webkul_magento2.reader.family_import.class%'
+        arguments:
+            - '@magento2.connector.service'
+            - '@doctrine.orm.entity_manager'
+            - '@pim_enrich.controller.rest.family'
+
+    webkul_magento2.reader.product_model_association_import:
+        class: '%webkul_magento2.reader.product_model_association_import.class%'
+        arguments:
+            - '@magento2.connector.service'
+            - '@doctrine.orm.entity_manager'
+            - '@akeneo_file_storage.file_storage.file.file_storer'
+            - '@akeneo_file_storage.repository.file_info'
+            - '@magento2.temp_path.provider'
+            - '@pim_enrich.controller.rest.family_variant'
+    
+    webkul_magento2.reader.product_association_import:
+        class: '%webkul_magento2.reader.product_association_import.class%'
+        arguments:
+            - '@magento2.connector.service'
+            - '@doctrine.orm.entity_manager'
+            - '@akeneo_file_storage.file_storage.file.file_storer'
+            - '@akeneo_file_storage.repository.file_info'
+            - '@magento2.temp_path.provider'
+            - '@pim_enrich.controller.rest.family_variant'
+
+    webkul_magento2.reader.product_model_import:
+        class: '%webkul_magento2.reader.product_model_import.class%'
+        arguments:
+            - '@magento2.connector.service'
+            - '@doctrine.orm.entity_manager'
+            - '@akeneo_file_storage.file_storage.file.file_storer'
+            - '@akeneo_file_storage.repository.file_info'
+            - '@magento2.temp_path.provider'
+            - '@pim_enrich.controller.rest.family_variant'
+
+    webkul_magento2.reader.product_import:
+        class: '%webkul_magento2.reader.product_import.class%'
+        arguments:
+            - '@magento2.connector.service'
+            - '@doctrine.orm.entity_manager'
+            - '@akeneo_file_storage.file_storage.file.file_storer'
+            - '@akeneo_file_storage.repository.file_info'
+            - '@magento2.temp_path.provider'
+            - '@pim_enrich.controller.rest.family_variant'

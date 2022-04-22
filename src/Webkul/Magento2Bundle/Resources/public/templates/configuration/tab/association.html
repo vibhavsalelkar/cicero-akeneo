@@ -1,0 +1,57 @@
+<!-- Styles for grid view -->
+<style>
+    .AknFormContainer-associationMappings .field-input,.AknFormContainer-associationMappings .field-header,.AknFormContainer-associationMappings .header-col {
+        display: inline-block;
+        width: calc(50% - 2px);
+        border: none;
+    }
+    .limit-width-35 {
+        max-width: 35%;
+    }
+    .AknFormContainer-associationMappings .AknForm-header.widget-header {
+        border-bottom: 2px solid #67768A;
+        margin-bottom: 10px;
+    }
+    .AknFormContainer-associationMappings .AknSettingField {
+        width: 80%;
+    }
+</style>
+
+<!-- //HTML for form grid view -->
+<div class="AknFormContainer AknFormContainer--withPadding  AknFormContainer-associationMappings" style="width: 100%">
+    <div class="AknForm-header widget-header">
+        <div class="header-col AknSubsection-title">
+            <%- _.__('magento2.magento.associations') %>
+        </div>
+        <div class="header-col AknSubsection-title">
+            <%- _.__('magento2.akeneo.association') %>
+        </div>
+    </div>
+
+    <div>
+        <div id="mapped-fields">
+            <!-- Input Field -->
+                <% _.each(fields, function(field) { %>
+                <div class="AknFieldContainer">
+                    <div class="field-header">
+                        <label class="AknFieldContainer-label">
+                            <%- _.__(field.label) %>
+                        </label>
+                    </div>
+                    <div class="field-input">
+                        <select name="<%- field.code %>" id="pim_enrich_entity_form_<%- field.code %>" class="select2 label-field AknSettingField associationValue">
+                            <% selectVal = model && typeof(model) !== 'undefined' && typeof(model.association) !== 'undefined' && typeof(model.association[field.code]) !== 'undefined' ? model.association[field.code] : '' %>
+                            <option><%- _.__('Select Association') %></option>
+                            <% _.each(associations, function(association) { %>
+                                <% if(association.code != 'webkul_magento2_groupped_product') { %>
+                                    <option value=<%- association.code %> <% if(selectVal === association.code) { %> selected = "selected" <% } %> >
+                                        <%- typeof(association.labels[currentLocale]) !== 'undefined' ? association.labels[currentLocale] : association.code %>
+                                    </option>
+                            <% } }); %>
+                        </select>
+                    </div>
+                </div>
+                <% }) %>
+        </div>
+    </div> 
+</div>

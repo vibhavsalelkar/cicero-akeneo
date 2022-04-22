@@ -1,0 +1,31 @@
+<div class="AknFieldContainer attribute" data-code="akeneoAttributeId" <%  if(type != 'attribute') { %> style="display: none" <% } %>>
+    <div class="AknFieldContainer-header">
+        <label for="akeneoAttributeId" class="AknFieldContainer-label control-label required">
+            <%- label %> <em><%- required %></em>
+        </label>
+    </div>
+
+    <!-- Select Field -->
+    <div class="AknFieldContainer-inputContainer field-input">
+        <select class="select2 select-field" name="akeneoAttributeId" id="pim_enrich_entity_form_akeneoAttributeId" required>
+            <% _.each(attributes, function(attribute) { %>
+                <option value="<%- attribute.code %>" <%- attribute.code === akeneoAttributeId ? 'selected' : '' %>><%- attribute.labels[locale] %></option>
+            <% }); %>
+        </select>
+    </div>
+    <!-- //Select Field -->
+    
+    <!-- Validation Error block -->
+    <%  if(error) { %>
+        <div class="AknFieldContainer-footer">
+            <div class="AknFieldContainer-validationErrors validation-errors">
+                <div class="AknFieldContainer-validationError">
+                    <i class="icon-warning-sign"></i>
+                    <%- error %>
+                </div>
+            </div>
+        </div>
+    <% } %>
+    <!-- //Validation Error block -->
+
+</div>

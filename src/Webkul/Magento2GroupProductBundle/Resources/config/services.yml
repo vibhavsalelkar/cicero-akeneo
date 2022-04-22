@@ -1,0 +1,28 @@
+services:
+    magento2_group_product_connector_service:
+        class: Webkul\Magento2GroupProductBundle\Services\Magento2GroupProductConnector
+        arguments:
+            - '@akeneo_file_storage.file_storage.filesystem_provider'
+            - '@doctrine.orm.entity_manager'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_catalog.repository.category'
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.repository.locale'
+            - '@pim_catalog.repository.attribute_group'
+            - '@pim_catalog.repository.attribute_option'
+            - '@pim_catalog.repository.family'
+            - '@pim_catalog.repository.family_variant'
+            - '@pim_catalog.repository.product'
+            - '@pim_catalog.repository.product_model'
+            - '@pim_catalog.factory.family_variant'
+            - '@pim_catalog.updater.family_variant'
+            - '@pim_catalog.saver.family'
+            - '@pim_catalog.saver.family_variant'
+            - '@pim_catalog.updater.family'
+            - '@pim_catalog.updater.setter.registry'
+            - '@pim_enrich.normalizer.violation'
+            - '@pim_internal_api_serializer'
+            - '@router'
+            - '@service_container'
+            - '@validator'
+

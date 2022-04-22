@@ -1,0 +1,21 @@
+Webkul\Magento2Bundle\Entity\MappedAttribute:
+    type: entity
+    table: wk_magento2_attribute_mapping
+    repositoryClass: Webkul\Magento2Bundle\Entity\MappedAttributeRepository
+    indexes:
+        wk_magento2_attribute_mapping:
+            columns: [ magentoCode, akeneoCode]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        magentoCode:
+            type: string
+            length: 255
+        akeneoCode:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

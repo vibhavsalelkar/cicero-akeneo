@@ -1,0 +1,11 @@
+services:
+    # job parameters 
+    webkul_magento2.job.job_parameters.bundle_product_import:
+        class: 'Webkul\Magento2Bundle\JobParameters\Magento2Import'
+        arguments:
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.repository.locale'            
+            - [ '%webkul_magento2_bundle_product_import.job%' ]
+        tags:
+            - { name: akeneo_batch.job.job_parameters.constraint_collection_provider }
+            - { name: akeneo_batch.job.job_parameters.default_values_provider }

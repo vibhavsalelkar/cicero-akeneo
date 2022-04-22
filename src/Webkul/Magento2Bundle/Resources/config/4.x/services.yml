@@ -1,0 +1,59 @@
+parameters:
+    pim_enrich.provider.form.job_instance.class: 'Akeneo\Platform\Bundle\ImportExportBundle\Provider\Form\JobInstanceFormProvider'
+services:
+    # magento2.job.job_parameters.default_values_provider.product_model_csv_export:
+    #     class: '%pim_connector.job.job_parameters.default_values_provider.product_model_csv_export.class%'
+    #     arguments:
+    #         - '@?pim_connector.job.job_parameters.default_values_provider.simple_csv_export'
+    #         - '@?akeneo_pim_enrichment.job.job_parameters.default_values_provider.simple_csv_export'
+    #         - '@pim_catalog.repository.channel'
+    #         - '@pim_catalog.repository.locale'
+    #         - ['product_model_csv_export_magento2']
+    #         -
+    #             - 'product_model_csv_export_magento2'
+    #     tags:
+    #         - { name: akeneo_batch.job.job_parameters.default_values_provider }
+
+    # magento2.job.job_parameters.constraint_collection_provider.product_csv_export:
+    #     class: '%webkul_magento2.job.job_parameters.constraint_collection_provider.product_csv_export.class%'
+    #     arguments:
+    #         - '@akeneo_pim_enrichment.job.job_parameters.constraint_collection_provider.simple_csv_export'
+    #         - ['%webkul_mage2_product_connector.product_csv_for_magento2%', '%webkul_mage2_product_export_csv.job_name%']
+    #     tags:
+    #         - { name: akeneo_batch.job.job_parameters.constraint_collection_provider }
+
+    # magento2.job.job_parameters.default_values_provider.product_csv_export:
+    #     class: '%webkul_magento2.job.job_parameters.default_values_provider.product_csv_export.class%'
+    #     arguments:
+    #         - '@akeneo_pim_enrichment.job.job_parameters.default_values_provider.simple_csv_export'
+    #         - '@pim_catalog.repository.channel'
+    #         - '@pim_catalog.repository.locale'
+    #         - ['%webkul_mage2_product_connector.product_csv_for_magento2%', '%webkul_mage2_product_export_csv.job_name%']
+    #     tags:
+    #         - { name: akeneo_batch.job.job_parameters.default_values_provider }
+            
+    # pim_catalog.normalizer.standard.attribute:
+    #     class: 'Akeneo\Pim\Structure\Component\Normalizer\Standard\AttributeNormalizer'
+    #     arguments:
+    #         - '@pim_catalog.normalizer.standard.translation'
+    #         - '@pim_catalog.normalizer.standard.datetime'
+    #         - ['auto_option_sorting', 'auto_option_visual_swatch']
+    #     tags:
+    #         - { name: pim_standard_format_serializer.normalizer, priority: 90 }
+    magento2.job.job_parameters.default_values_provider.product_csv_export:
+        class: '%webkul_magento2.job.job_parameters.default_values_provider.product_csv_export.class%'
+        arguments:
+            - '@akeneo_pim_enrichment.job.job_parameters.default_values_provider.simple_csv_export'
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.repository.locale'
+            - ['%webkul_mage2_product_connector.product_csv_for_magento2%', '%webkul_mage2_product_export_csv.job_name%']
+        tags:
+            - { name: akeneo_batch.job.job_parameters.default_values_provider }
+        
+    magento2.job.job_parameters.constraint_collection_provider.product_csv_export:
+        class: '%webkul_magento2.job.job_parameters.constraint_collection_provider.product_csv_export.class%'
+        arguments:
+            - '@akeneo_pim_enrichment.job.job_parameters.constraint_collection_provider.simple_csv_export'
+            - ['%webkul_mage2_product_connector.product_csv_for_magento2%', '%webkul_mage2_product_export_csv.job_name%']
+        tags:
+            - { name: akeneo_batch.job.job_parameters.constraint_collection_provider }

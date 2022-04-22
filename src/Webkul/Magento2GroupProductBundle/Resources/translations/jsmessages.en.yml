@@ -1,0 +1,57 @@
+
+batch_jobs:
+  magento2_import_group_product:
+      label: Magento2 Grouped Products Import
+      credential_check.label: Credential Validate	
+      grouped_product_import.label: Magento2 Grouped Products Import	
+      grouped_product_associated_product_import.label: Magento2 Grouped Associated Products Import	
+      grouped_product_associated_product_link.label:  Magento2 Grouped Associated Products Link Import
+
+
+# extra translations
+not_available: N/A
+
+confirmation:
+  title: Confirm
+pim_menu:
+  tab:
+    products: Products
+
+pim_enrich:
+  entity:
+    product:
+      create: Create
+      subTitle: Create Product
+      create_popin.title: Create Product
+      modalTitle: Select your action
+      infos: Product Infos
+      navigation: Product navigation
+      meta:
+        created: Created
+        updated: Updated
+        created_by: By
+        updated_by: By
+        family.title: Family
+    fallback:
+      flash:
+        generic_error: An error occured
+        update:
+          discard_changes_title: Are you sure?
+
+  form:
+    product:
+      tab:
+        attributes.title: Attributes
+        associations:
+          title: Associations
+          none_exist: No association types exist.
+          association_type_selector: Association type
+          target: Target
+          manage: Add {{ associationType }} associations
+          manage_description: Select the products you want to associate with the current product
+          add_associations: Add associations
+          info:
+            number_of_associations: "{{ productCount }} product(s), {{ productModelCount }} product model(s) and {{ groupCount }} group(s)"
+            show_products: Display products
+            show_groups: Display groups
+        bundled-product.title: Bundled Products  

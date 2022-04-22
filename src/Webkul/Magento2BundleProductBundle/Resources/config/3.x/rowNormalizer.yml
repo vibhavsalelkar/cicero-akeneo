@@ -1,0 +1,13 @@
+parameters:
+    pim_datagrid.normalizer.product_and_product_model.class: Webkul\Magento2BundleProductBundle\Normalizer\RowDataGridProductNormalizer
+    
+services:
+    pim_datagrid.normalizer.product_and_product_model_rows:
+        class: '%pim_datagrid.normalizer.product_and_product_model.class%'
+        arguments:
+            - '@pim_enrich.normalizer.image'
+            - '@bundle_adon.service'
+
+        tags:
+            - { name: pim_datagrid_serializer.normalizer }
+    

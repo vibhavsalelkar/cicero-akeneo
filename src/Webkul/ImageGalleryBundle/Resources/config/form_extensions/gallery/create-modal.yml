@@ -1,0 +1,21 @@
+extensions:
+    webkul-gallery-create-modal:
+        module: pim/form/common/creation/modal
+        config:
+            labels:
+                title: pim_enrich.entity.gallery.create_popin.title
+                subTitle: webkul_gallery.item.asset
+            picture: illustrations/Family.svg
+            successMessage: webkul_gallery.entity.asset.message.created
+            editRoute: webkul_gallery_asset_edit
+            postUrl: webkul_gallery_asset_create_rest
+            routerKey: code
+
+    webkul-gallery-create-code:
+        module: webkulgallery/form/common/creation/field
+        parent:  webkul-gallery-create-modal
+        targetZone: fields
+        position: 10        
+        config:
+            identifier: code
+            label: pim_enrich.entity.create_popin.code

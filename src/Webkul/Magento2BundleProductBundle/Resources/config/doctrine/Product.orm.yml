@@ -1,0 +1,10 @@
+Webkul\Magento2BundleProductBundle\Entity\Product:
+    type: entity
+    table: pim_catalog_product
+    changeTrackingPolicy: DEFERRED_EXPLICIT
+    repositoryClass: Pim\Bundle\CatalogBundle\ProductRepository
+    fields:
+        bundleOptions:
+            type: json_array
+            nullable: true
+    

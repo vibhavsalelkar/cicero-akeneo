@@ -1,0 +1,21 @@
+parameters:
+    pimee_enrich.provider.form.product.class:  Webkul\Magento2GroupProductBundle\Provider\Form\PimEnterprise\ProductFormProvider
+    pimee_security.form.provider.form.product.class: Webkul\Magento2GroupProductBundle\Provider\Form\PimEnterprise\ProductFormProvider
+
+services:
+    pimee_enrich.provider.form.product:
+      class: '%pimee_enrich.provider.form.product.class%'
+      arguments:
+          - '@security.authorization_checker'
+          - '@magento2.connector.service'
+      tags:
+          - { name: pim_enrich.provider.form, priority: 90 }
+
+        # Provider
+    pimee_security.form.provider.form.product:
+        class: '%pimee_security.form.provider.form.product.class%'
+        arguments:
+            - '@security.authorization_checker'
+            - '@magento2.connector.service'
+        tags:
+            - { name: pim_enrich.provider.form, priority: 90 }

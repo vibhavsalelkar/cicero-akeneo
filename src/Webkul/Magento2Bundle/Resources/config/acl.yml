@@ -1,0 +1,9 @@
+webkul_magento2_connector_configuration:
+    type: action
+    label: Change Magento 2 Connector Configuration 
+    group_name: magento2.acl_group.channel
+
+# webkul_magento2_connector_importexport_job:
+#     type: action
+#     label: Add/Edit Magento 2 Connector Import/Export Job 
+#     group_name: magento2.acl_group.channel

@@ -1,0 +1,12 @@
+parameters:
+    webkulgallery_attribute_type.asset.class: Webkul\ImageGalleryBundle\AttributeType\GalleryType
+
+services:
+    webkul_gallery_attribute_type.attribute_type.gallery:
+        class: '%webkulgallery_attribute_type.asset.class%'
+        arguments:
+            - webkul-gallery
+            - text
+            - '@pim_catalog.validator.constraint_guesser.chained_attribute'
+        tags:
+            - { name: pim_catalog.attribute_type, alias: pim_catalog_gallery_group }

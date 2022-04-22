@@ -1,0 +1,11 @@
+
+parameters:
+    pim_catalog.updater.product.class: Webkul\Magento2BundleProductBundle\Component\Catalog\Updater\ProductUpdater
+    pim_catalog.updater.setter.bundle_options_field.class: Webkul\Magento2BundleProductBundle\Catalog\Updater\Setter\BundleOptionsFieldSetter
+services:
+    pim_catalog.updater.setter.bundle_options_field:
+        class: '%pim_catalog.updater.setter.bundle_options_field.class%'
+        arguments:
+            - ['bundleOptions']
+        tags:
+            - { name: 'pim_catalog.updater.setter' }

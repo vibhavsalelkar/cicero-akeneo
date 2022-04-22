@@ -1,0 +1,22 @@
+services:
+    webkul_magento2.step.bundle_product.import:
+        class: '%pim_connector.step.item_step.class%'
+        arguments: 
+          - 'bundle_product_import'
+          - '@event_dispatcher'
+          - '@akeneo_batch.job_repository'
+          - '@webkul_magento2.reader.bundle_product_import'
+          - '@pim_connector.processor.denormalization.product'
+          - '@pim_connector.writer.database.product'
+          - 10
+
+    webkul_magento2.step.bundle_product_associated_product.import:
+        class: '%pim_connector.step.item_step.class%'
+        arguments: 
+          - 'bundle_product_associated_product_import'
+          - '@event_dispatcher'
+          - '@akeneo_batch.job_repository'
+          - '@webkul_magento2.reader.bundle_product_associated_product_import'
+          - '@pim_connector.processor.denormalization.product'
+          - '@pim_connector.writer.database.product'
+          - 10

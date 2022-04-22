@@ -1,0 +1,36 @@
+parameters:
+    webkul_magento2.reader.group_product_import.class: Webkul\Magento2GroupProductBundle\Connector\Reader\Import\ProductReader
+    webkul_magento2.reader.group_product_associated_product_import.class: Webkul\Magento2GroupProductBundle\Connector\Reader\Import\AssociatedProductReader
+    webkul_magento2.reader.group_product_association_link_import.class: Webkul\Magento2GroupProductBundle\Connector\Reader\Import\ProductAssociationLinkReader
+
+services:
+    webkul_magento2.reader.group_product_import:
+      class: '%webkul_magento2.reader.group_product_import.class%'
+      arguments:
+          - '@magento2.connector.service'
+          - '@doctrine.orm.entity_manager'
+          - '@akeneo_file_storage.file_storage.file.file_storer'
+          - '@akeneo_file_storage.repository.file_info'
+          - '@magento2.temp_path.provider'
+          - '@pim_enrich.controller.rest.family_variant'
+
+    webkul_magento2.reader.group_product_associated_product_import:
+        class: '%webkul_magento2.reader.group_product_associated_product_import.class%'
+        arguments:
+          - '@magento2.connector.service'
+          - '@doctrine.orm.entity_manager'
+          - '@akeneo_file_storage.file_storage.file.file_storer'
+          - '@akeneo_file_storage.repository.file_info'
+          - '@magento2.temp_path.provider'
+          - '@pim_enrich.controller.rest.family_variant'
+    
+    webkul_magento2.reader.group_product_association_link_import:
+      class: '%webkul_magento2.reader.group_product_association_link_import.class%'
+      arguments:
+          - '@magento2.connector.service'
+          - '@doctrine.orm.entity_manager'
+          - '@akeneo_file_storage.file_storage.file.file_storer'
+          - '@akeneo_file_storage.repository.file_info'
+          - '@magento2.temp_path.provider'
+          - '@pim_enrich.controller.rest.family_variant'
+    

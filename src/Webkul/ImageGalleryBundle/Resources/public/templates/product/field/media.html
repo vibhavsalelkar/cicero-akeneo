@@ -1,0 +1,98 @@
+<style>
+.AknComparableFields {
+    display: flex;
+    flex-wrap: wrap;
+    width: 250%;
+}
+.AknMediaField {
+    flex-basis: 24.3%;
+    margin: 0 0px 5px 5px;
+    max-width: 24.3%;
+    min-height: 200px;
+}
+.AknMediaField-info {
+    display: block !important;
+}
+.filename {
+    word-break: break-all;
+}
+input.ak-input-copy-link {
+    position: absolute;
+    bottom: 35px;
+}  
+
+</style>
+
+<div class="AknMediaField" >
+        <input class="AknMediaField-fileUploaderInput" id="<%- fieldId %>" type="file" data-locale="<%- locale %>" data-scope="<%- scope %>" multiple />
+        <div class="AknMediaField-emptyContainer">
+            <span title="upload icon" class="AknMediaField-uploadIcon"/>
+            <span><%- _.__('pim_enrich.entity.product.media.upload')%></span>
+        </div>
+        <div class="AknMediaField-progress AknProgress AknProgress--micro progress">
+            <div class="AknProgress-bar bar"></div>
+        </div>
+</div>
+    
+    <% if (value && value.data) { %>
+        
+        <%_.each(value.data, function (image,key){ %>
+
+            <% if(typeof(image.filePath) !== 'undefined') { %>
+                <div class="AknMediaField <%- image && image.filePath ? 'has-file' : '' %>" >
+                        <div class="AknMediaField-preview preview">
+                            
+                            <% mediaThumbnailUrl = mediaUrlGenerator.getMediaShowUrl(image.filePath, 'thumbnail_small') %>
+                            <% mediaPreviewUrl   = mediaUrlGenerator.getMediaShowUrl(image.filePath, 'preview') %>
+                            <% mediaDownloadUrl  = Routing.generate('webkulgallery_media_download', {'identifier': 
+                                                                            typeof(image) !== 'undefined' && typeof(image.filePath) !== 'undefined' ? encodeURIComponent(image.filePath) : null
+                                                                        }); %>
+
+                            
+                            
+                            
+                            <% if ('pim_catalog_image' === attribute.type && null != mediaThumbnailUrl) { %>
+                                <div class="AknMediaField-thumb file"><img src="<%- mediaThumbnailUrl %>" class="AknMediaField-image"/></div>
+                            <% } else { %>
+                                <div class="AknMediaField-thumb file">
+                                    <span title="upload icon" class="AknMediaField-uploadIcon"/>
+                                </div>
+                            <% } %>
+                            <div class="AknMediaField-info info">
+                                
+                                <div class="filename" title="<%- image.originalFilename %>"><%- image.originalFilename %></div>
+                                <% extension = image.originalFilename.split('.').pop() %>
+                                <% imageExtensions = ['jpg','jpeg','png','bmp']%>
+                                <div class="AknButtonList AknButtonList--centered actions">
+                                    <input type="hidden" name="asset_index" value = "<%- key %>">  
+                                    <% if ('pim_catalog_image' === attribute.type && null != mediaPreviewUrl && imageExtensions.includes(extension) !== false) { %>
+                                        <span class="AknButtonList-item AknIconButton AknIconButton--grey open-media"><i class="icon icon-eye-open"></i></span>
+                                    <% } %>
+
+                                    <a href="<%- mediaDownloadUrl %>" class="AknButtonList-item AknIconButton AknIconButton--grey download-file" download><i class="icon icon-cloud-download"></i></a>
+                                    <% if ('pim_catalog_image' === attribute.type && null != mediaPreviewUrl && imageExtensions.includes(extension) !== false) { %>
+                                        <span class="AknButtonList-item AknIconButton AknIconButton--grey edit-media"><i class="icon-fixed-width icon-pencil"></i></span>
+                                    <% } %>
+                                    
+                                    <span class="AknButtonList-item AknIconButton AknIconButton--grey clear-field <%- editMode === 'view' ? 'AknIconButton--hide' : '' %>"><i class="icon icon-trash"></i></span>
+                                    
+                                    <% if(typeof image.visibility !== 'undefined') { %>
+                                        <span class="AknButtonList-item AknIconButton AknIconButton--grey show-url <%- editMode === 'view' ? 'AknIconButton--hide' : '' %>"><i class="icon icon-link"></i></span>
+                                            <span class="AknButtonList-item AknIconButton AknIconButton--grey change-visibility <%- editMode === 'view' ? 'AknIconButton--hide' : '' %>">
+                                                <% if(image.visibility !== 'public') { %> 
+                                                    <i class="icon icon-lock"></i>
+                                                <% } else { %>
+                                                        <i class="icon icon-unlock"></i>
+                                                <% } %> 
+                                        </span>
+                                    <% } %>
+                                </div>
+                            </div>
+                        </div>
+                    
+                    
+                </div>
+            <% } %>
+        <% }) %>
+    <% } %>
+    

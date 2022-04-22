@@ -1,0 +1,8 @@
+parameters:
+    webkulgallery.normalizer.standard.gallery.class: Webkul\ImageGalleryBundle\Normalizer\Standard\GalleryNormalizer
+
+services:
+    webkulgallery.normalizer.standard.gallery:
+        class: '%webkulgallery.normalizer.standard.gallery.class%'
+        tags:
+            - { name: pim_serializer.normalizer, priority: 90 }

@@ -1,0 +1,45 @@
+Webkul\Magento2Bundle\Entity\DataMapping:
+    type: entity
+    table: wk_magento2_data_mapping
+    repositoryClass: Webkul\Magento2Bundle\Entity\DataMappingRepository
+    indexes:
+        wk_magento2_data_mapping:
+            columns: [ entityType, code, externalId]
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        entityType:
+            type: string
+            length: 255
+        code:
+            type: string
+            length: 255
+        magentoCode:
+            type: string
+            nullable: true
+            length: 255
+        externalId:
+            type: string
+            length: 255
+        relatedId:
+            type: text
+            nullable: true
+            options:
+                default: null
+        jobInstanceId:
+            type: integer
+        storeViewCode:
+            type: string
+            length: 255
+            nullable: true
+        apiUrl:
+            type: string
+            length: 255
+            nullable: true    
+        extras:
+            type: text
+            nullable: true

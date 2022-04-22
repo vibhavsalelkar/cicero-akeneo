@@ -1,0 +1,89 @@
+datagrid:
+    magento2-custom_attributes_mapping-grid:
+        options:
+            locale_parameter: localeCode
+            entityHint: attribute
+            manageFilters: false
+            removeFiltersNotUsableInGrid: false
+            requireJSModules:
+                - pim/datagrid/column-form-listener
+                - oro/datagrid/pagination-input
+                - oro/datafilter-builder
+            columnListener:
+                dataField: id
+                columnName: is_checked
+                selectors:
+                    included: '#appendProducts'
+                    excluded: '#removeProducts'
+        source:
+            type: wk_magento2_datasource_custom_attributes_mapping
+            acl_resource: pim_enrich_attribute_index
+        columns:
+            is_checked:
+                frontend_type: boolean
+                data_name:     is_checked
+                editable:      true
+            in_mapping:
+                label:         In Mapping
+                frontend_type: boolean-label
+            label:
+                label: Label
+                frontend_type: label
+            type:
+                label: Type
+                type: translateable
+            group:
+                label:     Group
+                data_name: groupLabel
+            scopable:
+                label:         Scopable
+                frontend_type: boolean-status
+            localizable:
+                label:         Localizable
+                frontend_type: boolean-status
+        properties:
+            id: ~
+            code: ~
+        sorters:
+            columns:
+                scopable:
+                    data_name: a.scopable
+                localizable:
+                    data_name: a.localizable
+                group:
+                    data_name: groupLabel
+                label:
+                    data_name: label
+            default:
+                in_mapping: '%oro_datagrid.extension.orm_sorter.class%::DIRECTION_ASC'
+        filters:
+            columns:
+                code:
+                    type:      string
+                    label:     pim_common.code
+                    data_name: a.code
+                label:
+                    type: search
+                    label: Label
+                    data_name: translation.label
+                type:
+                    type:      choice
+                    data_name: a.type
+                    options:
+                        field_options:
+                            multiple: true
+                            choices:  '@pim_catalog.registry.attribute_type->getSortedAliases'
+                group:
+                    type:      choice
+                    data_name: attributeGroup.code
+                    options:
+                        field_options:
+                            multiple: true
+                            choices:  '@pim_enrich.repository.attribute_group->findTranslatedLabels'
+                scopable:
+                    type:      boolean
+                    data_name: a.scopable
+                localizable:
+                    type:      boolean
+                    data_name: a.localizable
+                     

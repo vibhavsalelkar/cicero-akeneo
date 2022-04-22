@@ -1,0 +1,30 @@
+<div class="AknFieldContainer magento-product" data-code="magentoProductId"  <%  if(type != 'product') { %> style="display: none" <% } %>   >
+    <div class="AknFieldContainer-header">
+        <label for="magentoProductId" class="AknFieldContainer-label control-label required">
+            <%- label %> <em><%- required %></em>
+        </label>
+    </div>
+    <!-- Select Field -->
+    <div class="AknFieldContainer-inputContainer field-input">
+        <select class="select2 select-field" name = "magentoProductId"  id="pim_enrich_entity_form_magentoProductId" required>
+            <% _.each(magentoproducts, function(magentoproduct) { %>
+                <option value="<%- magentoproduct.id %>"  <% if(magentoproduct.id == magentoProductId) {%>selected="selected" <%}%> relatedId="<%- _.first(magentoproduct.variants) ? _.first(magentoproduct.variants).id : '' %>" ><%- magentoproduct.title %><%- ' ' %>(<%- magentoproduct.id %>)</option>
+            <% }); %> 
+        </select>
+    </div>
+    <!-- //Select Field -->
+
+    <!-- Validation Error block -->
+    <%  if(error) { %>
+        <div class="AknFieldContainer-footer">
+            <div class="AknFieldContainer-validationErrors validation-errors">
+                <div class="AknFieldContainer-validationError">
+                    <i class="icon-warning-sign"></i>
+                    <%- error %>
+                </div>
+            </div>
+        </div>
+    <% } %>
+    <!-- //Validation Error block -->
+</div>
+

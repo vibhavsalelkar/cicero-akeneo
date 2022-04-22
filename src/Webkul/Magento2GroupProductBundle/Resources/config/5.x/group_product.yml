@@ -1,0 +1,72 @@
+parameters:
+    # override the product file for grouped product grid type
+    pim_datagrid.datasource.result_record.hydrator.default.class:  Webkul\Magento2GroupProductBundle\Datasource\ResultRecord\Orm\ResultRecordHydrator
+
+services:
+    webkul.step.magento2_grouped_product_link_export_quick_export:
+        class: '%webkul_magento2.export.step%'
+        public: true
+        arguments:
+            - 'grouped_product_link_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@doctrine.orm.entity_manager'
+            - '@pim_enrich.reader.database.product' 
+            - '@webkul_magento2.processor.magento_normalization.product.association'
+            - '@webkul_magento2.writer.grouped_product_link.api'
+            - 10
+            - '@?akeneo_batch.job.job_stopper'
+
+    webkul.magento2_grouped_product.controller.rest.grouped.product:
+        class: Webkul\Magento2GroupProductBundle\Controller\Rest\Akeneo5\GrouppedProductController
+        public: true
+        arguments:
+            - '@pim_catalog.repository.product'
+            - '@pim_catalog.repository.product'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_catalog.updater.product'
+            - '@pim_catalog.saver.product'
+            - '@pim_internal_api_serializer'
+            - '@pim_catalog.validator.product'
+            - '@pim_user.context.user'
+            - '@pim_catalog.filter.chained'
+            - '@pim_enrich.filter.product_edit_data'
+            - '@pim_catalog.remover.product'
+            - '@pim_catalog.builder.product'
+            - '@pim_catalog.localization.localizer.converter'
+            - '@pim_catalog.comparator.filter.product'
+            - '@pim_enrich.converter.enrich_to_standard.product_value'
+            - '@pim_enrich.normalizer.product_violation'
+            - '@pim_catalog.builder.product'
+            - '@?pim_enrich.filter.product_attribute_filter'
+            - '@pim_catalog.entity_with_family_variant.remove_parent_from_product'
+            - '@?akeneo_elasticsearch.client.product_and_product_model'
+            - '@magento2.connector.service'
+
+    webkul.magento2_grouped_product.controller.rest.product:
+        class: Webkul\Magento2GroupProductBundle\Controller\Rest\Akeneo5\ProductController
+        public: true
+        arguments:
+            - '@pim_catalog.repository.product'
+            - '@pim_catalog.repository.product'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_catalog.updater.product'
+            - '@pim_catalog.saver.product'
+            - '@pim_internal_api_serializer'
+            - '@pim_catalog.validator.product'
+            - '@pim_user.context.user'
+            - '@pim_catalog.filter.chained'
+            - '@pim_enrich.filter.product_edit_data'
+            - '@pim_catalog.remover.product'
+            - '@pim_catalog.builder.product'
+            - '@pim_catalog.localization.localizer.converter'
+            - '@pim_catalog.comparator.filter.product'
+            - '@pim_enrich.converter.enrich_to_standard.product_value'
+            - '@pim_enrich.normalizer.product_violation'
+            - '@pim_catalog.builder.product'
+            - '@?pim_enrich.filter.product_attribute_filter'
+            - '@pim_catalog.entity_with_family_variant.remove_parent_from_product'
+            - '@?akeneo_elasticsearch.client.product_and_product_model'
+            - '@magento2.connector.service'
+
+                

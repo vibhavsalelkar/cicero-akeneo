@@ -1,0 +1,187 @@
+<style>
+    .wk_info_text > b {
+        display: inline-block;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    .wk_info_text {
+        font-size: 14px;
+    } 
+    .wk_doc_tab ol li {
+        padding-bottom: 10px;
+    }
+    .wk_highlight {
+        font-style: italic;
+    }
+    .wk_info_text:not(:last-child) {
+        border-bottom: 1px solid #ccd1d8;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+    .wk_toggler .icon {
+        background: url("../bundles/pimui/images/jstree/icon-right.svg") 50% 50% no-repeat;
+        height: 12px;
+        width: 22px;
+        margin: 0 5px 0 0;
+        background-size: 20px;   
+        display: inline-block;
+        cursor: pointer;
+    }
+    .wk_toggler.active .icon {
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg);        
+    }    
+    .wk_toggle {
+        margin-left: 50px;
+    }
+    .wk_toggler ~ .wk_toggle {
+        display: none;
+    }
+    .wk_toggler.active ~ .wk_toggle {
+        display: block;
+    }
+    .wk_points b {
+        display: block;
+        padding-top: 5px;
+    }
+</style>
+<div class="AknFormContainer--withPadding wk_doc_tab">
+    <div class="wk_info_text">
+        <b><%= _.__('How to Setup:') %></b>
+        <ol class="wk_steps">
+            <li style="cursor: pointer;">
+                <span class="wk_toggler active">
+                    <%= _.__('Generate Api credentials from your Magento Store.') %>
+                    <span class="icon"></span>
+                </span>
+                <a href="bundles/magento2/images/integration-tokens.png" target="_blank">
+                    <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="Read Guidelines"></i>
+                </a>
+                <div class="wk_toggle">
+                    <ol class="wk_info">
+                        <li>
+                            <%= _.__('Log in to Admin and click <strong>System &gt; Integrations</strong> to display the Integrations page.') %>
+                        </li>
+                        <li>
+                            <%= _.__('Click <strong>Add New Integration</strong> to display the New Integration page.') %>
+                        </li>
+                        <li>
+                            <%= _.__('Enter a unique name for the integration in the <strong>Name</strong> field. Then enter your admin password in the <strong>Your Password</strong> field. Leave all other fields blank.') %>
+                        </li>
+                        <li>
+                            <%- _.__('Click the API tab. Select the Magento resources the integration can access. You can select all resources, or select a custom list.' ) %>
+                        </li>
+                        <li>
+                        <%= _.__('Click <strong>Save</strong> to save your changes and return to the Integrations page.') %>
+                        </li>
+                        <li>
+                        <%= _.__('Click the <strong>Activate</strong> link in the grid that corresponds to the newly-created integration.' ) %>
+                        </li>
+                        <li>
+                            <%= _.__('Click <strong>Allow</strong>.') %>
+                            <%- _.__('A dialog similar to the following displays:') %>
+                            <img src="bundles/magento2/images/integration-tokens.png" alt="<%- _.__('REST client') %>'" width="70%">
+                        </li>
+                        <li>
+                            <%= _.__('Copy Credentials and Paste in Setup credentials tab.') %>
+                        </li>        
+                    </ol>
+                </div>                
+            </li>            
+            <li>
+                <%= _.__('Goto <span class="wk_highlight">Setup Credentials</span> tab and enter your store credentials and Save credentials.') %>
+            </li>
+            <li>
+                <%= _.__('After saving Credentials goto <span class="wk_highlight">Store view mapping</span> tab and Save mapping.') %>
+            </li>
+            <li>
+                <%= _.__('Then, goto <span class="wk_highlight">Setup Attribute Mapping</span> tab and Save attribute mapping.') %>
+            </li>
+        </ol>                        
+    </div>
+    <div class="wk_info_text">
+        <b><%= _.__('How to Export Data to Magento Store:') %></b>
+        <ol class="wk_steps">
+            <li>
+                <%= _.__('Goto <span class="wk_highlight">Export jobs</span> and Create a job with by entering <i>code</i>, <i>label</i> and Selecting <i>Magento 2 Export Job.</i>') %>
+            </li>
+            <li>
+                <%= _.__('After creating job Goto <span class="wk_highlight">Content tab</span> Add neccessary Filters in <i>FILTER THE DATA</i> and <i>FILTER THE PRODUCTS</i>. After that Save job.') %>
+            </li>
+            <li>
+                <%= _.__('Run job whenever you want to Export Product by navigating to Export profiles >> Magento Job and Clicking on Export now') %>
+            </li>
+        </ol>
+    </div>
+    <div class="wk_info_text">
+        <b>
+            <%= _.__('Understanding different export jobs:') %>
+        </b>
+        <p>
+            <%= _.__('There are different export jobs each performing different actions') %>
+        </p>
+        <ol class="wk_steps wk_points">
+            <li>
+                <b>
+                    <%= _.__('Magento 2 Export Job') %>
+                </b>
+                <span>
+                    <%= _.__('It exports categories, attribute, attribute options, attribute group family and products based on filters in job.') %>
+                    <%= _.__('Product must have a category for including in export.') %>
+                </span>
+            </li>
+            <li>
+                <b>
+                    <%= _.__('Category export to Magento2 Job') %>
+                </b>
+                <span>
+                    <%= _.__('It exports only categories. you may filter categories to be exported using filter of this job. Without filters it exports all Category trees. if there is default category tree on Magento then it maps that category root to category root of selected channel in the job.') %>
+                    <%= _.__('If you want to use more than one category trees, Then export categories then Select respective category tree as default category tree on Magento 2.') %>
+                </span>
+            </li>
+            <li>
+                <b>
+                    <%= _.__('Attribute export to Magento2 Job') %>
+                </b>
+                <span>
+                    <%- _.__('It exports attribute and attributes options. It only export attribute that are mapped in Setup Attribute Mapping tab.') %>
+                    <%= _.__('This export attribute but does not add them to group or attribute set. Family export is used for that.') %>
+                </span>                
+            </li>
+            <li>
+                <b>
+                    <%= _.__('Family export to Magento2 Job') %>
+                </b>
+                <span>                
+                    <%= _.__('It exports family(Attribute set) and attribute groups and add already exported attribute to family(Attribute set).') %>
+                    <%= _.__('All Attribute group export can be enabled/disabled using Attibute group export setting in Other settings tab.') %>
+                </span>         
+            </li>
+            <li>
+                <b>
+                    <%= _.__('Product only export to Magento2 Job') %>
+                </b>
+                <span>                                
+                <%= _.__('It exports products to Magento2. It also adds categories, attributes, family and variations to product.') %>
+                <%= _.__('You should have exported other data like category, attribute, family prior to this export.') %>
+                <%= _.__('Attribute used as main picture in family is used as thumbnail, small image for products.') %>
+                <%= _.__('User can map attributes like url_key in Attribute mapping tab.') %>
+                <%= _.__('Sometimes url_key of product conficts with url_key of category, in that mapping url_key is very useful.') %>
+                </span>
+            </li>
+            <li>
+                <b><%= _.__('Quick export job') %></b>
+                <%= _.__('It is very handy feature for exporting or updating some products.') %>
+                <%- _.__('It is similar to Product only export to Magento2 Job') %>
+            </li>            
+        </ol>
+    </div>    
+</div>
+
+<div class="AknFooter-item current-version" style="text-align: center !important; display: block !important;">
+    <span>Module Version:</span>
+    <span><%- moduleVersion %></span>
+</div>

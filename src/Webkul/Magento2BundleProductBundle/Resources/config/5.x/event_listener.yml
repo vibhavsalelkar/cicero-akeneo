@@ -1,0 +1,40 @@
+services:    
+    Webkul\Magento2BundleProductBundle\Listener\AkeneoVersionsCompatibility:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernalRequest }
+            
+    wk_commond_m2productbundle_event.listener:
+        class:  'Webkul\Magento2BundleProductBundle\Listener\AkeneoVersionsCompatibility'          
+        tags:
+            - { name: kernel.event_listener, event: console.command, method: onConsoleCommand }
+    
+    wk_commond_m2productbundle_event.entity_modification.listener:
+        class: Webkul\Magento2BundleProductBundle\Listener\EntityModificationListener
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.connector.service'
+            - '@pim_enrich.normalizer.product_violation'
+        tags:
+            - { name: kernel.event_listener, event: akeneo.storage.pre_save, method: onPreSave }
+
+    wk_commond_m2productbundle_event.entity_modification.listener_on_delete:
+        class: Webkul\Magento2BundleProductBundle\Listener\EntityModificationListener
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.connector.service'
+            - '@pim_enrich.normalizer.product_violation'
+        tags:
+            - { name: kernel.event_listener, event: akeneo.storage.pre_remove, method: onPreRemove }
+
+    pim_enrich.event_listener.association_product_grid_before_listener.grouped:
+        class: '%pim_datagrid.event_listener.configure_product_grid_listener.class%'
+        arguments:
+            - '@pim_datagrid.datagrid.configuration.product.context_configurator'
+            - '@pim_datagrid.datagrid.configuration.product.columns_configurator'
+            - '@pim_datagrid.datagrid.configuration.product.filters_configurator'
+            - '@pim_datagrid.datagrid.configuration.product.sorters_configurator'
+            - '@pim_datagrid.datagrid.configuration.product.selected_attributes_configurator'
+        tags:
+            - { name: kernel.event_listener, event: oro_datagrid.datgrid.build.before.groupped-product-grid, method: buildBefore }
+
+                            

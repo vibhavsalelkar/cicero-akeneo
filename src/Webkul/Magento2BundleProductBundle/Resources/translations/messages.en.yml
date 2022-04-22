@@ -1,0 +1,3 @@
+batch_jobs:
+  magento2_import_bundle_product:
+      label: Magento2 Bundle Products Import

@@ -1,0 +1,6 @@
+services:
+    webkul_magento2.writer.grouped_product_link.api:
+        class: 'Webkul\Magento2GroupProductBundle\Connector\Writer\GroupedProductLinkWriter'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.connector.service'

@@ -1,0 +1,7 @@
+datagrid:
+    product-grid:
+        columns:
+            complete_bundle_products:
+                label:         Bundle products
+                data_name:     complete_bundle_product
+                frontend_type: complete-bundle-product

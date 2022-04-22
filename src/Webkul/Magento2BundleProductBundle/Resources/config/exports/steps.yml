@@ -1,0 +1,22 @@
+services:
+    webkul.step.magento2_bundle_products.csv_export:    
+        class: '%pim_connector.step.item_step.class%'
+        arguments:
+            - 'bundle_product_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@wk_magento2_connector.reader.database.product' #'pim_connector.reader.database.product'
+            - '@webkul_magento_csv.processor.normalization.product'
+            - '@magento2.writer.file.csv_product'
+            - 10
+            
+    webkul.step.magento2_bundle_products.csv.quick_export:
+        class: '%pim_connector.step.item_step.class%'
+        arguments:
+            - 'quick_export_product'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@pim_enrich.reader.database.product'
+            - '@webkul_magento_csv.processor.normalization.product'
+            - '@magento2.writer.file.csv_product'
+            - 10            

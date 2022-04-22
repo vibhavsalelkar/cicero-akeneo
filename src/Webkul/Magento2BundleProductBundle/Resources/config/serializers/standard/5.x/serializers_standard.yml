@@ -1,0 +1,13 @@
+parameters:
+  pim_catalog.normalizer.standard.product.properties.class: Webkul\Magento2BundleProductBundle\Component\Catalog\Normalizer\Standard\Product\PropertiesNormalizer
+
+services:
+    pim_catalog.normalizer.standard.product:
+        class: '%pim_catalog.normalizer.standard.product.class%'
+        arguments:
+            - '@pim_catalog.normalizer.standard.product.properties'
+            - '@pim_catalog.normalizer.standard.product.associations'
+            - '@pim_catalog.normalizer.standard.product.quantified_associations'
+        tags:
+            - { name: pim_serializer.normalizer, priority: 90 }
+            - { name: pim_standard_format_serializer.normalizer, priority: 90 }

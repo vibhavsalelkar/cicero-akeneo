@@ -1,0 +1,258 @@
+<style>
+    .tooltip.fade.right.in {
+        width: 191px;
+    }
+
+</style>
+
+<div class="AknFormContainer AknFormContainer--withPadding AknFormContainer-otherSettings">
+    <div class="AknFieldContainer">
+        <div class="AknFieldContainer-header">
+            <label class="AknFieldContainer-label">
+                <%- _.__('Attribute group export') %></em>
+            </label>
+            <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="Settings to export attribute-groups to magento or export all attributes to existing attribute group at magento."></i>
+        </div>
+        <div class="AknFieldContainer-inputContainer field-input">
+            <select name="exportAttributeGroup">
+                <option value="0" 
+                    <% if('undefined' !== typeof(settings.exportAttributeGroup) && settings.exportAttributeGroup === '0') { %>selected="selected"<% } %>
+                >
+                        <%- _.__('Export all attributes in Single Attribute Group') %>
+                </option>
+                <option value="1"
+                    <% if('undefined' !== typeof(settings.exportAttributeGroup) && settings.exportAttributeGroup === '1') { %>selected="selected"<% } %>                
+                >
+                        <%- _.__('Export all Attribute groups') %>
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="AknFieldContainer">
+        <div class="AknFieldContainer-header">
+            <label class="AknFieldContainer-label">
+                <%- _.__('Url key prefix for Product models (Optional)') %>
+                <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="<%- 'Url key  of Products/categories can conflicts with each other due to no url_key mapping. To avoid this, you can add prefix in url_key of products.' %>"></i>
+            </label>
+        </div>
+        <div class="AknFieldContainer-inputContainer field-input">
+            <input type="text" name="urlKeyPrefix" id="pim_enrich_entity_form_urlkey_prefix" class="AknTextField label-field" 
+            value="<%- typeof(settings.urlKeyPrefix) && settings.urlKeyPrefix ? settings.urlKeyPrefix : '' %>">
+        </div>    
+    </div>
+
+    <div class="AknFieldContainer">        
+        <div class="AknFieldContainer-header">
+            <label class="AknFieldContainer-label control-label" for="pim_enrich_form_metric_selection">
+                Export Unit with Value of Metric Attributes
+            </label>
+            <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="Settings for Export Unit with Value of Metric Attributes Or Not."></i>
+
+        </div>
+        <div class="meta" data-drop-zone="meta"></div>
+        <div class="AknFieldContainer-inputContainer">
+            <div class="field-input">
+                <div class="switch switch-small" data-on-label="Enabled" data-off-label="Disabled">
+                    <input id="pim_enrich_form_metric_selection" type="checkbox" name="metric_selection" <% if(settings.metric_selection == "true" || settings.metric_is_active == "true") { %> checked <% }  if(settings.metric_is_active == "true"){ %>  disabled<%} %> >
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="AknFieldContainer">        
+        <div class="AknFieldContainer-header">
+            <label class="AknFieldContainer-label control-label" for="pim_enrich_form_metric_is_active">
+                Export metric type attributes as select type.
+                <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="<%- 'If you have metric based configurable product, you need to enable this option.' %>"></i>
+            </label>
+        </div>
+        <div class="meta" data-drop-zone="meta"></div>
+        <div class="AknFieldContainer-inputContainer">
+            <div class="field-input">
+                <div class="switch switch-small" data-on-label="Enabled" data-off-label="Disabled">
+                    <input id="pim_enrich_form_metric_is_active" type="checkbox" name="metric_is_active" <% if(settings.metric_is_active == "true") { %> checked <% }  %> >
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="AknFieldContainer">
+        <div class="AknFieldContainer-header">
+            <label class="AknFieldContainer-label">
+                <%- _.__('Fallback Name field when mapped field is not present (Optional)') %>
+                <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="<%- 'Sometimes mapped name field is not present in product then fallback name would be used as name.' %>"></i>
+            </label>
+        </div>
+    </div>
+
+    <div class="AknFieldContainer">
+        <div class="AknFieldContainer-inputContainer field-input">
+            <select name="fallbackName" id="pim_enrich_entity_form_fallbackName" class="select2 label-field AknSettingField">
+                <option value=""><%- _.__('Select Attribute') %></option>
+                <% selectVal = typeof(settings) !== 'undefined' && typeof(settings.fallbackName) !== 'undefined' ?  settings.fallbackName : '' %>
+                <% _.each(attributes, function(attribute) { %>
+                    <% if(['pim_catalog_text'].indexOf(attribute.type) !== -1 ) { %>
+                        <option value="<%- attribute.code %>" <% if(attribute.code === selectVal) { %>selected="selected"<% } %> >
+                            <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                        </option>
+                    <% } %>
+                <% }); %>
+            </select>
+        </div>
+    </div>
+    
+    <div class="AknFieldContainer">
+        <div class="AknFieldContainer-header">
+            <label class="AknFieldContainer-label control-label" for="pim_enrich_form_product_parts">
+                <%- _.__('Select Attribute Option Code / Label for Admin Column.') %>
+            </label>
+            <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="<%- 'Settings for Select Attribute Option Code / Label for Admin Column.' %>"></i>
+
+        </div>
+        <div class="AknFieldContainer-inputContainer ">
+            <% selectVal = typeof(settings.attrOptionAdminCol) === 'string' ? settings.attrOptionAdminCol : 0 %>
+            <select class="select2" id="attrOptionAdminCol" name="attrOptionAdminCol">
+                <% _.each({'1' : 'Option Code', '0' : 'Option Label'}, function (label, code) { %>
+                    <option value="<%- code %>" <%- selectVal == code ? 'selected' : '' %>><%- _.__(label) %></option>
+                <% }) %>
+            </select>            
+        </div>
+    </div>
+
+    <% if(supportMagento2ProductAttachment || supportMagento2AmastyProductAttachment) { %>
+        <div class="AknWidget-header">
+            <%- _.__('Other magento2 modules support') %>
+        </div>
+    <% } %>
+
+    <% if(supportMagento2ProductAttachment) { %>
+        <!-- product attachment setting -->
+        <div class="AknFieldContainer">
+            <div class="AknFieldContainer-header">
+                <label class="AknFieldContainer-label control-label" for="pim_enrich_form_enable_attachment_export">
+                    Support Attachment export (<a href="https://github.com/mageprince/magento2-productAttachment" target="_blank">Only for module in link</a> )
+                    <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="Enable only when using extension in link on magento2"></i>
+                </label>
+            </div>
+            <div class="meta" data-drop-zone="meta"></div>
+            <div class="AknFieldContainer-inputContainer">
+                <div class="field-input">
+                    <div class="switch switch-small" data-on-label="Enabled" data-off-label="Disabled">
+                        <input id="pim_enrich_enable_attachment_export" name="enable_attachment_export" type="checkbox" <% if(settings && settings.enable_attachment_export == "true") { %> checked <% }  %> >
+                    </div>
+                </div>
+            </div>   
+        </div>
+        <div class="AknFieldContainer magento2_attachment_fields_wrapper" <% if(settings && typeof(settings.enable_attachment_export) === 'undefined' || !settings.enable_attachment_export || settings.enable_attachment_export == 'false') { %>style="display: none;"<% } %>>
+            <div class="AknFieldContainer-header">
+                <label class="AknFieldContainer-label control-label" for="pim_enrich_attachment_fields">
+                    Atttributes to used as Attachments
+                </label>
+            </div>
+            <div class="meta" data-drop-zone="meta"></div>
+            <div class="AknFieldContainer-inputContainer ">
+                <div style="width: 100%">
+                    <select name="magento2_attachment_fields" id="pim_enrich_entity_form_attachment_fields" class="select2 label-field AknSettingField otherSetting" multiple="multiple">
+                        <% selectVal =  (settings && typeof(settings.magento2_attachment_fields) === 'string') ? JSON.parse(settings.magento2_attachment_fields) : (typeof(settings.magento2_attachment_fields) === 'object' ? settings.magento2_attachment_fields : [] ) ; %>
+                        <% _.each(attributes, function(attribute) { %>
+                            <% if(['pim_catalog_image', 'pim_catalog_file'].indexOf(attribute.type) !== -1 ) { %>
+                                <option value="<%- attribute.code %>" <% if(selectVal.indexOf(attribute.code) !== -1) { %>selected="selected"<% } %> >
+                                    <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                                </option>
+                            <% } %>
+                        <% }); %>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="AknFieldContainer magento2_attachment_fields_wrapper" <% if(settings && typeof(settings.enable_attachment_export) === 'undefined' || !settings.enable_attachment_export || settings.enable_attachment_export == 'false') { %>style="display: none;"<% } %>>
+            <div class="AknFieldContainer-header">
+                <label class="AknFieldContainer-label control-label" for="pim_enrich_attachment_fields">
+                    Request to Check product Attachment is exist or not (If deleted Mannualy from Magento)
+                </label>
+            </div>
+            <div class="meta" data-drop-zone="meta"></div>
+            <div class="AknFieldContainer-inputContainer ">
+                <div style="width: 100%">
+                    <select name="magento2_attachment_fields" id="pim_enrich_entity_form_attachment_fields" class="select2 label-field AknSettingField otherSetting" multiple="multiple">
+                        <% selectVal =  (settings && typeof(settings.magento2_attachment_fields) === 'string') ? JSON.parse(settings.magento2_attachment_fields) : (typeof(settings.magento2_attachment_fields) === 'object' ? settings.magento2_attachment_fields : [] ) ; %>
+                        <% _.each(attributes, function(attribute) { %>
+                            <% if(['pim_catalog_image', 'pim_catalog_file'].indexOf(attribute.type) !== -1 ) { %>
+                                <option value="<%- attribute.code %>" <% if(selectVal.indexOf(attribute.code) !== -1) { %>selected="selected"<% } %> >
+                                    <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                                </option>
+                            <% } %>
+                        <% }); %>
+                    </select>
+                </div>
+            </div>
+        </div>
+    <% } %>
+
+    <% if(supportMagento2AmastyProductAttachment) { %>
+        <!-- product attachment setting -->
+        <div class="AknFieldContainer">
+            <div class="AknFieldContainer-header">
+                <label class="AknFieldContainer-label control-label" for="pim_enrich_form_enable_amasty_attachment_export">
+                    Support Amasty Product Attachment (<a href="https://amasty.com/product-attachments-for-magento-2.html" target="_blank">Only for module in link</a> )
+                    <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="Enable only when using extension in link on magento2"></i>
+                </label>
+            </div>
+            <div class="meta" data-drop-zone="meta"></div>
+            <div class="AknFieldContainer-inputContainer">
+                <div class="field-input">
+                    <div class="switch switch-small" data-on-label="Enabled" data-off-label="Disabled">
+                        <input id="pim_enrich_enable_amasty_attachment_export" name="enable_amasty_attachment_export" type="checkbox" <% if(settings.enable_amasty_attachment_export == "true") { %> checked <% }  %> >
+                    </div>
+                </div>
+            </div>   
+        </div>
+        <div class="AknFieldContainer magento2_amasty_attachment_fields_wrapper" <% if(settings && typeof(settings.enable_amasty_attachment_export) === 'undefined' || !settings.enable_amasty_attachment_export || settings.enable_amasty_attachment_export == 'false') { %>style="display: none;"<% } %>>
+            <div class="AknFieldContainer-header">
+                <label class="AknFieldContainer-label control-label" for="pim_enrich_attachment_fields">
+                    <% _.__('Atttributes to used as Amasty Product Attachments') %>
+                </label>
+            </div>
+            <div class="meta" data-drop-zone="meta"></div>
+            <div class="AknFieldContainer-inputContainer ">
+                <div style="width: 100%">
+                    <select name="magento2_amasty_attachment_fields" id="pim_enrich_entity_form_amasty_attachment_fields" class="select2 label-field AknSettingField otherSetting" multiple="multiple">
+                        <% selectVal = typeof(settings.magento2_amasty_attachment_fields) === 'string' ? JSON.parse(settings.magento2_amasty_attachment_fields) : (typeof(settings.magento2_amasty_attachment_fields) === 'object' ? settings.magento2_amasty_attachment_fields : [] ) ; %>
+                        <% _.each(attributes, function(attribute) { %>
+                            <% if(['pim_catalog_image', 'pim_catalog_file'].indexOf(attribute.type) !== -1 ) { %>
+                                <option value="<%- attribute.code %>" <% if(selectVal.indexOf(attribute.code) !== -1) { %>selected="selected"<% } %> >
+                                    <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                                </option>
+                            <% } %>
+                        <% }); %>
+                    </select>
+                </div>
+            </div>
+        </div>
+    <% } %>
+
+    <% if(supportAmastyProductParts) { %>
+        <div class="AknFieldContainer">
+            <div class="AknFieldContainer-header">
+                <label class="AknFieldContainer-label control-label" for="pim_enrich_form_product_parts">
+                    <%- _.__('Table Attribute for Amasty Product Part finder') %>
+                </label>
+            </div>
+            <div class="AknFieldContainer-inputContainer ">
+                <select name="product_part_field" id="pim_enrich_form_product_parts" class="label-field AknSettingField otherSetting">
+                    <% selectVal = typeof(settings.product_part_field) === 'string' ? settings.product_part_field : '' %>
+                    <option value=""><%- _.__('Select Value') %></option>                    
+                    <% _.each(attributes, function(attribute) { %>
+                        <% if(['pim_catalog_table'].indexOf(attribute.type) !== -1 ) { %>
+                            <option value="<%- attribute.code %>" <% if(selectVal === attribute.code) { %>selected="selected"<% } %> >
+                                <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                            </option>
+                        <% } %>
+                    <% }); %>
+                </select>
+            </div>
+        </div>
+    <% } %>    
+
+    
+</div>

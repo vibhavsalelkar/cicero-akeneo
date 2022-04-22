@@ -1,0 +1,144 @@
+datagrid:
+    webkul-magento2-data-mapping-grid:
+        extended_entity_name: Webkul\Magento2Bundle\Entity\DataMapping
+        options:
+            entityHint: DataMapping
+            manageFilters: false
+        source:
+            acl_resource: webkul_magento2_connector_configuration
+            type: magento2_datasource_data_mapping
+            entity: 'Webkul\Magento2Bundle\Entity\DataMapping'
+            query:
+                select:
+                    - wdm.id
+                    - wdm.entityType
+                    - wdm.code
+                    - wdm.externalId
+                    - wdm.relatedId
+                    - wdm.apiUrl
+                    - wdm.jobInstanceId
+                from:
+                    - { table: 'Webkul\Magento2Bundle\Entity\DataMapping', alias: wdm }
+
+        columns:
+            id: 
+                lable: Id
+                frontend_type: label
+            code:
+                label: Akeneo Entity Code
+                frontend_type: label
+            externalId:
+                label: Magento External Id
+                frontend_type: label
+            relatedId:
+                label: Magento Related (Parent Id)
+                frontend_type: label
+            entityType:
+                label: Entity Type
+                frontend_type: label
+            apiUrl:
+                label: API Url
+            jobInstanceId:
+                label: Job Instance Id
+                frontend_type: label
+        properties:
+            id: ~
+            delete_link:
+                type: url
+                route: webkul_magento2_data_mapping_delete
+                params:
+                    - id
+            # edit_link:
+            #     type: url
+            #     route: webkul_magento2_data_mapping_delete
+            #     params:
+            #         - id
+
+        mass_actions:
+            delete:
+                type: mass_delete
+                label: pim.grid.mass_action.delete
+                entity_name: DataMapping
+                acl_resource: webkul_magento2_connector_configuration
+                handler:  wk_mapping_mass_delete
+                className: 'AknButton AknButton--important AknButtonList-item'
+                messages:
+                    confirm_title: pim_datagrid.mass_action.delete.confirm_title
+                    confirm_content: webkul_magento2_connector.mass_action.delete.confirm_content
+                    confirm_ok: pim_datagrid.mass_action.delete.label
+                    success: webkul_magento2_connector.mass_action.delete.success
+                    error: webkul_magento2_connector.mass_action.delete.error
+                    empty_selection: webkul_magento2_connector.mass_action.delete.empty_selection
+
+        sorters:
+            columns:
+                id:
+                    data_name: wdm.id
+                entityType:
+                    data_name: wdm.entityType
+                code:
+                    data_name: wdm.code
+                externalId:
+                    data_name: wdm.externalId
+                relatedId:
+                    data_name: wdm.relatedId
+                jobInstanceId:
+                    data_name: wdm.jobInstanceId
+                apiUrl:
+                    data_name: wdm.apiUrl
+            default:
+                id: '%oro_datagrid.extension.orm_sorter.class%::DIRECTION_ASC'
+        
+        filters:
+            columns:
+                code:
+                    type: search
+                    data_name: wdm.code
+                # entityType:
+                #     type:      choice
+                #     data_name: wdm.entityType
+                #     options:
+                #         field_options:
+                #             multiple: true
+                #             choices:  '@magento2_connector.controller.rest.data_mapping->getTypes'
+                
+                externalId:
+                    type:      string
+                    label:     Magento External Id
+                    data_name: wdm.externalId
+                relatedId:
+                    type:      string
+                    label:     Magento Related (Parent Id)
+                    data_name: wdm.relatedId
+                entityType:
+                    type:      choice
+                    label:     Entity Type
+                    data_name: wdm.entityType
+                    options:
+                        field_options:
+                            multiple: true
+                            choices:  '@magento2.controller.rest.data_mapping->getTypes'
+                apiUser:
+                    type:      choice
+                    label:     API Url
+                    data_name: wdm.apiUrl
+                    options:
+                        field_options:
+                            multiple: true
+                            choices: '@magento2.controller.rest.data_mapping->getCredentialApiUrl'
+                
+        actions:
+            delete:
+                launcherOptions:
+                    className:  AknIconButton AknIconButton--small AknIconButton--trash
+                type:           delete
+                label:          Delete
+                link:           delete_link
+                acl_resource:   webkul_magento2_connector_configuration
+            # edit:
+            #     launcherOptions:
+            #         className:  AknIconButton AknIconButton--small AknIconButton--edit
+            #     type:           edit
+            #     label:          Edit
+            #     link:           edit_link
+            #     acl_resource:   webkul_magento2_connector_configuration

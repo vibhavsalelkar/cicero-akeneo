@@ -1,0 +1,149 @@
+<style>
+    .description-gallery {
+        padding: 8px;
+        text-align: center;
+        background-color: #ddd;
+        text-indent: 50px;
+        letter-spacing: 1px;
+    }
+    .gallery-image-product {
+        background-color: #f1f1f1;
+    }
+
+    div.hover-shadow {
+  transition: 0.3s;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: green;
+}
+/* Hide the slides by default */
+.mySlides {
+  display: none;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 50%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.6s ease;
+  border-radius: 0 3px 3px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 3px 0 0 3px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(0, 0, 0, 0.8);
+}
+/* The Close Button */
+.close {
+  color: white;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #999;
+  text-decoration: none;
+  cursor: pointer;
+}    
+    </style>
+ 
+    <div class="AknAssetCollectionField-header AknButtonList">
+        <% if(editMode === 'edit') { %>
+            <span class="AknButtonList-item AknButton AknButton--apply add-asset">
+                <%- _.__('webkulgallery.media.update') %>
+            </span>
+            <!-- <% if(assets.length >= 0) {%>
+                <% _.each(assets, function (image, key) { %>
+                <input type="hidden" name="asset_indexes" value = "<%- key %>">
+                <span class="AknButtonList-item AknIconButton AknIconButton--grey open-imageSlider"><i class="icon icon-eye-open"></i></span>
+                <% }); %>
+            <% } %> -->
+        <% } else { %>
+            <span class="AknButtonList-item AknButton AknButton--disabled">
+                    <%- _.__('webkulgallery.media.update') %>
+                </span>
+        <% } %>
+    </div>
+    
+    <% if(assets.length !== 0) {%>
+        <% _.each(assets, function (asset) { %>
+            <div class="gallery-image-product">
+                <div class="description-gallery">
+                        <% if (asset.title) { %>
+                            <%- asset.title %> 
+                        <% } %> ( <%- asset.code%> )
+                </div>
+                <ul class="AknAssetCollectionField-list">
+                <% var mediaFiles = typeof(asset.medias) !== 'undefined' ? asset.medias : [] %>
+                <% _.each(mediaFiles, function(mediaFile){ %>
+                    <li class="asset-thumbnail-item AknAssetCollectionField-listItem" data-asset="<%- asset.code %>">
+                        <!-- <input type="hidden" name="data_image" value="url('<%- MediaUrlGenerator.getMediaShowUrl((typeof(mediaFile.filePath) !== "undefined" ? mediaFile.filePath : null), 'thumbnail') %>')"> -->
+                        <div class="AknAssetCollectionField-assetThumbnail asset-thumbnail openModal" id="assetId" style="background-image: url('<%- MediaUrlGenerator.getMediaShowUrl((typeof(mediaFile.filePath) !== "undefined" ? mediaFile.filePath : null), 'thumbnail') %>')">                            
+                        </div>
+
+                        <!-- The Modal/Lightbox -->
+<!-- <div id="myModal" class="modal">
+    <span class="close cursor closeModal" >&times;</span>
+    <div class="modal-content">
+  
+      <div class="mySlides">
+        <div class="numbertext">1 / 4</div>
+        <div class="AknAssetCollectionField-assetThumbnail asset-thumbnail" style="background-image: url('<%- MediaUrlGenerator.getMediaShowUrl((typeof(mediaFile.filePath) !== "undefined" ? mediaFile.filePath : null), 'thumbnail') %>')">                            
+      </div>
+  
+        
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+</div>       -->
+
+                    </li>
+                    <!-- <input type="hidden" name="asset_indexes">
+                    <span class="AknButtonList-item AknIconButton AknIconButton--grey open-media"><i class="icon icon-eye-open"></i></span> -->
+                        <% }); %>
+                </ul>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <ul class="AknAssetCollectionField-list">
+    
+        </ul>
+    <% } %>
+
+
+    

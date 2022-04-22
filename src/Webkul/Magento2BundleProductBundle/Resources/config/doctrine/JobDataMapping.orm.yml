@@ -1,0 +1,27 @@
+Webkul\Magento2BundleProductBundle\Entity\JobDataMapping:
+    type: entity
+    table: wk_magento2_bundle_job_data_mapping
+    repositoryClass: Webkul\Magento2BundleProductBundle\Repository\JobDataMappingRepository
+    uniqueConstraints:
+        wk_magento2_identifier_type_idx:
+            columns: productIdentifier, mappingType
+    id:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+    fields:
+        productIdentifier:
+            type: string
+            length: 255
+        mappingType:
+            type: string
+            length: 255
+        extras:
+            type: json_array
+            nullable: true
+        jobInstanceId:
+            type: string
+            length: 255
+    lifecycleCallbacks: {  }

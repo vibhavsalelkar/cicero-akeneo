@@ -1,0 +1,44 @@
+services:
+    webkul.image_gallery_configuration.controller:
+        class: Webkul\ImageGalleryBundle\Controller\Rest\ConfigurationController
+        public: true
+        arguments:
+            - '@webkul.image.gallery.connector.service'
+            - '@pim_catalog.repository.currency'
+            - '@pim_catalog.repository.locale'
+            - '@pim_enrich.repository.job_instance'
+            - '@doctrine.orm.entity_manager'
+            - '@akeneo_file_storage.file_storage.filesystem_provider'
+            - '@webkul_gallery.repository.media'
+            - '@webkul_gallery.repository.media_gallery'            
+
+    webkul_image.gallery.controller.rest.media:
+        class: 'Webkul\ImageGalleryBundle\Controller\PostMediaController'
+        public: true
+        arguments:
+            - '@validator'
+            - '@akeneo_file_storage.file_storage.path_generator'
+            # - '%tmp_storage_dir%'
+            - '@akeneo_file_storage.file_storage.file.file_storer'
+            # - '@doctrine.orm.entity_manager'
+            # - '@webkul_gallery.repository.media'
+
+    webkul_image.gallery.category.controller:
+        class: 'Webkul\ImageGalleryBundle\Controller\CategoryController'
+        arguments:
+            - '@validator'
+            - '@akeneo_file_storage.file_storage.path_generator'
+            - '%tmp_storage_dir%'
+            - '@akeneo_file_storage.file_storage.file.file_storer'
+            # - '@doctrine.orm.entity_manager'
+            # - '@webkul_gallery.repository.media'
+
+    webkul_image.gallery.controller.media:
+        class: 'Webkul\ImageGalleryBundle\Controller\MediaController'
+        public: true
+        arguments:
+            - '@akeneo_file_storage.file_storage.filesystem_provider'
+            - '@akeneo_file_storage.repository.file_info'
+            - '@webkul.image.gallery.connector.service'
+            - '@akeneo_file_storage.file_storage.file.file_storer'
+    

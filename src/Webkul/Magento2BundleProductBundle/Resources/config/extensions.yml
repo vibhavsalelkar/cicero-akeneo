@@ -1,0 +1,3 @@
+parameters:
+  pim_datagrid.extension.filter.class:  Webkul\Magento2BundleProductBundle\Extension\Filter\FilterExtension   #Pim\Bundle\DataGridBundle\Extension\Filter\FilterExtension
+  

@@ -1,0 +1,95 @@
+<style>
+    .wk_margin_top_10 {
+        margin-top: 10px;
+    }
+    .wk_store_mapping td {
+        width: calc(30%);
+    }
+    .wk_store_mapping .wk_header_cell {
+        border: none
+        display: table-cell;
+        color: #67768A;
+        font-size: 14px;
+        text-transform: uppercase;
+        padding: 10px 0px;        
+    }
+    .wk_store_mapping table {
+        table-layout: fixed;
+        text-align: left;
+    }    
+    .wk_store_mapping table thead {
+        border-bottom: 2px solid #67768A;        
+    }
+</style>
+
+<div class="wk_margin_top_10 wk_store_mapping">
+        <table class="AknGrid AknGrid--unclickable">
+            <thead>
+                <tr>
+                    <th class="wk_header_cell">
+                        <%- _.__('magento2.select.store_view') %>
+                    </th>
+                    <th class="wk_header_cell">
+                        <%- _.__('magento2.locale') %>
+                    </th>
+                    <th class="wk_header_cell">
+                        <%- _.__('Currencies') %>
+                    </th>                    
+                </tr>
+            </thead>
+
+            <tbody>
+                
+                <% if(storeViews &&  Object.keys(storeViews).length) { %>
+                  
+                <% _.each(storeViews, function(mapping, key) { if(mapping.website_id) { %>
+                    <tr class="AknGrid-bodyRow storeViewData" data-storeView="<%- mapping.code %>">
+                        <td class="AknGrid-bodyCell">
+                            <%- mapping.name %>
+                        </td>
+                        <td class="AknGrid-bodyCell">
+                            <% if('undefined' !== typeof(storeMapping[mapping.code]) && 'undefined' !== typeof(storeMapping[mapping.code]['locale']) && storeMapping[mapping.code]['locale']) { 
+                                selectedVal = storeMapping[mapping.code]['locale'];
+                                } else {
+                                selectedVal = null;
+                            } %>
+                            <select name="locale">
+                                <option value=""><%- _.__('Select store view') %></option>                            
+                                <% _.each(locales, function(locale, key) { %>
+                                    <option value="<%- locale.code %>" <% if(locale.code === selectedVal) { %>selected="selected"<% } %> >
+                                        <%- locale.code %>
+                                    </option>
+                                <% }); %>
+                            </select>
+                        </td>
+                        <td class="AknGrid-bodyCell AknGrid-bodyCell--right">
+                                <% if('undefined' !== typeof(storeMapping[mapping.code]) && 'undefined' !== typeof(storeMapping[mapping.code]['currency']) && storeMapping[mapping.code]['currency']) { 
+                                    selectedVal = storeMapping[mapping.code]['currency'];
+                                 } else {
+                                    selectedVal = null;
+                                } %>                            
+                            <select name="currency">
+                                <option value=""><%- _.__('Select Currency for store view') %></option>
+                                <% if(typeof(currencies) !== 'undefined' && currencies) { %>
+                                    <% _.each(currencies, function(currency, key) { %>
+                                        <option value="<%- currency.code %>"  <% if(currency.code === selectedVal) { %>selected="selected"<% } %> >
+                                            <%- currency.code %>
+                                        </option>
+                                    <% }); %>
+                                <% } %>
+                            </select>
+                        </td>               
+                    </tr>
+                <% } }); %>
+            
+                <% } else {%>     
+                    <tr class="AknGrid-bodyRow storeViewData">
+                            <td class="AknGrid-bodyCell" colspan="3">
+                               <h2>&#9888; Save Credential First for Store View Mapping </h2>
+                            </td>
+                <% } %> 
+                
+            </tbody>
+        </table>
+     
+</div>

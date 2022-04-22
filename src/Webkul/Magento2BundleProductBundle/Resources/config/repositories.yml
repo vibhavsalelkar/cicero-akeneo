@@ -1,0 +1,3 @@
+# override repositories
+parameters:
+    pim_catalog.repository.product_model.class: Webkul\Magento2BundleProductBundle\Doctrine\ORM\Repository\ProductModelRepository #Pim\Bundle\CatalogBundle\Doctrine\ORM\Repository\ProductModelRepository

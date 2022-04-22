@@ -1,0 +1,14 @@
+# parameters:
+#   # pimee_workflow.saver.product_delegating.class: Webkul\Magento2BundleProductBundle\Saver\Merger\MergeDataOnProduct
+
+services:
+    pimee_catalog.security.merger.merge_data_on_product:
+        class: 'Webkul\Magento2BundleProductBundle\Saver\Merger\MergerDataOnProduct'
+        arguments:
+            -
+                - '@pimee_catalog.security.merger.not_granted_values'
+                - '@pimee_catalog.security.merger.not_granted_associated_product'
+                - '@pimee_catalog.security.merger.not_granted_category'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_catalog.entity_with_family_variant.add_parent_to_product'
+            - '@pim_catalog.repository.product_model_without_permission'

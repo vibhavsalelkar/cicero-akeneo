@@ -1,0 +1,86 @@
+extensions:
+    #  group product
+    pim-product-index-create-button:
+        module: pim/form/common/product/create-button
+        parent: pim-product-index
+        targetZone: buttons
+        config:
+            buttonTitle: pim_enrich.entity.product.create
+            modalTitle: pim_enrich.entity.product.modalTitle
+            subTitle: pim_enrich.entity.product.subTitle
+            choices:
+                create-product:
+                    form: pim-product-create-modal
+                    title: Product
+                    icon: icon-product
+                    aclResourceId: pim_enrich_product_create
+                create-product-model:
+                    form: pim-product-model-create-modal
+                    title: Product model
+                    icon: icon-model
+                    aclResourceId: pim_enrich_product_model_create
+                create-group-product:
+                    form: pim-product-create-modal-group
+                    title: Grouped Product
+                    icon: icon-product
+                    aclResourceId: pim_enrich_product_create 
+    # simple product
+    pim-product-create-modal:
+       module: pim/form/common/creation/modal
+       config:
+           labels:
+               title: pim_enrich.entity.product.create_popin.title
+               subTitle: pim_menu.tab.products
+           picture: illustrations/Product.svg
+           successMessage: pim_enrich.entity.product.message.created
+           editRoute: pim_enrich_product_edit
+           postUrl: webkul_magento2_group_product_connector_product_rest_create
+
+    pim-product-create-sku:
+        module: pim/product-edit-form/creation/identifier
+        parent: pim-product-create-modal
+        targetZone: fields
+        position: 10
+        config:
+            identifier: identifier
+
+    pim-product-create-family:
+        module: pim/form/common/fields/simple-select-async
+        parent: pim-product-create-modal
+        targetZone: fields
+        position: 20
+        config:
+            fieldName: family
+            label: pim_enrich.entity.product.meta.family.title
+            choiceRoute: pim_enrich_family_rest_index
+
+    # group product 
+    pim-product-create-modal-group:
+       module: pim/form/common/creation/modal
+       config:
+           labels:
+               title: pim_enrich.entity.product.create_popin.title
+               subTitle: pim_menu.tab.products
+           picture: illustrations/Product.svg
+           successMessage: pim_enrich.entity.product.message.created
+           editRoute: pim_enrich_product_edit
+           postUrl: webkul_magento2_group_product_connector_product_group_rest_create
+
+    pim-product-group-create-sku:
+        module: pim/product-edit-form/creation/identifier
+        parent: pim-product-create-modal-group
+        targetZone: fields
+        position: 10
+        config:
+            identifier: identifier
+
+    pim-product-group-create-family:
+        module: pim/form/common/fields/simple-select-async
+        parent: pim-product-create-modal-group
+        targetZone: fields
+        position: 20
+        config:
+            fieldName: family
+            label: pim_enrich.entity.product.meta.family.title
+            choiceRoute: pim_enrich_family_rest_index
+ 

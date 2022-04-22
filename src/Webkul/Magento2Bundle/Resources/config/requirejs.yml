@@ -1,0 +1,120 @@
+config:
+    paths:
+        # Controllers
+        magento2/controller/configuration:  magento2/js/controller/configuration
+        magento2/controller/data-mapping/index: magento2/js/controller/dataMapping/index
+        # Forms
+        magento2/form/configuration:                    magento2/js/form/configuration/configuration
+        magento2/form/configuration/tab/credential:     magento2/js/form/configuration/tab/credential
+        magento2/form/configuration/tab/mapping:        magento2/js/form/configuration/tab/mapping
+        magento2/form/configuration/tab/documentation:  magento2/js/form/configuration/tab/documentation
+        magento2/form/configuration/tab/storeMapping:   magento2/js/form/configuration/tab/storeMapping
+        magento2/form/configuration/tab/overview:       magento2/js/form/configuration/tab/overview
+        magento2/form/configuration/tab/otherSettings:  magento2/js/form/configuration/tab/otherSettings
+        magento2/form/configuration/tab/association:    magento2/js/form/configuration/tab/association
+        magento2/form/configuration/jobs:               magento2/js/form/configuration/jobs
+        magento2/form/configuration/importjobs:         magento2/js/form/configuration/importjobs
+        magento2/form/configuration/save:               magento2/js/form/configuration/save
+        magento2/form/configuration/locale:             magento2/js/form/configuration/locale
+        magento2/job/filter/product/identifier:         magento2/js/job/filter/product/identifier
+        magento2/form/configuration/fields/switch:      magento2/js/form/configuration/fields/switch
+        magento2/job/common/edit/category:              magento2/js/job/common/edit/category
+        magento2/job/common/edit/category-selector:     magento2/js/job/common/edit/category-selector
+        magento2/job/common/edit/associate:             magento2/js/job/common/edit/tree-associate.jstree
+        
+        
+        # Templates
+        magento2/template/configuration/tab/credential: magento2/templates/configuration/tab/credential.html
+        magento2/template/configuration/tab/mapping:    magento2/templates/configuration/tab/mapping.html
+        magento2/template/configuration/tab/storeMapping: magento2/templates/configuration/tab/storeMapping.html
+        magento2/template/configuration/tab/documentation: magento2/templates/configuration/tab/documentation.html
+        magento2/template/configuration/tab/overview: magento2/templates/configuration/tab/overview.html
+        magento2/template/configuration/tab/otherSettings: magento2/templates/configuration/tab/otherSettings.html
+        magento2/template/configuration/tab/association: magento2/templates/configuration/tab/association.html
+        magento2/template/job/export/credentials: magento2/templates/job/export/credentials.html
+        magento2/template/job/export/data: magento2/templates/job/export/data.html
+        magento2/template/common/meta: magento2/templates/common/meta.html
+        magento2/template/common/password: magento2/templates/common/password.html
+        magento2/template/common/storeMapping: magento2/templates/common/storeMapping.html
+        magento2/template/common/savebutton: magento2/templates/common/savebutton.html
+        magento2/template/configuration/locale: magento2/templates/configuration/locale.html
+        magento2/template/configuration/field/switch: magento2/templates/configuration/field/switch.html
+        magento2/job/common/tab/history: magento2/js/common/tab/history
+        magento2/template/job/categories: magento2/templates/job/categories.html
+        magento2/template/job/catalog-switcher: magento2/templates/job/catalog-switcher.html
+        magento2/template/job/jstree-locked-item: magento2/templates/job/jstree-locked-item.html
+        magento2/template/job/identifier: magento2/templates/job/identifier.html
+        
+        #other
+        magento2/job/individual/credentials: magento2/js/job/export/credentials
+        magento2/common/password: magento2/js/common/password
+        magento2/common/meta: magento2/js/common/meta
+        magento2/common/save-buttons: magento2/js/common/save_button
+        magento2/form/configuration/create/modal: magento2/js/form/configuration/create/modal
+        magento2/form/configuration/create/form: magento2/js/form/configuration/create/form
+        magento2/form/configuration/credentials/edit: magento2/js/form/configuration/credentials/edit
+        magento2/job/export/exportProfile: magento2/js/job/export/exportProfile
+        magento2/job/common/edit/field/switch: magento2/js/job/common/edit/field/switch
+        magento2/job/export/data: magento2/js/job/export/data
+
+        magento2/job/product/edit/content/structure/scopes: magento2/js/job/product/edit/content/structure/scopes
+        magento2/template/export/product/edit/content/structure/scope: magento2/templates/export/product/edit/content/structure/scopes.html
+        magento2/template/export/product/edit/content/structure/attributes: magento2/templates/export/product/edit/content/structure/attributes.html
+        magento2/job/product/edit/content/structure/locales: magento2/js/job/product/edit/content/structure/locales
+        # magento2/job/product/edit/content/structure/categories: magento2/js/job/product/edit/content/structure/categories
+        # magento2/job/product/edit/content/structure/selector: magento2/js/job/product/edit/content/structure/selector
+        magento2/job/product/edit/content/structure/attributes: magento2/js/job/product/edit/content/structure/attributes
+        # attribute option swatch image integration
+        # pim/attributeoptionview:  magento2/js/pim-attributeoptionview
+        # magento2/template/attribute-option/index: magento2/templates/attribute-option/index.html
+        # magento2/template/attribute-option/edit: magento2/templates/attribute-option/edit.html
+        # magento2/template/attribute-option/show: magento2/templates/attribute-option/show.html
+        magento2/template/job/default-template: magento2/templates/configuration/default-template.html
+        oro/datafilter/search-filter: magento2/js/common/tab/search
+    config:
+        pim/controller-registry:
+            controllers:
+                webkul_magento2_connector_configuration: #Router for above module
+                    module: magento2/controller/configuration     #Module
+                webkul_magento2_credentials_edit:
+                    module: magento2/form/configuration/credentials/edit
+        magento2/form/configuration/save:
+            route: webkul_magento2_connector_configuration_post
+
+        magento2/form/configuration/jobs:
+            route: webkul_magento2_connector_configuration_post            
+
+        pim/fetcher-registry:
+            fetchers:
+                mapping-attributes:
+                    module: pim/base-fetcher
+                    options:
+                        urls:
+                            list: webkul_magento_connector_configuration_attributes_action    
+                magento-fields:
+                    module: pim/base-fetcher
+                    options:
+                        urls:
+                            list: webkul_magento_connector_configuration_action
+                credential-readonly-parameters:
+                    module: pim/base-fetcher
+                    options:
+                        urls:
+                            list: webkul_magento_connector_configuration_credential-readonly-parameters
+                magento2-profiles:
+                    module: pim/base-fetcher
+                    options:
+                        urls:
+                            list: webkul_magento2_credentials_get_all
+                akeneo-magento2-job-instance-class:
+                    module: pim/base-fetcher
+                    options:
+                        urls:
+                            list: akeneo-magento2-job-instance-class
+
+                custom-category:
+                    module: pim/base-fetcher
+                    options:
+                        urls:
+                            list: magento2_custom_category_rest_list
+        

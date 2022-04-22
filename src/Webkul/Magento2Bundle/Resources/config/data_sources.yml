@@ -1,0 +1,20 @@
+parameters:
+    magento2_credential_source.class: Webkul\Magento2Bundle\Datasource\CredentialsDatasource
+    webkul_magento2.credential_repository.class: Webkul\Magento2Bundle\Repository\CredentialConfigRepository
+    webkul_magento2.entity.credential.class: Webkul\Magento2Bundle\Entity\CredentialConfig
+
+services:
+    webkul_magento2_datagrid.datasource.credentials:
+        class: '%pim_datagrid.datasource.repository.class%'
+        arguments:
+            - '@pim_enrich.repository.magento2_credentials'
+            - '@pim_datagrid.datasource.result_record.hydrator.default'
+        tags:
+            - { name: oro_datagrid.datasource, type: magento2_datasource_credentials }
+
+    # repository
+    pim_enrich.repository.magento2_credentials:
+        class: '%webkul_magento2.credential_repository.class%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '%webkul_magento2.entity.credential.class%'

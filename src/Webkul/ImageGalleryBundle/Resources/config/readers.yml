@@ -1,0 +1,23 @@
+parameters:
+    webkulgallery.api.file.gallrey.class: Webkul\ImageGalleryBundle\Connector\Reader\GalleryReader
+    webkulgallery.reader.file.csv_gallery.class: Webkul\ImageGalleryBundle\Connector\Reader\Import\GalleryReader
+    webkulgallery.array_converter.flat_to_standard.asset.class: Webkul\ImageGalleryBundle\Connector\ArrayConvertor\FlatToStandard\Gallery
+services:
+    webkulgallery.reader.file.csv_gallery:
+        class: '%webkulgallery.reader.file.csv_gallery.class%'
+        arguments:
+            - '@pim_connector.reader.file.csv_iterator_factory'
+            - '@webkulgallery.array_converter.flat_to_standard.asset'
+            - '@webkul.image.gallery.connector.service'
+
+    webkulgallery.array_converter.flat_to_standard.asset:
+        class: '%webkulgallery.array_converter.flat_to_standard.asset.class%'
+        arguments:
+            - '@pim_connector.array_convertor.checker.fields_requirement'
+            -
+                - 'starred'
+    
+    webkulgallery.reader.database.gallery:
+        class: '%webkulgallery.api.file.gallrey.class%'
+        arguments:
+            - '@webkul_gallery.repository.media'

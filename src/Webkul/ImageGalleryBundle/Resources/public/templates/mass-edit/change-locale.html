@@ -1,0 +1,85 @@
+<div class="AknFormContainer AknFormContainer--withPadding">
+    <div class="AknFieldContainer">
+        <div class="AknFieldContainer-header">
+            <label class="AknFieldContainer-label control-label AknFieldContainer-label required" for="pim_enrich_mass_edit_choose_action_operation_change_family">
+                <%- _.__('Change From Locale') %>
+            </label>
+        </div>
+        <div class="AknFieldContainer-inputContainer field-input">
+            <select name="changefromlocale" id="pim_enrich_entity_form_locale" class="select2 label-field AknSettingField change-locale"
+             <% if(changefromlocalevalue) { %> disabled <% } %>>
+             
+                <option ><%- _.__('Select Locale') %></option>
+                <% _.each(model, function (locale, key){ %>
+                    <option value="<%- key %>" <% if(changefromlocalevalue == key){ %> selected = "selected" <%};%> >
+                     <%- _.__(locale) %>
+                    </option>   
+                <% }); %>
+            </select>  
+        </div>
+    </div>
+</div>
+<div class="AknFormContainer AknFormContainer--withPadding">
+    <div class="AknFieldContainer">
+        <div class="AknFieldContainer-header">
+            <label class="AknFieldContainer-label control-label AknFieldContainer-label required" for="pim_enrich_mass_edit_choose_action_operation_change_family">
+                <%- _.__('Change From Scope') %>
+            </label>
+        </div>
+        <div class="AknFieldContainer-inputContainer field-input">
+            <select name="changefromscope" id="pim_enrich_entity_form_locale" class="select2 label-field AknSettingField change-locale"
+             <% if(changefromscopevalue) { %> disabled <% } %>>
+             
+                <option ><%- _.__('Select Locale') %></option>
+                <% _.each(modelscope, function (scope, key){ %>
+                    <option value="<%- key %>" <% if(changefromscopevalue == key){ %> selected = "selected" <%};%> >
+                     <%- _.__(scope) %>
+                    </option>   
+                <% }); %>
+            </select>  
+        </div>
+    </div>
+</div>
+<div class="AknFormContainer AknFormContainer--withPadding">
+    <div class="AknFieldContainer">
+        <div class="AknFieldContainer-header">
+            <label class="AknFieldContainer-label control-label AknFieldContainer-label required" for="pim_enrich_mass_edit_choose_action_operation_change_family">
+                <%- _.__('Change to Locale') %>
+            </label>
+        </div>
+        <div class="AknFieldContainer-inputContainer field-input">
+            <select name="changetolocale" id="pim_enrich_entity_form_locale" class="select2 label-field AknSettingField change-locale"
+             <% if(changetolocalevalue) { %> disabled <% } %> multiple >
+             
+                <option ><%- _.__('Select Locale') %></option>
+                <% _.each(model, function (locale, key){ %>
+                    <option value="<%- key %>" <% if(key === changetolocalevalue || (',' + changetolocalevalue + ',' ).indexOf(','+key+',') !== -1 ) { %>selected="selected"<% } %> >
+                     <%- _.__(locale) %>
+                    </option>   
+                <% }); %>
+            </select>  
+        </div>
+    </div>
+</div>
+<div class="AknFormContainer AknFormContainer--withPadding">
+    <div class="AknFieldContainer">
+        <div class="AknFieldContainer-header">
+            <label class="AknFieldContainer-label control-label AknFieldContainer-label required" for="pim_enrich_mass_edit_choose_action_operation_change_family">
+                <%- _.__('Change To Scope') %>
+            </label>
+        </div>
+        <div class="AknFieldContainer-inputContainer field-input">
+            <select name="changetoscope" id="pim_enrich_entity_form_locale" class="select2 label-field AknSettingField change-locale"
+             <% if(changetoscopevalue) { %> disabled <% } %>>
+             
+                <option ><%- _.__('Select Locale') %></option>
+                <% _.each(modelscope, function (scope, key){ %>
+                    <option value="<%- key %>" <% if(changetoscopevalue == key){ %> selected = "selected" <%};%> >
+                     <%- _.__(scope) %>
+                    </option>   
+                <% }); %>
+            </select>  
+        </div>
+    </div>
+</div>
+

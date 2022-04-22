@@ -1,0 +1,100 @@
+config:
+    paths:
+        webkulgallery/controller/gallery/edit: imagegallery/js/controller/gallery/edit
+        webkul/gallery/edit/form:  imagegallery/js/form/gallery/edit
+        webkul/gallery/menu/item: imagegallery/js/menu/item
+        webkul/gallery/media-field: imagegallery/js/form/media-field
+        webkulgallery/controller/gallery/media/edit: imagegallery/js/controller/gallery/media/edit
+        webkul/gallery/image-media-field: imagegallery/js/form/image-media-field
+        webkulgallery/asset-field: imagegallery/js/product/field/gallery-field
+        webkulgallery/remover/asset: imagegallery/js/remover/asset
+        webkulgallery/asset-edit-form/delete: imagegallery/js/form/delete
+        oro/datagrid/gallery-thumbnail-cell: imagegallery/js/datagrid/cell/asset-thumbnail-cell
+        oro/datagrid/gallery-boolean-cell: imagegallery/js/datagrid/cell/boolean-cell
+        webkulgallery/datagrid/row/asset: imagegallery/js/datagrid/row/asset
+        webkulgallery/datagrid/column-form-listener: imagegallery/js/datagrid/column-form-listener
+        webkulgallery/select/item-picker: imagegallery/js/media/select/item-picker
+        webkulgallery/select/gallery-group: imagegallery/js/media/select/gallery-group        
+        oro/datafilter/filters-manager: imagegallery/js/filter/filters-manager
+        webkulgallery/asset/create: imagegallery/js/controller/gallery/create
+        webkulgallery/asset/uploader:    imagegallery/js/form/uploader
+        # webkulgallery/select/image-slider: imagegallery/js/media/select/image-slider
+        webkulgallery/select/image-gallery-slider: imagegallery/js/media/select/image-gallery-slider
+        webkulgallery/form/common/creation/field: imagegallery/js/form/common/creation/field
+        webkulgallery/form/common/creation/groupfield: imagegallery/js/form/common/creation/groupfield
+        #template
+        webkulgallery/template/product/field/media: imagegallery/templates/product/field/media.html
+        webkulgallery/template/product/field/image-media-field: imagegallery/templates/product/field/image-media.html        
+        webkulgallery/template/select/asset-group: imagegallery/templates/select/asset-group.html
+        webkulgallery/template/select/item-picker-basket: imagegallery/templates/select/item-picker-basket.html
+        pim/template/datagrid/add-filter-select: imagegallery/templates/add-filter-select.html
+        webkulgallery/template/select/image-gallery-slider: imagegallery/templates/select/image-gallery-slider.html
+        webkulgallery/template/form/creation/field: imagegallery/templates/form/creation/field.html
+        oro/datagrid/webkulgallery-asset-star-cell: imagegallery/js/datagrid/cell/asset-star-cell
+        webkulgallery/template/datagrid/star-cell: imagegallery/templates/datagrid/star-cell.html
+        webkulgallery/form/gallery-tags: imagegallery/js/form/common/gallery-tags
+        webkulgallery/template/form/gallery-tags: imagegallery/templates/form/gallery-tags.html
+        webkulgallery/form/gallery-group: imagegallery/js/form/common/gallery-group
+        webkulgallery/template/form/gallery-group: imagegallery/templates/form/gallery-group.html
+        webkulgallery/template/datagrid/row/asset-thumbnail: imagegallery/templates/datagrid/row/asset-thumbnail.html
+        webkulgallery/controller/group_mapping/group: imagegallery/js/controller/group_mapping/group
+        webkulgallery/form/common/index/create-button: imagegallery/js/form/common/create-button
+        webkulgallery/template/form/index/create-button: imagegallery/templates/form/create-button.html
+        webkulgallery/form/common/index/version: imagegallery/js/form/common/version
+        webkulgallery/template/form/common/index/version: imagegallery/templates/form/version.html
+        webkulgallery/form/date: imagegallery/js/form/date
+    config:
+        pim/form/common/attributes/create-button:
+            attribute_icons:
+                pim_catalog_gallery_group: file
+        
+        webkulgallery/remover/asset:
+            url: webkul_gallery_asset_delete        
+        pim/controller-registry:
+            controllers:
+                webkul_akeneo_gallery_index: #Router for above module
+                    module: pim/controller/common/index
+                    aclResourceId: image_gallery_configuration
+                    config:
+                        entity: webkul-gallery
+                        
+                webkul_gallery_asset_edit:
+                    module: webkulgallery/controller/gallery/edit
+                    aclResourceId: image_gallery_configuration
+                webkul_gallery_media_edit:
+                    module: webkulgallery/controller/gallery/media/edit
+                    aclResourceId: image_gallery_configuration
+                webkulgallery_group_data_grid:
+                    module: webkulgallery/controller/group_mapping/group            
+        
+        pim/fetcher-registry:
+            fetchers:
+                gallery:
+                    module: pim/base-fetcher
+                    options:
+                        urls:
+                            get: webkul_gallery_rest_get
+                            list: webkulgallery_asset_rest_index
+                gallery-media:
+                    module: pim/base-fetcher
+                    options:
+                        urls:
+                            list: webkul_gallery_media_rest_get
+                gallery-tags: 
+                    module: pim/base-fetcher
+                    options:
+                        urls:
+                            list: webkulgallery_gettags
+
+                image-gallery-version: 
+                    module: pim/base-fetcher
+                    options:
+                        urls:
+                            list: image_gallery_version
+                gallery-groups:
+                    module: pim/base-fetcher
+                    options:
+                        urls:
+                            list: webkulgallery_getgroups
+
+                                

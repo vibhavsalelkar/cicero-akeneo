@@ -1,0 +1,15 @@
+parameters:
+    wk_magento2_datagrid.datasource.product.class: Webkul\Magento2BundleProductBundle\Datasource\ProductDatasource # Pim\Bundle\DataGridBundle\Datasource\ProductDatasource #
+services:
+    wk_magento2_datagrid.datasource.product:
+        class: '%wk_magento2_datagrid.datasource.product.class%'
+        arguments:
+            - '@pim_catalog.object_manager.product'
+            - '@pim_enrich.query.product_and_product_model_query_builder_from_size_factory'
+            - '@pim_datagrid_serializer'
+            - '@pim_datagrid.event_subscriber.filter_entity_with_values_subscriber'
+            
+        calls:
+            - [ setMassActionRepository, ['@pim_catalog.repository.product_mass_action'] ]
+        tags:
+            - { name: oro_datagrid.datasource, type: wk_magento2_datasource_product }

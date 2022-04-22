@@ -1,0 +1,25 @@
+
+parameters:
+    pim_datagrid.normalizer.product.class: Webkul\Magento2GroupProductBundle\Normalizer\DataGridProductNormalizer
+    pim_datagrid.normalizer.product_model.class: Webkul\Magento2GroupProductBundle\Normalizer\DataGridProductModelNormalizer
+    
+
+services:
+    pim_datagrid.normalizer.product:
+        class: '%pim_datagrid.normalizer.product.class%'
+        arguments:
+            - '@pim_catalog.filter.chained'
+            - '@pim_enrich.normalizer.image'
+            - '@magento2.connector.service'
+        tags:
+            - { name: pim_serializer.normalizer }
+
+    pim_datagrid.normalizer.product_model:
+        class: '%pim_datagrid.normalizer.product_model.class%'
+        arguments:
+            - '@pim_catalog.filter.chained'
+            - '@pim_catalog.doctrine.query.find_variant_product_completeness'
+            - '@pim_catalog.product_models.image_as_label'
+            - '@pim_enrich.normalizer.image'
+        tags:
+            - { name: pim_serializer.normalizer }    

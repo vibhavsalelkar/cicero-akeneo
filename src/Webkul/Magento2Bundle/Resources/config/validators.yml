@@ -1,0 +1,6 @@
+services:
+    pim_connector.validator.constraints.webkul_magento2_filter_structure_locale_validator:
+        class: Webkul\Magento2Bundle\Services\CredentialValidator
+        arguments:
+        tags:
+            -  {  name: validator.constraint_validator, alias: webkul_magento2_filter_structure_locale_validator }

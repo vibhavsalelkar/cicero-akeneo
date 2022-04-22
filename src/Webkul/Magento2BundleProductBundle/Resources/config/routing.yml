@@ -1,0 +1,18 @@
+webkul_magento2_connector_product_bundle_rest_create:
+    path: /magento2-configuration/rest/bundle-product/
+    defaults: { _controller: webkul.magento2.controller.rest.bundle.product:createAction}
+    methods: [POST]
+
+webkul_magento2_connector_product_rest_create:
+    path: /magento2-configuration/rest/product/
+    defaults: { _controller: webkul.magento2_bundle_product.controller.rest.product:createAction}
+    methods: [POST]
+
+wk_pim_enrich_product_rest_post:
+    path: wk/rest/{id}
+    defaults: { _controller: webkul.magento2.controller.rest.bundle.product:postAction }
+    requirements:
+        id: '[0-9a-f]+'
+    methods: [POST]
+
+    # webkul.magento2_grouped_product.controller.rest.grouped.product

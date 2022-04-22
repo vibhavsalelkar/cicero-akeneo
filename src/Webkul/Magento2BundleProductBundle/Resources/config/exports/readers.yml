@@ -1,0 +1,14 @@
+parameters:
+    wk_magento2_connector.reader.database.product.class: Webkul\Magento2BundleProductBundle\Connector\Reader\Export\ProductReader
+
+services:
+    wk_magento2_connector.reader.database.product:
+        class: '%wk_magento2_connector.reader.database.product.class%'
+        arguments:
+            - '@pim_catalog.query.product_query_builder_factory'
+            - '@pim_catalog.repository.channel'
+            - '@?pim_catalog.manager.completeness'
+            - '@pim_catalog.converter.metric'
+            - true
+            - '@service_container'
+            - '@pim_catalog.repository.product'

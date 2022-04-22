@@ -1,0 +1,15 @@
+parameters:
+    targetEntityParams: 'Akeneo\Pim\Enrichment\Bundle\Doctrine\ORM\Repository\ProductRepository'
+    originEntity: 'Akeneo\Pim\Enrichment\Component\Product\Model\Product'
+
+doctrine:
+    orm:
+        resolve_target_entities:
+            # Webkul\Magento2BundleProductBundle\Entity\Product: Webkul\Magento2BundleProductBundle\Entity\Product
+            Pim\Bundle\CatalogBundle\ProductRepository: '%targetEntityParams%'
+
+akeneo_storage_utils:
+    mapping_overrides:
+        -
+            original: '%originEntity%'
+            override: Webkul\Magento2BundleProductBundle\Entity\Product

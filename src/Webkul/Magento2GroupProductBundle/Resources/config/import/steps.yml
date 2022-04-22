@@ -1,0 +1,33 @@
+services:
+    webkul_magento2.step.group_product.import:
+        class: '%pim_connector.step.item_step.class%'
+        arguments: 
+          - 'grouped_product_import'
+          - '@event_dispatcher'
+          - '@akeneo_batch.job_repository'
+          - '@webkul_magento2.reader.group_product_import'
+          - '@pim_connector.processor.denormalization.product'
+          - '@pim_connector.writer.database.product'
+          - 10
+
+    webkul_magento2.step.group_product_associated_product.import:
+        class: '%pim_connector.step.item_step.class%'
+        arguments: 
+          - 'grouped_product_associated_product_import'
+          - '@event_dispatcher'
+          - '@akeneo_batch.job_repository'
+          - '@webkul_magento2.reader.group_product_associated_product_import'
+          - '@pim_connector.processor.denormalization.product'
+          - '@pim_connector.writer.database.product'
+          - 10
+
+    webkul_magento2.step.group_product_associated_product_link.import:
+        class: '%pim_connector.step.item_step.class%'
+        arguments: 
+          - 'grouped_product_associated_product_link'
+          - '@event_dispatcher'
+          - '@akeneo_batch.job_repository'
+          - '@webkul_magento2.reader.group_product_association_link_import'
+          - '@pim_connector.processor.denormalization.product_association'
+          - '@pim_connector.writer.database.product_association'
+          - 1

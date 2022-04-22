@@ -1,0 +1,10 @@
+config:
+    config:
+        pim/saver/product:
+            url: wk_pim_enrich_product_rest_post
+    paths:  
+        #bundle product form
+        magento2bundleproduct/product/form/bundled: magento2bundleproduct/js/product/form/bundled
+        magento2bundleproduct/template/product/tab/bundled: magento2bundleproduct/templates/product/tab/bundled.html
+        magento2bundleproduct/template/modal: magento2bundleproduct/templates/product/tab/modal.html
+        oro/datagrid/complete-bundle-product-cell: magento2bundleproduct/js/datagrid/cell/complete-bundle-product-cell

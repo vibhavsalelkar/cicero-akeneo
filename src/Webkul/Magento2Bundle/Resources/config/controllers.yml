@@ -1,0 +1,21 @@
+services:
+    wk_magento2_configuration_controller:
+        public: true
+        class: Webkul\Magento2Bundle\Controller\Rest\ConfigurationController
+        arguments:
+            - '@magento2.connector.service'
+            - '@pim_catalog.repository.locale'
+
+    webkul.magento2.controller.rest.media:
+        public: true
+        class: Webkul\Magento2Bundle\Controller\MediaController
+        arguments:
+            - '@validator'
+            - '@akeneo_file_storage.file_storage.path_generator'
+            - '@magento2.temp_path.provider'
+            - '@akeneo_file_storage.file_storage.file.file_storer'
+            - '@akeneo_file_storage.file_storage.filesystem_provider'
+            - '@akeneo_file_storage.repository.file_info'
+            - '@wk_magento2_media_file_path_generator'
+            - ['catalogStorage']
+            

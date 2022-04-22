@@ -1,0 +1,58 @@
+<style>
+    .wk_info_text > b {
+        display: inline-block;
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+    .wk_info_text {
+        font-size: 14px;
+    }
+    .wk_doc_tab ol li {
+        padding-bottom: 10px;
+    }
+    .wk_highlight {
+        font-style: italic;
+    }
+    .wk_info_text:not(:last-child) {
+        border-bottom: 1px solid #ccd1d8;
+        padding-bottom: 15px;
+        margin-bottom: 15px;
+    }
+    .wk_toggler {
+        cursor: pointer;
+    }
+    .wk_toggler .icon {
+        background: url("../bundles/pimui/images/jstree/icon-right.svg") 50% 50% no-repeat;
+        height: 12px;
+        width: 22px;
+        margin: 0 5px 0 0;
+        background-size: 20px;
+        display: inline-block;
+        cursor: pointer;
+    }
+    .wk_toggler.active .icon {
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        transform: rotate(90deg);
+    }
+    .wk_toggle {
+        margin-left: 50px;
+    }
+    .wk_toggler ~ .wk_toggle {
+        display: none;
+    }
+    .wk_toggler.active ~ .wk_toggle {
+        display: block;
+    }
+    #container .AknButtonList[data-drop-zone="buttons"] div:nth-of-type(1) {
+        /* display: none; */
+    }
+</style>
+<div class="AknFormContainer--withPadding wk_doc_tab">
+    <div class="AknFooter-item current-version" style="text-align: center !important; display: block !important;">
+        <span>Module Version:</span>
+        <span><%- moduleVersion %></span>
+    </div>
+</div>

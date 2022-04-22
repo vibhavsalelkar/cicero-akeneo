@@ -1,0 +1,216 @@
+extensions:
+    pim-job-instance-magento2-attribute-export-edit:
+        module: pim/form/common/edit-form
+
+    pim-job-instance-magento2-attribute-export-edit-main-image:
+        module: pim/form/common/main-image
+        parent: pim-job-instance-magento2-attribute-export-edit
+        targetZone: main-image
+        config:
+            path: bundles/magento2/images/magento2_illustration.png
+
+    pim-job-instance-magento2-attribute-export-edit-user-navigation:
+        module: pim/menu/user-navigation
+        parent: pim-job-instance-magento2-attribute-export-edit
+        targetZone: user-menu
+        config:
+            userAccount: pim_menu.user.user_account
+            logout: pim_menu.user.logout
+
+    pim-job-instance-magento2-attribute-export-edit-breadcrumbs:
+        module: pim/common/breadcrumbs
+        parent: pim-job-instance-magento2-attribute-export-edit
+        targetZone: breadcrumbs
+        config:
+            tab: pim-menu-exports
+
+    pim-job-instance-magento2-attribute-export-edit-cache-invalidator:
+        module: pim/cache-invalidator
+        parent: pim-job-instance-magento2-attribute-export-edit
+        position: 1000
+
+    pim-job-instance-magento2-attribute-export-edit-tabs:
+        module: pim/form/common/form-tabs
+        parent: pim-job-instance-magento2-attribute-export-edit
+        targetZone: content
+        position: 100
+
+    pim-job-instance-magento2-attribute-export-edit-properties:
+        module: pim/job/common/edit/properties
+        parent: pim-job-instance-magento2-attribute-export-edit-tabs
+        aclResourceId: pim_importexport_export_profile_property_edit
+        targetZone: container
+        position: 100
+        config:
+            tabTitle: pim_enrich.form.job_instance.tab.properties.title
+            tabCode: pim-job-instance-properties
+
+    pim-job-instance-magento2-attribute-export-edit-history:
+        module: magento2/job/common/tab/history
+        parent: pim-job-instance-magento2-attribute-export-edit-tabs
+        targetZone: container
+        aclResourceId: pim_importexport_export_profile_history
+        position: 150
+        config:
+            title: pim_enrich.form.job_instance.tab.history.title
+            tabCode: pim-job-instance-history
+
+    pim-job-instance-magento2-attribute-export-edit-properties-code:
+        module: pim/job/common/edit/field/text
+        parent: pim-job-instance-magento2-attribute-export-edit-properties
+        position: 100
+        targetZone: properties
+        config:
+            fieldCode: code
+            label: pim_enrich.form.job_instance.tab.properties.code.title
+            readOnly: true
+
+    pim-job-instance-magento2-attribute-export-edit-properties-label:
+        module: pim/job/common/edit/field/text
+        parent: pim-job-instance-magento2-attribute-export-edit-properties
+        position: 110
+        targetZone: properties
+        config:
+            fieldCode: label
+            label: pim_enrich.form.job_instance.tab.properties.label.title
+            readOnly: false
+
+    pim-job-instance-magento2-attribute-export-edit-label:
+        module: pim/job/common/edit/label
+        parent: pim-job-instance-magento2-attribute-export-edit
+        targetZone: title
+        position: 100
+
+    pim-job-instance-magento2-attribute-export-edit-meta:
+        module: pim/job/common/edit/meta
+        parent: pim-job-instance-magento2-attribute-export-edit
+        targetZone: meta
+        position: 100
+
+    pim-job-instance-magento2-attribute-export-edit-secondary-actions:
+        module: pim/form/common/secondary-actions
+        parent: pim-job-instance-magento2-attribute-export-edit
+        targetZone: buttons
+        position: 50
+
+    pim-job-instance-magento2-attribute-export-edit-delete:
+        module: pim/job/export/edit/delete
+        parent: pim-job-instance-magento2-attribute-export-edit-secondary-actions
+        targetZone: secondary-actions
+        aclResourceId: pim_importexport_export_profile_remove
+        position: 100
+        config:
+            trans:
+                title: confirmation.remove.export_profile
+                subTitle: pim_menu.item.export_profile
+                content: pim_enrich.confirmation.delete_item
+                success: flash.job_instance.removed
+                failed: error.removing.job_instance
+            redirect: pim_importexport_export_profile_index
+
+    pim-job-instance-magento2-attribute-export-edit-save-buttons:
+        module: pim/form/common/save-buttons
+        parent: pim-job-instance-magento2-attribute-export-edit
+        targetZone: buttons
+        position: 120
+
+    pim-job-instance-magento2-attribute-export-edit-save:
+        module: pim/job-instance-export-edit-form/save
+        parent: pim-job-instance-magento2-attribute-export-edit
+        targetZone: buttons
+        position: 0
+        config:
+            redirectPath: pim_importexport_export_profile_show
+
+    pim-job-instance-magento2-attribute-export-edit-state:
+        module: pim/form/common/state
+        parent: pim-job-instance-magento2-attribute-export-edit
+        targetZone: state
+        position: 900
+        config:
+            entity: pim_enrich.entity.job_instance.title
+
+    pim-job-instance-magento2-attribute-export-edit-content-data-help:
+        module: pim/job/common/edit/content/data/help
+        parent: pim-job-instance-magento2-attribute-export-edit-content-data
+
+    pim-job-instance-magento2-attribute-export-edit-validation:
+        module: pim/job/common/edit/validation
+        parent: pim-job-instance-magento2-attribute-export-edit
+
+    # structure/ filter the data
+    pim-job-instance-magento2-attribute-export-edit-content:
+        module: pim/job/product/edit/content
+        parent: pim-job-instance-magento2-attribute-export-edit-tabs
+        aclResourceId: pim_importexport_export_profile_content_edit
+        targetZone: container
+        position: 130
+        config:
+            tabTitle: pim_enrich.form.job_instance.tab.content.title
+            tabCode: pim-job-instance-content
+
+    pim-job-instance-magento2-attribute-export-edit-content-structure:
+        module: pim/job/product/edit/content/structure
+        parent: pim-job-instance-magento2-attribute-export-edit-content
+        targetZone: structure-filters
+        position: 100
+
+    pim-job-instance-magento2-attribute-export-edit-content-structure-scope:
+        module: magento2/job/product/edit/content/structure/scopes
+        parent: pim-job-instance-magento2-attribute-export-edit-content-structure
+        targetZone: filters
+        position: 90
+
+    pim-job-instance-magento2-attribute-export-edit-content-structure-locales:
+        module: magento2/job/product/edit/content/structure/locales
+        parent: pim-job-instance-magento2-attribute-export-edit-content-structure
+        targetZone: filters
+        position: 100
+
+    pim-job-instance-magento2-attribute-export-edit-content-structure-attributes:
+        module: magento2/job/product/edit/content/structure/attributes
+        parent: pim-job-instance-magento2-attribute-export-edit-content-structure
+        targetZone: filters
+        position: 110
+
+    pim-job-instance-magento2-attribute-export-edit-properties-add-new-only:
+        module: magento2/form/configuration/fields/switch
+        parent: pim-job-instance-magento2-attribute-export-edit-properties
+        position: 120
+        targetZone: properties
+        config:
+            fieldCode: configuration.addNewOnly
+            readOnly: false
+            label: magento2.addNewOnly.title
+            tooltip: magento2.addNewOnly.tooltip
+
+    pim-job-instance-magento2-attribute-export-edit-properties-isFilterableInSearch:
+        module: magento2/form/configuration/fields/switch
+        parent: pim-job-instance-magento2-attribute-export-edit-properties
+        position: 130
+        targetZone: properties
+        config:
+            fieldCode: configuration.isFilterableInSearch
+            readOnly: false
+            label: magento2.isFilterableInSearch.title
+            tooltip: magento2.isFilterableInSearch.tooltip
+
+    #credential
+    pim-job-instance-magento2-attribute-export-edit-credentials:
+        module: magento2/job/individual/credentials
+        parent: pim-job-instance-magento2-attribute-export-edit-tabs
+        targetZone: container
+        position: 140
+        config:
+            tabTitle: magento2.credentials.tab
+            tabCode: pim-job-instance-credentials
+
+    pim-job-instance-magento2-attribute-export-edit-credentials-exportProfile:
+        module: magento2/job/export/exportProfile
+        parent: pim-job-instance-magento2-attribute-export-edit-credentials
+        targetZone: credentials
+        position: 150
+        config:
+            fieldCode: configuration.exportProfile
+            label: magento2.form.properties.exportProfile.title
+            readOnly: false

@@ -1,0 +1,12 @@
+services:
+    webkul.step.magento2_grouped_product_link_export:
+        class: '%webkul_magento2.export.step%'       
+        arguments:
+            - 'grouped_product_link_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@doctrine.orm.entity_manager'
+            - '@pim_connector.reader.database.product' 
+            - '@webkul_magento2.processor.magento_normalization.product.association'
+            - '@webkul_magento2.writer.grouped_product_link.api'
+            - 10

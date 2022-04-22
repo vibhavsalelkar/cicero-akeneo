@@ -1,0 +1,150 @@
+magento2.connector.title: 'Magento 2 Akeneo Connector'
+magento2.overview: Overview 
+magento2.documentation: Documentation 
+magento2.credentials.tab: Setup Credentials
+magento2.store_mapping: Store view Mapping
+magento2.attribute_mapping: Setup Attribute Mapping
+magento2.jobs: Jobs
+
+magento2.form.properties.host_name.title: Host name (Url of Magento store)
+magento2.form.properties.consumer_key.title: Consumer key
+magento2.form.properties.consumer_secret.title: Consumer Secret
+magento2.form.properties.auth_token.title: Access Token
+magento2.form.properties.auth_secret.title: Access Token Secret
+magento2_connector.attribute.name: Name
+magento2_connector.attribute.description: Description 
+magento2_connector.attribute.price: Price
+magento2_connector.attribute.weight: Weight
+magento2_connector.attribute.short_description: Short description
+magento2_connector.attribute.quantity: quantity
+magento2_connector.attribute.in_stock: in_stock
+magento2_connector.attribute.visibility: visibility
+magento2_connector.attribute.new_from: Product new from
+magento2_connector.attribute.new_till: Product new till
+magento2_connector.attribute.purchase_limit: Purchase Limit
+magento2_connector.attribute.special_price: Special Price
+magento2_connector.attribute.special_price_from: Special Price from
+magento2_connector.attribute.special_price_till: Special Price till
+magento2_connector.attribute.url_key: url_key (for SEO)
+batch_jobs.magento2_product_export.notify.label: Successful Export
+Magento2 Connector: Magento 2 Connector
+page_title.webkul_magento2_connector_configuration: Magento 2 Akeneo Connector
+Log in to Admin and click <strong>System &gt; Integrations</strong> to display the Integrations page.: Log in to Admin and click <strong>System &gt; Integrations</strong> to display the Integrations page.
+Click <strong>Add New Integration</strong> to display the New Integration page.: Click <strong>Add New Integration</strong> to display the New Integration page.
+Enter a unique name for the integration in the <strong>Name</strong> field. Then enter your admin password in the <strong>Your Password</strong> field. Leave all other fields blank.: Enter a unique name for the integration in the <strong>Name</strong> field. Then enter your admin password in the <strong>Your Password</strong> field. Leave all other fields blank.
+Click the API tab. Select the Magento resources the integration can access. You can select all resources, or select a custom list.: Click the API tab. Select the Magento resources the integration can access. You can select all resources, or select a custom list.
+Click <strong>Save</strong> to save your changes and return to the Integrations page.: Click <strong>Save</strong> to save your changes and return to the Integrations page.
+Click the <strong>Activate</strong> link in the grid that corresponds to the newly-created integration.: Click the <strong>Activate</strong> link in the grid that corresponds to the newly-created integration.
+Click <strong>Allow</strong>.: Click <strong>Allow</strong>.
+'A dialog similar to the following displays:': 'A dialog similar to the following displays:'
+Copy Credentials and Paste in Setup credentials tab.: Copy Credentials and Paste in Setup credentials tab.
+Goto <span class="wk_highlight">Setup Credentials</span> tab and enter your store credentials and Save credentials.: Goto <span class="wk_highlight">Setup Credentials</span> tab and enter your store credentials and Save credentials.
+After saving Credentials goto <span class="wk_highlight">Store view mapping</span> tab and Save mapping.: After saving Credentials goto <span class="wk_highlight">Store view mapping</span> tab and Save mapping.
+Then, goto <span class="wk_highlight">Setup Attribute Mapping</span> and Save attribute mapping.: Then, goto <span class="wk_highlight">Setup Attribute Mapping</span> and Save attribute mapping.
+'How to generate Api credentials:': 'How to generate Api credentials:' 
+REST client: REST client
+Store view code: Store view code
+Select store view: Select store view
+Locale: Locale
+Corresponding Attribute in Akeneo: Corresponding Attribute in Akeneo
+Enter your Store Api Credentials below. You can <a target="_blank" href="http://devdocs.magento.com/guides/v2.0/get-started/authentication/gs-authentication-token.html#integration-tokens">follow these instructions</a> to generate Api credentials.: Enter your Store Api Credentials below. You can <a target="_blank" href="http://devdocs.magento.com/guides/v2.0/get-started/authentication/gs-authentication-token.html#integration-tokens">follow these instructions</a> to generate Api credentials.
+magento2.export_products_only: Export products only (not categories, attributes first)
+magento2.export_products_only.tooltip: Only select when you want to export products only, not other data like Categories, Attributes, Families
+magento2.magento.field.group: Field in Magento 2 Store 
+magento2.akeneo.field.group: Corresponding field in Akeneo
+magento2.view.jobs: View Jobs
+magento2.default.category.in_akeneo: Corresponding default category in Akeneo
+magento2.select.store_view: Store view in Magento Store
+magento2.locale: Locale
+Save credentials first !!: Save credentials first !!
+magento2.website_ids: Website Id's
+magento2.channel: Akeneo Channel
+magento2_connector.attribute.meta_title: Meta title (SEO)
+magento2_connector.attribute.meta_keyword: Meta keywords (SEO)
+magento2_connector.attribute.meta_description: Meta description (SEO)
+
+batch_jobs.magento2_product_export.category_export.label: Export Categories
+batch_jobs.magento2_product_export.product_export.label: Exporting Products & Product Variants
+batch_jobs.magento2_product_export.attribute_export.label: Exporting Attributes
+batch_jobs.magento2_product_export.attribute_group.label: Exporting Attribute Groups
+batch_jobs.magento2_product_export.attribute_option.label: Exporting Attribute Options
+batch_jobs.magento2_product_export.families_export.label: Exporting Families/Attribute sets
+batch_jobs.magento2_product_export.label: Magento 2 Export Job (All)
+batch_jobs.magento2_product_only_export.label: Product only export to Magento 2
+batch_jobs.default_steps.delete_category: Delete Category
+batch_jobs.magento2_category_export.label: Category export to Magento 2
+batch_jobs.magento2_family_export.label: Family export to Magento 2
+batch_jobs.magento2_attribute_export.label: Attribute export to Magento 2
+batch_jobs.magento2_attribute_option_export.label: Attribute Option export
+
+batch_jobs.magento2_category_export.category_export.label: Category Export
+pim.grid.mass_action.quick_export.magento2: Magento 2 Export
+batch_jobs.magento2_quick_export.category_export.label: Category Export
+batch_jobs.magento2_quick_export.attribute_export.label: Attribute Export
+batch_jobs.magento2_quick_export.attribute_option.label: Attribute Option Export
+batch_jobs.magento2_quick_export.families_export.label: Families/Attribute set export
+batch_jobs.magento2_quick_export.product_export.label: Product and Product Variant Export
+
+
+batch_jobs.magento2_attribute_export.attribute_export.label: Attribute Export
+batch_jobs.magento2_attribute_export.attribute_option.label: Attribute Option Export
+batch_jobs.magento2_family_export.families_export.label: Family Export
+batch_jobs.magento2_product_only_export.product_export.label: Product only Export
+batch_jobs.default_steps.simple_product_export: Simple Product Export
+batch_jobs.default_steps.product_model_variants_export: Configurable and Variant Products export
+batch_jobs.magento2_attribute_export.metricoption_export.label:  Metric attribute option export
+
+batch_jobs.magento_2_all_import.label: Magento 2 Import
+batch_jobs.magento2_family_import.label: Magento 2 Families Import
+batch_jobs.magento2_product_import.label: Magento 2 Product only Import
+batch_jobs.magento2_product_model_import.label: Magento 2 Product Model Import
+batch_jobs.magento2_category_import.label: Magento 2 Category Import
+batch_jobs.magento2_attribute_import.label: Magento 2 Attribute Import
+batch_jobs.magento2_attribute_group_import.label: Magento 2 Attribute Group Import
+
+job_execution.summary:
+    already_exist: skipped (Already Exist)
+    read_loacle: read (Category Locales)
+    attribute_option_skipped_no_diff: skipped attribute option (no differences)
+    read_data.for.store_views.label: Read products data (storeview wise)
+    read_products: Read products
+    linked attribute: Linked attribute
+    added_to_queue: Added to queue
+    read_product_models: Read product models
+    already_exported: Skipped already exported	
+    info: info
+    skipped: Skipped
+    host: Host
+    settings: Please enable export metric type attributes as select type. 
+    
+batch_jobs.product_model_csv_export_magento2.product_model_export.label: Magento2 Configurable Products export (CSV)
+batch_jobs.product_csv_export_magento2.product_export.label: Magento2 simple product export (CSV)
+batch_jobs.product_csv_export_magento2.label: Magento2 simple product export (CSV) 
+batch_jobs.product_model_csv_export_magento2.label: Magento2 Configurable Products export (CSV)
+batch_jobs.custom_associations.label: Custom Assossiations create
+batch_jobs.magento2_association_export.label: Magento2 Assosiations export
+batch_jobs.custom_associations.custom_associations.label: creating automatic assosiations
+batch_jobs.magento_2_update_fields.label: Import url_key , special_price
+batch_jobs.rabbitmq_product_export.rabbitmq_product_export.label: Magento2 products Export(RabbitMQ)
+batch_jobs.rabbitmq_product_export.rabbimq_product_model_export.label: Magento2 Product models export(RabbitMQ)
+batch_jobs.product_csv_export_magento2.product_attachments_export.label: Add Product Attachments
+batch_jobs.product_csv_export_magento2.product_model_attachments_export.label: Add Product Model Attachments
+batch_jobs.rabbitmq_product_export.label: Magento2 Products export (RabbitMQ)
+batch_jobs.product_csv_export_magento2.upload_csv.label: Upload Csv on magento2
+batch_jobs.product_csv_export_magento2.credential_check.label: Credential check
+
+magento2_connector.attribute.website_ids: Websites (by default present in all)
+job_execution.summary.attachment_not_found: No Attachments found for product
+job_execution.summary.deleted: Association Deleted
+job_execution.summary.delete_category: Deleted Category	
+magento2.acl_group.channel: Magento2 Connector
+magento2.form.properties.exportProfile.title: Select Magento2 Export profile
+batch_jobs.magento2_attribute_export.metric_attribute_option.label: Metric Attribute Option export
+flash:
+    credentialconfig:
+        remove: Credential Successfully Removed
+webkul_magento2_credentials:
+    message:
+        created: Credential Successfully Created
+pim_enrich.entity.attributes.uppercase_label: Attributes
+webkul.export.product.filter.attributes.help: Add Attributes Which selected in Magento2 mappig will be show here and attributes selected here will export.

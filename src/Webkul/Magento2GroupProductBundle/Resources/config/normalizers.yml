@@ -1,0 +1,10 @@
+parameters:
+  pim_enrich.provider.form.product.class: Webkul\Magento2GroupProductBundle\Provider\Form\ProductFormProvider
+
+services:
+  pim_enrich.provider.form.product:
+      class: '%pim_enrich.provider.form.product.class%'
+      arguments: 
+          - '@magento2.connector.service'
+      tags:
+          - { name: pim_enrich.provider.form, priority: 100 }

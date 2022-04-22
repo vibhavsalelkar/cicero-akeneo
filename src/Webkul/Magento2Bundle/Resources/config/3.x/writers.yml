@@ -1,0 +1,26 @@
+parameters:
+    magento2.array_converter.standard_to_flat.product_localized.class: Webkul\Magento2Bundle\Connector\ArrayConverter\ProductConverter
+    magento2.writer.file.csv_product.class:  Webkul\Magento2Bundle\Connector\Writer\Csv\ProductWriter
+
+services:
+    magento2.writer.file.csv_product:
+        class: '%magento2.writer.file.csv_product.class%'
+        arguments:
+            - '@magento2.array_converter.standard_to_flat.product_localized'
+            - '@pim_connector.factory.flat_item_buffer'
+            - '@pim_connector.writer.file.product.flat_item_buffer_flusher'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_connector.writer.file.media_exporter_path_generator'
+            - '@akeneo.pim.enrichment.connector.write.file.flat.generate_headers_from_family_codes'
+            - '@akeneo.pim.enrichment.connector.write.file.flat.generate_headers_from_attribute_codes'
+            - '@wk_magento2_media_file_path_generator'
+            - ['pim_catalog_file', 'pim_catalog_image']
+            
+    magento2.array_converter.standard_to_flat.product_localized:
+        class: '%magento2.array_converter.standard_to_flat.product_localized.class%'
+        arguments:
+            - '@pim_connector.array_converter.standard_to_flat.product'
+            - '@pim_catalog.localization.localizer.converter'
+            - '@magento2.connector.service'
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.repository.category'

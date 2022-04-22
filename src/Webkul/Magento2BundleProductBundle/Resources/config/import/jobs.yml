@@ -1,0 +1,15 @@
+parameters:
+    webkul_magento2_bundle_product_import.job: magento2_import_bundle_product
+services:
+    webkul_magento2_bundle_product_import:
+        class:  '%pim_connector.job.simple_job.class%'
+        arguments:
+            - '%webkul_magento2_bundle_product_import.job%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                - '@webkul.step.magento2_credential_check.export'
+                - '@webkul_magento2.step.bundle_product.import'
+                  #                - '@webkul_magento2.step.bundle_product_associated_product.import'
+        tags:
+            - { name: akeneo_batch.job, connector: '%webkul_magento2.import_connector.name%', type: '%pim_connector.job.import_type%'}

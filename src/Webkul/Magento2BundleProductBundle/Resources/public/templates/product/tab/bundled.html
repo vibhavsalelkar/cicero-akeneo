@@ -1,0 +1,236 @@
+<style>
+
+    .Option-label{
+        font-size: 14px;
+        display: inline-block
+    }
+    .Akn-container.AknGrid-optiontable{
+        border: solid 1px #67768A;
+        padding: 10px;
+        box-sizing: content-box;   
+    }
+    .input[type="checkbox"] {
+        vertical-align: middle !important;   
+    }
+    .Akn-container.AknGrid-option-productsTable {
+        padding: 10px;
+        box-sizing: content-box;   
+        background: #eaeaea;
+    }
+    .AknGrid-headerCell {
+        border-bottom: solid 1px #67768A !important;
+    }
+    .Akn-container {
+        margin-bottom: 40px !important;
+    }
+    .Option-productsTable {
+        width:100%;
+    }
+    .wk_toggle:not(.active) {
+        display: none;
+    }
+    .wk_toggle.active {
+        display: contents;
+    }
+    .wk_toggler .icon {
+        background: url("../bundles/pimui/images/icon-down.svg") no-repeat 100% center;
+        height: 12px;
+        width: 22px;
+        margin: 0 5px 0 0;
+        background-size: 20px;   
+        display: inline-block;
+        cursor: pointer;
+    }
+    .wk_toggler:not(.active) .icon {
+        -webkit-transform: rotate(270deg);
+        -moz-transform: rotate(270deg);
+        -o-transform: rotate(270deg);
+        -ms-transform: rotate(270deg);
+        transform: rotate(270deg);        
+    }
+    .Akn-container.bundle .has-switch {
+        display: block !important;
+    }
+    .bundle_config{
+        width: 50%;
+        margin-bottom: 10px;
+        height: 40px;
+        vertical-align: middle;
+        float: left;
+    }
+    .bundle_config .switch.switch-small.has-switch {
+        height: 40px;
+        vertical-align: middle;
+    }
+</style>
+<div id="1" class="AknTextCollection">
+    <div class="Akn-container">
+        <h1 class="AknTitleContainer-title">Bundle Products</h1>
+    </div>
+    
+    <div class="Akn-container" style="display:inline-block !important">
+        <!-- bundle_price_view -->
+        <div class="bundle_config">
+            <label class="AknGrid-bodyCell AknGrid-bodyCell--noWrap AknGrid-bodyCell--highlight">Price View</label>
+            <select name="bundle_price_view" style="width:auto !important">
+                <% var selectVal = bundleOptions && typeof bundleOptions.bundle_price_view !== 'undefined' ? bundleOptions.bundle_price_view : null  %>
+                <option data-title="Price range" value="Price range" <% if(selectVal === "Price range"){ %> selected <% }%> >Price range</option>
+                <option data-title="As low as" value="As low as" <% if(selectVal === "As low as"){ %> selected <% }%> >As Low as</option>
+            </select>
+        </div>
+        <!-- bundle_sku_type -->
+        <div class="bundle_config">
+            <label class="AknGrid-bodyCell AknGrid-bodyCell--noWrap AknGrid-bodyCell--highlight">Dynamic SKU</label>
+            <% var selectValue = bundleOptions && typeof bundleOptions.bundle_sku_type !== 'undefined' ? bundleOptions.bundle_sku_type : null  %>
+            <div class="switch switch-small" data-on-label="<%- _.__('switch_on') %>" data-off-label="<%- _.__('switch_off') %>">
+                <input type="checkbox" name="bundle_sku_type" title="<%- _.__('bundle_sku_type') %>" id="<%-  'bundle_sku_type' %>" <%- selectValue ? 'checked' : '' %>/>
+            </div>
+        </div>
+        <!-- bundle_weight_type -->
+        <div class="bundle_config">
+            <label class="AknGrid-bodyCell AknGrid-bodyCell--noWrap AknGrid-bodyCell--highlight">Dynamic Weight</label>
+            <% var selectValue = bundleOptions && typeof bundleOptions.bundle_weight_type !== 'undefined' ? bundleOptions.bundle_weight_type : null  %>
+            <div class="switch switch-small" data-on-label="<%- _.__('switch_on') %>" data-off-label="<%- _.__('switch_off') %>">
+                <input type="checkbox" name="bundle_weight_type" title="<%- _.__('bundle_weight_type') %>" id="<%-  'bundle_weight_type' %>" <%- selectValue ? 'checked' : '' %>/>
+            </div>
+        </div>
+         <!-- bundle_price_type -->
+        <div class="bundle_config">
+            <label class="AknGrid-bodyCell AknGrid-bodyCell--noWrap AknGrid-bodyCell--highlight">Dynamic Price</label>
+            <% var selectValue = bundleOptions && typeof bundleOptions.bundle_price_type !== 'undefined' ? bundleOptions.bundle_price_type : null  %>
+            <div class="switch switch-small" data-on-label="<%- _.__('switch_on') %>" data-off-label="<%- _.__('switch_off') %>">
+                <input type="checkbox" name="bundle_price_type" title="<%- _.__('bundle_price_type') %>" id="<%-  'bundle_price_type' %>" <%- selectValue ? 'checked' : '' %>/>
+            </div>
+        </div>
+    </div>
+    <div class="Akn-container ">
+        <label class="AknGrid-bodyCell AknGrid-bodyCell--noWrap AknGrid-bodyCell--highlight">Ship Bundle Items</label>
+        <select name="shipment_type">
+            <% var selectVal = bundleOptions && typeof bundleOptions.shipment_type !== 'undefined' ? bundleOptions.shipment_type : 0  %>
+            <option data-title="Together" value="together" <% if(selectVal === "together"){ %> selected <% }%> >Together</option>
+            <option data-title="Separately" value="separately" <% if(selectVal === "separately"){ %> selected <% }%> >Separately</option>
+        </select>
+    </div>
+<div>
+     
+    <% if(bundleOptions && Object.keys(bundleOptions).length) { %> 
+
+            <% _.each(bundleOptions, function(bundleOption, tableName){ if(bundleFields.indexOf(tableName) === -1) { %>                
+                <div class="Akn-container AknGrid-optiontable">
+                    <table class="AknGrid grid AknGrid AknGrid--unclickable" name="<%- tableName %>">
+                        <thead>
+                            <tr>
+                                <th class="AknGrid-headerCell handle">
+                                    <span class="wk_toggler active">
+                                        <span class="icon"></span>
+                                    </span>
+                                    <!-- <i class="icon-reorder"></i> -->
+                                    <span style="font-weight: bold;font-size: 14px;text-transform: uppercase;color: #67768A;">
+                                            <%- bundleOption && typeof bundleOption['title'] !== 'undefined' ? bundleOption['title'] : 'New Option' %>
+                                    </span>
+                                </th>
+                                <th class="AknGrid-headerCell"> </th>
+                                <th class="AknGrid-headerCell"> </th>
+                                <th class="AknGrid-headerCell">
+                                    <div class="AknButtonList AknButtonList--right">
+                                        <button class="AknIconButton AknIconButton--small AknIconButton--trash AknButtonList-item removeTable" name="<%- tableName %>" type="button">
+                                            
+                                        </button>
+                                    </div>
+                                </th>       
+                            </tr>
+                        </thead>
+                        <tbody class="wk_toggle active" >
+                            <tr class="AknGrid-bodyRow">
+                                <td class="AknGrid-bodyCell">
+                                    <% var title = bundleOption && typeof bundleOption['title'] !== 'undefined' ? bundleOption['title'] : '' %>
+                                    <label class="Option-label"> <%- 'Option Title *' %></label>
+                                    <input type="text" class="AknTextField AknTextCollection-item" name="<%- 'title' %>" placeholder = "title" value="<%- title %>"/>
+                                </td>
+                                <td class="AknGrid-bodyCell">
+                                    <% var type = bundleOption && typeof bundleOption['type'] !== 'undefined' ? bundleOption['type'] : '' %>
+                                    <label class="Option-label"> <%- 'Input Type' %> </label>
+
+                                    <select class="AknTextField AknTextCollection-item" name="type">
+                                        <option value=""> Select Input Type </option>
+                                        <option data-title="Drop-down" value="select" <% if(type === "select"){ %> selected <% }%> >Drop-down</option>
+                                        <option data-title="Radio Buttons" value="radio" <% if(type === "radio"){ %> selected <% }%> >Radio Buttons</option>
+                                        <option data-title="Checkbox" value="checkbox" <% if(type === "checkbox"){ %> selected <% }%> >Checkbox</option>
+                                        <option data-title="Multiple Select" value="multi" <% if(type === "multi"){ %> selected <% }%> >Multiple Select</option>
+                                    </select>
+                                </td>
+                                <td class="AknGrid-bodyCell">
+                                    <% var required = bundleOption && typeof bundleOption['required'] !== 'undefined' ? bundleOption['required'] : '' %>
+                                    <input tabindex="-1" type="checkbox" name="required"  <% if(required === true){ %> checked <% }%> > 
+                                    <label class="Option-label" style="margin: 22px 5px 0px 0;" > <%- 'Required' %> </label>
+                                </td>
+                                <td class="AknGrid-bodyCell">
+
+                                </td>
+                            </tr> 
+                            <tr>
+                                <td colspan="4">
+                                    <% if(bundleOption && typeof bundleOption['products'] != 'undefined' && bundleOption['products'].length ) { %>
+                                        <div class="Akn-container AknGrid-option-productsTable">
+                                            <table class="Option-productsTable" name="<%- tableName %>" >
+                                                <tr> 
+                                                    <th  class="AknGrid-headerCell"> </th>
+                                                    <th  class="AknGrid-headerCell"> Is Default </th>
+                                                    <!-- <th  class="AknGrid-headerCell"> Name </th> -->
+                                                    <th  class="AknGrid-headerCell"> SKU </th>
+                                                    <th  class="AknGrid-headerCell"> Default Quantity *</th>
+                                                    <% if(type && ['multi', 'checkbox'].indexOf(type) === -1) { %>
+                                                    <th  class="AknGrid-headerCell"> User Defined </th>
+                                                    <% } %>
+                                                    <th  class="AknGrid-headerCell" > </th>
+                                                </tr>
+                                                <% bundleOption['products'].forEach(function(product, key, arr) {  if(typeof product === 'object')  { %>
+
+                                                    <tr name="<%- product.sku %>" class="movable-row">
+                                                        <td class="AknGrid-bodyCell product-handle">
+                                                                <!-- <i class="icon-reorder"></i> -->
+                                                        </td>
+                                                        <td class="AknGrid-bodyCell"> <input tabindex="-1" type="<%- ['multi', 'checkbox'].indexOf(type) === -1 ? 'radio' : 'checkbox'%>" name="<%- tableName %>-is_default" <% if(typeof product.is_default != 'undefined' && product.is_default){ %> checked <%} %> > </td>
+                                                        <!-- <td class="AknGrid-bodyCell"> <span class="Option-label"> Product Name</span> </td> -->
+                                                        <td class="AknGrid-bodyCell"> <span class="Option-label" name="sku"> <%- product.sku %> </span> </td>
+                                                        <td class="AknGrid-bodyCell"> <input class="AknTextField" name="qty" type="number" value="<% if(product.qty != undefined ) { %><%- product.qty %><% } else { %><%- 1 %><% } %>"> </td>
+                                                        <% if(type && ['multi', 'checkbox'].indexOf(type) === -1) { %>
+                                                            <td class="AknGrid-bodyCell"> <input tabindex="-1" name="can_change_quantity" type="checkbox" <% if(typeof product.can_change_quantity != 'undefined' && product.can_change_quantity){ %> checked <%} %>"> </td>
+                                                        <% } %>
+                                                        <td class="AknGrid-bodyCell">
+                                                            <div class="AknButtonList AknButtonList--right">
+                                                                <button class="AknIconButton AknIconButton--small AknIconButton--trash removeProducts AknButtonList-item" name="<%- tableName + '_product_' + product.sku %>" type="button">
+                                                                   
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                <% } });%>
+                                            </table>
+                                        </div>
+                                    <% }%>
+                                </td>
+                            </tr>
+                        </tbody> 
+                        <tfoot class="wk_toggle active">
+                            <tr>
+                                <td class="AknTextCollection-actions" colspan="<%- 6 %>">
+                                    <div class="AknButtonList AknButtonList">
+                                        <div class="AknButton AknButton--grey add-products">
+                                            <%- _.__('Add Products to Option')%>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            <% }})%>
+        <% } %>
+    </div>
+
+    <div class="AknButtonList AknButtonList--right">
+        <button class="AknButton AknButton--action add-option">Add Option</button>
+
+    </div>
+</div>

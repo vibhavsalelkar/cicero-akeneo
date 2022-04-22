@@ -1,0 +1,86 @@
+parameters:
+    magento2.array_converter.standard_to_flat.product_localized.class: Webkul\Magento2Bundle\Connector\ArrayConverter\ProductConverter
+    magento2.writer.file.csv_product.class:  Webkul\Magento2Bundle\Connector\Writer\Csv\ProductWriter
+    
+
+services:
+    webkul_magento2.writer.product.api:
+        class: 'Webkul\Magento2Bundle\Connector\Writer\ProductWriter'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.connector.service'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_catalog.repository.family_variant'
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.repository.category'
+            - '@akeneo_batch.job_repository'
+            - '@?webkul_marketplace_connector.vendor.export'
+            - '@?webkul_magento_bundle_discount.product_bundle.product.api'
+
+    webkul_magento2.writer.category.api:
+        class: 'Webkul\Magento2Bundle\Connector\Writer\CategoryWriter'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.connector.service'
+            - '@pim_catalog.repository.channel'
+            - '@akeneo.image.description.connector'
+            
+    webkul_magento2.writer.attribute.api:
+        class: 'Webkul\Magento2Bundle\Connector\Writer\AttributeWriter'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.connector.service'
+
+    webkul_magento2.writer.attribute_option.api:
+        class: 'Webkul\Magento2Bundle\Connector\Writer\AttributeOptionWriter'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.connector.service'
+
+    webkul_magento2.writer.family.api:
+        class: 'Webkul\Magento2Bundle\Connector\Writer\AttributeSetWriter'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.connector.service'
+
+    webkul_magento2.writer.group.api:
+        class: 'Webkul\Magento2Bundle\Connector\Writer\AttributeGroupWriter'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.connector.service'
+            
+    magento2.writer.file.csv_product:
+        class: '%magento2.writer.file.csv_product.class%'
+        arguments:
+            - '@magento2.array_converter.standard_to_flat.product_localized'
+            - '@pim_connector.factory.flat_item_buffer'
+            - '@pim_connector.writer.file.product.flat_item_buffer_flusher'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_connector.writer.file.media_exporter_path_generator'
+            - '@?akeneo.pim.enrichment.connector.write.file.flat.generate_headers_from_family_codes'
+            - '@?akeneo.pim.enrichment.connector.write.file.flat.generate_headers_from_attribute_codes'
+            - '@magento2.connector.service'
+            - ['pim_catalog_file', 'pim_catalog_image', 'pim_catalog_asset_group']
+
+    magento2.array_converter.standard_to_flat.product_localized:
+        class: '%magento2.array_converter.standard_to_flat.product_localized.class%'
+        arguments:
+            - '@pim_connector.array_converter.standard_to_flat.product'
+            - '@pim_catalog.localization.localizer.converter'
+            - '@magento2.connector.service'
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.repository.category'    
+
+    webkul_magento2.writer.product.association.api:
+        class: 'Webkul\Magento2Bundle\Connector\Writer\AssociationWriter'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.connector.service'
+            
+    webkul_magento2.writer.product_model.association.api:
+        class: 'Webkul\Magento2Bundle\Connector\Writer\ProductModelAssociationWriter'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.connector.service'
+
+    

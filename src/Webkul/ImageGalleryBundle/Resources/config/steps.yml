@@ -1,0 +1,24 @@
+parameters:
+
+services: 
+    webkulgallery.step.csv_gallery.export:
+        class: '%pim_connector.step.item_step.class%'
+        arguments:
+            - 'export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@webkulgallery.reader.database.gallery'
+            - '@webkulgallery.processor.normalization.gallery'
+            - '@webkulgallery.writer.api.csv_gallery'
+            - 10
+
+    webkulgallery.step.csv_gallery.import:
+        class: '%pim_connector.step.item_step.class%'
+        arguments:
+            - 'import'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@webkulgallery.reader.file.csv_gallery'
+            - '@webkulgallery.processor.denormalization.gallery'
+            - '@webkulgallery.writer.database.gallery'
+            - 1

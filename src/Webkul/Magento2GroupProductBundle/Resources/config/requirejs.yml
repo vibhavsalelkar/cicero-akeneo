@@ -1,0 +1,10 @@
+config:
+    paths:
+        #grouped product form 
+        magento2GroupProduct/product/form/grouped: magento2groupproduct/js/product/form/grouped
+        pim/product-edit-form/associations: magento2groupproduct/js/product/form/associations
+        magento2GroupProduct/template/modal: magento2groupproduct/templates/modal.html
+        wk/template/product/tab/associations: magento2groupproduct/templates/associations.html
+        # group product view
+        oro/datagrid/complete-group-product-cell: magento2groupproduct/js/datagrid/cell/complete-group-product-cell
+        

@@ -1,0 +1,289 @@
+<style>
+    .wk_margin_top_10 {
+        margin-top: 10px;
+    }
+    .wk_store_mapping td {
+        width: calc(30%);
+    }
+    .wk_store_mapping .wk_header_cell {
+        border: none;
+        display: table-cell;
+        color: #67768A;
+        font-size: 14px;
+        text-transform: uppercase;
+        padding: 10px 0px;        
+    }
+    .wk_store_mapping table {
+        table-layout: fixed;
+        text-align: left;
+    }    
+    .wk_store_mapping table thead {
+        border-bottom: 2px solid #67768A;        
+    }
+    .default{
+        text-align: center;
+        width: 15%;
+    }
+    .MagentoStoreMapping-hint {
+        background: #F5F9FC;
+        display: flex;
+        padding: 5px;
+        font-size: 13px;
+        color: #67768A;
+        min-height: 80px;
+        align-items: center;
+    }
+    .MagentoStoreMapping-icon {
+        min-height: 60px;
+        height: auto;
+        background-repeat: no-repeat;
+        position: relative;
+    }
+    .MagentoStoreMapping-icon--info {
+        background-size: 24px auto;
+        border-right: 1px #D9DDE2 solid;
+        background-position: 50%;
+        min-width: 65px;
+        margin-right: 16px;
+        background-image: url(../bundles/magento2/images/icon-info.svg);
+    }
+    .MagentoStoreMapping-hintTitle {
+        flex-grow: 1;
+    }
+    .MagentoStoreMapping-remove {
+        margin: 15px;
+        background-size: 20px;
+    }
+    .AknIconButton--remove {
+        background: url(../bundles/pimui/images/icon-remove.svg) no-repeat center;
+        background-size: 20px;
+        opacity: 0.8;
+        transition: opacity 0.1s ease-in;
+        font-size: 0;
+    }
+    .MagentoStoreMapping-hint--hidden {
+        display: none;
+    }
+</style>
+
+<div class="wk_margin_top_10 wk_store_mapping">
+    <div class="AknFormContainer AknFormContainer--withPadding AknFormContainer-Credential">
+        <!-- Input Field -->
+        <% _.each(controls, function (control) { %>
+            <div class="AknFieldContainer">
+                <div class="AknFieldContainer-header">
+                    <label class="AknFieldContainer-label">
+                        <%- _.__(control.label) %> <em><%- _.__('pim_enrich.form.required') %></em>
+                    </label>
+                </div>
+                <div class="AknFieldContainer-inputContainer field-input">
+                        <% if(control.type === 'password')  { %>
+                            <input type="<%- control.type %>" name="<%- control.name %>" id="pim_enrich_entity_form_<%- control.name %>" class="AknTextField label-field" value="****************************"  <%if(control.name ==='hostName') {%> readonly <%}%> required>
+                        <% } else { %>
+                            <input type="<%- control.type %>" name="<%- control.name %>" id="pim_enrich_entity_form_<%- control.name %>" class="AknTextField label-field" value="<%- model[control.name] %>"  <%if(control.name ==='hostName') {%> readonly <%}%> required>
+                        <% } %>
+                </div>
+            </div>
+        <% }); %>
+            
+    </div>
+
+    <% if(storeViews && Object.keys(storeViews).length) { %>
+        <div class="MagentoStoreMapping-sectionHeading">
+            <div class="AknWidget-header widget-header">
+                    <%- _.__("Store view Mappings") %>
+                    <div class="AknButtonList AknButtonList--right widget-actions"></div>
+                </div>            
+            <div class="MagentoStoreMapping-hint <%- hintIsHidden ? 'MagentoStoreMapping-hint--hidden' : ' ' %>">
+                <div class="MagentoStoreMapping-icon MagentoStoreMapping-icon--info"></div>
+                <div class="MagentoStoreMapping-hintTitle"> <p><b><%- _.__('magento2.currency_setup_info') %></b></p> <p><%- _.__('magento2.setup.common_currency_info') %></p> <p><%- _.__('magento2.setup.different_currency_info') %></p> </div>
+                <div class="MagentoStoreMapping-remove AknIconButton AknIconButton--remove"></div>
+            </div>
+        </div>
+
+        <table class="AknGrid AknGrid--unclickable">
+            <thead>
+                <tr>
+                    <th class="wk_header_cell">
+                        <%- _.__('magento2.website_ids') %>
+                    </th>
+                    <th class="wk_header_cell">
+                        <%- _.__('magento2.select.store_view') %>
+                    </th>
+                    <th class="wk_header_cell">
+                        <%- _.__('magento2.channel') %>
+                    </th>
+                    <th class="wk_header_cell">
+                        <%- _.__('magento2.locale') %>
+                    </th>
+                    <th class="wk_header_cell">
+                        <%- _.__('Currencies') %>
+                    </th>                    
+                </tr>
+            </thead>
+
+            <tbody>
+                <% var websitesIds = []; %>
+                <tr class="AknGrid-bodyRow storeViewData" data-storeView="allStoreView" storeViewsId="allStoreView" storeViewWebsiteId = "allStoreView" >
+                    <td class="AknGrid-bodyCell">
+                        All Store View**
+                    </td>
+                    <td class="AknGrid-bodyCell" >
+                        All Store View
+                    </td>
+                    <td class="AknGrid-bodyCell" style="padding-right: 8px !important;">
+                        <% if('undefined' !== typeof(storeMapping['allStoreView']) && 'undefined' !== typeof(storeMapping['allStoreView']['channel']) && storeMapping['allStoreView']['channel']) {
+                                selectedChannelVal = storeMapping['allStoreView']['channel'];
+                            } else {
+                                selectedChannelVal = null;
+                        } %>
+                        <select name="channel" class="storeView-channel" storeId="allStoreView">
+                            <option value=""><%- _.__('Select channel for store view') %></option>                            
+                            <% _.each(channels, function(channel, key) { %>
+                                <option value="<%- channel.code %>" <% if(channel.code === selectedChannelVal) { %>selected="selected"<% } %> >
+                                    <%- channel.code %>
+                                </option>
+                            <% }); %>
+                        </select>
+                    </td>
+
+                    <% if('undefined' !== typeof(storeMapping['allStoreView']) && 'undefined' !== typeof(storeMapping['allStoreView']['locale']) && storeMapping['allStoreView']['locale']) { 
+                        selectedVal = storeMapping['allStoreView']['locale'];
+                        } else {
+                        selectedVal = null;
+                    } %>       
+                    <td class="AknGrid-bodyCell">
+                        <select name="locale" class="storeView-locale">
+                            <% if(selectedChannelVal != null) { %>
+                                <option value=""><%- _.__('Select locale for store view') %></option>
+                                <% _.each(channels, function(channel, channelKey) { %>
+                                    <% if(channel.code === selectedChannelVal) { %>
+                                        <% _.each(channel.locales, function(locale, key) { %>
+                                            <option value="<%- locale.code %>" <% if(locale.code === selectedVal) { %>selected="selected"<% } %> >
+                                                <%- locale.code %>
+                                            </option>
+                                        <% }); %>
+                                    <% } %>
+                                <% }); %>
+                                <% } else { %>
+                                <option value=""><%- _.__('Select Channel to get locales') %></option> 
+                            <% } %>
+                        </select>
+                    </td>
+                    <td class="AknGrid-bodyCell AknGrid-bodyCell--right">
+                            <% if('undefined' !== typeof(storeMapping['allStoreView']) && 'undefined' !== typeof(storeMapping['allStoreView']['currency']) && storeMapping['allStoreView']['currency']) { 
+                                selectedVal = storeMapping['allStoreView']['currency'];
+                             } else {
+                                selectedVal = null;
+                            } %>                            
+                        <select name="currency">
+                                <% if(selectedChannelVal != null) { %>
+                                    <option value=""><%- _.__('Select Currency for store view') %></option>
+                                    <% _.each(channels, function(channel, channelKey) { %>
+                                        <% if(channel.code === selectedChannelVal) { %>
+                                            <% _.each(channel.currencies, function(currency, key) { %>
+                                                <option value="<%- currency %>"  <% if(currency === selectedVal) { %>selected="selected"<% } %> >
+                                                    <%- currency %>
+                                                </option>
+                                            <% }); %>
+                                        <% } %>
+                                    <% }); %>
+                                <% } else { %>
+                                    <option value=""><%- _.__('Select Channel to get Currency') %></option> 
+                                <% } %>
+                        </select>
+                    </td>
+                </tr>
+                <% _.each(storeViews, function(mapping, key) { if(mapping.website_id) { %>
+                    <tr class="AknGrid-bodyRow storeViewData" data-storeView="<%- mapping.code %>" storeViewsId="<%- mapping.id %>" storeViewWebsiteId = "<%- mapping.website_id %>" >
+                        <% if(!_.contains(websitesIds, mapping.website_id)) { 
+                            var storesCount = _.countBy(storeViews, function(storeView) {
+                                return storeView.website_id == mapping.website_id ? "count" : 'uncount';
+                            });
+                        %>
+                        <td rowspan="<%- storesCount.count %>" class="AknGrid-bodyCell">
+                            <%- 'Website Id : ' + mapping.website_id %>
+                        </td>
+                        <% websitesIds.push(mapping.website_id) %>
+                    <% } %>
+
+                        <td class="AknGrid-bodyCell">
+                            <%- mapping.name %>
+                        </td>
+                        <td class="AknGrid-bodyCell" style="padding-right: 8px !important;">
+                            <% if('undefined' !== typeof(storeMapping[mapping.code]) && 'undefined' !== typeof(storeMapping[mapping.code]['channel']) && storeMapping[mapping.code]['channel']) {
+                                    selectedChannelVal = storeMapping[mapping.code]['channel'];
+                                } else {
+                                    selectedChannelVal = null;
+                            } %>
+                            <select name="channel" class="storeView-channel" storeId="<%- mapping.code %>">
+                                <option value=""><%- _.__('Select channel for store view') %></option>                            
+                                <% _.each(channels, function(channel, key) { %>
+                                    <option value="<%- channel.code %>" <% if(channel.code === selectedChannelVal) { %>selected="selected"<% } %> >
+                                        <%- channel.code %>
+                                    </option>
+                                <% }); %>
+                            </select>
+                        </td>
+
+                        <% if('undefined' !== typeof(storeMapping[mapping.code]) && 'undefined' !== typeof(storeMapping[mapping.code]['locale']) && storeMapping[mapping.code]['locale']) { 
+                            selectedVal = storeMapping[mapping.code]['locale'];
+                            } else {
+                            selectedVal = null;
+                        } %>       
+                        <td class="AknGrid-bodyCell">
+                            <select name="locale" class="storeView-locale">
+                                <% if(selectedChannelVal != null) { %>
+                                    <option value=""><%- _.__('Select locale for store view') %></option>
+                                    <% _.each(channels, function(channel, channelKey) { %>
+                                        <% if(channel.code === selectedChannelVal) { %>
+                                            <% _.each(channel.locales, function(locale, key) { %>
+                                                <option value="<%- locale.code %>" <% if(locale.code === selectedVal) { %>selected="selected"<% } %> >
+                                                    <%- locale.code %>
+                                                </option>
+                                            <% }); %>
+                                        <% } %>
+                                    <% }); %>
+                                    <% } else { %>
+                                    <option value=""><%- _.__('Select Channel to get locales') %></option> 
+                                <% } %>
+                            </select>
+                        </td>
+                        <td class="AknGrid-bodyCell AknGrid-bodyCell--right">
+                                <% if('undefined' !== typeof(storeMapping[mapping.code]) && 'undefined' !== typeof(storeMapping[mapping.code]['currency']) && storeMapping[mapping.code]['currency']) { 
+                                    selectedVal = storeMapping[mapping.code]['currency'];
+                                 } else {
+                                    selectedVal = null;
+                                } %>                            
+                            <select name="currency">
+                                    <% if(selectedChannelVal != null) { %>
+                                        <option value=""><%- _.__('Select Currency for store view') %></option>
+                                        <% _.each(channels, function(channel, channelKey) { %>
+                                            <% if(channel.code === selectedChannelVal) { %>
+                                                <% _.each(channel.currencies, function(currency, key) { %>
+                                                    <option value="<%- currency %>"  <% if(currency === selectedVal) { %>selected="selected"<% } %> >
+                                                        <%- currency %>
+                                                    </option>
+                                                <% }); %>
+                                            <% } %>
+                                        <% }); %>
+                                    <% } else { %>
+                                        <option value=""><%- _.__('Select Channel to get Currency') %></option> 
+                                    <% } %>
+                            </select>
+                        </td>  
+                        
+                    </tr>
+                <% } }); %>
+            </tbody>
+        </table>
+
+    <% } else { %>
+        <div class="AknGridContainer-noData">
+            <div class="AknGridContainer-noDataImage"></div>
+            <div class="AknGridContainer-noDataTitle">
+                <%- _.__('Save credentials first !!') %>
+            </div>    
+        </div>        
+    <% } %>
+</div>

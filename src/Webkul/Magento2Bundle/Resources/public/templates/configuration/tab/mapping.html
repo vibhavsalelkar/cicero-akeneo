@@ -1,0 +1,459 @@
+<style>
+    .AknFormContainer-Mappings .field-input,.AknFormContainer-Mappings .field-header,.AknFormContainer-Mappings .header-col {
+        display: inline-block;
+        vertical-align: top;
+        width: calc(33% - 3px);
+        border: none;
+        font-size: 13px !important;
+    }
+    
+    .limit-width-35 {
+        max-width: 35%;
+    }
+    .AknFormContainer-Mappings .AknForm-header.widget-header {
+        border-bottom: 2px solid #67768A;
+        margin-bottom: 10px;
+    }
+    .AknFormContainer-Mappings .AknSettingField,.AknFormContainer-Mappings .AknSettingChildField{
+        width: 80%;
+    }
+    .otherSetting {
+        overflow: auto;
+        max-height: 200px;
+    }
+    /* data mapping css */
+    .AknCatalogVolume-hint {
+        background: #F5F9FC;
+        display: flex;
+        padding: 5px;
+        font-size: 13px;
+        color: #67768A;
+        min-height: 80px;
+        align-items: center;
+    }
+    .AknCatalogVolume-icon--info {
+        background-size: 24px auto;
+        border-right: 1px #D9DDE2 solid;
+        background-position: 50%;
+        min-width: 65px;
+        margin-right: 16px;
+        background-image: url('../bundles/magento2/images/icon-info.svg') !important;
+    }
+    .AknCatalogVolume-icon {
+        min-width: 70px;
+        min-height: 60px;
+        height: auto;
+        background-repeat: no-repeat;
+        background-position: 50% 15px;
+        background-size: 29px auto;
+        position: relative;
+    }
+    .AknButton--mapping{
+        margin-right: 2%;
+    }
+    .AknCatalogVolume-hintTitle {
+       flex-grow: 1;
+    }
+    .disabled_wrapper {
+        pointer-events: none;
+        opacity: 0.4;
+    }
+    /* end data mapping css */
+
+</style>
+
+<!-- //HTML for form grid view -->
+<div class="AknFormContainer AknFormContainer--withPadding  AknFormContainer-Mappings" style="width: 100%">
+    <div class="AknForm-header widget-header">
+        <div class="header-col AknSubsection-title">
+            <%- _.__('magento2.magento.field.group') %>
+        </div>
+        <div class="header-col AknSubsection-title">
+            <%- _.__('magento2.akeneo.field.group') %>
+        </div>
+        <div class="header-col AknSubsection-title">
+            <%- _.__('magento2.akeneo.child_field.group') %>
+        </div>
+    </div>
+    <div>
+        <div id="mapped-fields">
+            <!-- Input Field -->
+            <% _.each(fields, function (field, key) { %>
+                <div class="AknFieldContainer">
+                    <div class="field-header">
+                        <label class="AknFieldContainer-label">
+                            <%- _.__('undefined' !== typeof(field.label) ? field.label : field.name) %> <em>[<%- field.name %>]</em>
+                        </label>
+                    </div>
+                    <div class="field-input">
+                        <select name="<%- field.name %>" id="pim_enrich_entity_form_<%- field.name %>" class="select2 label-field AknSettingField attributeValue" <% if(field.name === 'sku') { %> disabled <% } %>>
+                            <option><%- _.__('Select Attribute') %></option>
+                            <% selectVal = mapping && typeof(mapping) !== 'undefined' && typeof(mapping[field.name]) !== 'undefined' ?  mapping[field.name] : '' %>
+                            <% _.each(attributes, function(attribute) { %>
+                                <% if(!field.types || field.types.indexOf(attribute.type) !== -1 ) { %>
+                                    <option value="<%- attribute.code %>" <% if(attribute.code === selectVal) { %>selected="selected"<% } %>
+                                        <% if((attribute.code != selectVal && _.indexOf(mappedAttributesCode, attribute.code) != -1)) {  %>
+                                            disabled
+                                        <% } %>
+                                    >
+                                        <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                                    </option>
+                                <% } %>
+                            <% }); %>
+                        </select>
+                        <% if('undefined' !== typeof(field.dynamic) && field.dynamic) %>
+                            <span class="AknButtonList-item AknIconButton AknIconButton--round  AknIconButton--remove delete-row" data-id="<%- key %>" data-name="<%- field.name %>" style="vertical-align: middle"></span>
+                        <% else if('undefined' !== typeof(field.tooltip) ) { %>
+                            <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="<%- _.__(field.tooltip) %>."></i>
+                        <% } %>                    
+                    </div>
+                    <div class="field-input">
+                        <select name="<%- field.name %>" id="pim_enrich_entity_form_<%- field.name %>" class="select2 label-field AknSettingChildField attributeValue" data-wrapper="childmapping" <% if(field.name === 'configurable_product_status') { %> disabled <% } %>>
+                            <option><%- _.__('Select Attribute') %></option>
+                            <% selectVal = childmapping && typeof(childmapping) !== 'undefined' && typeof(childmapping[field.name]) !== 'undefined' ?  childmapping[field.name] : '' %>
+                            <% _.each(attributes, function(attribute) { %>
+                                <% if(!field.types || field.types.indexOf(attribute.type) !== -1 ) { %>
+                                    <option value="<%- attribute.code %>" <% if(attribute.code === selectVal) { %>selected="selected"<% } %> 
+                                         <% if((attribute.code != selectVal && _.indexOf(mappedAttributesCode, attribute.code) !== -1)) {  %>
+                                            disabled
+                                        <% } %>
+                                    >
+                                        <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                                    </option>
+                                <% } %>
+                            <% }); %>
+                        </select>
+                        <% if('undefined' !== typeof(field.dynamic) && field.dynamic) %>
+                            <span class="AknButtonList-item AknIconButton AknIconButton--round  AknIconButton--remove delete-row" data-id="<%- key %>" data-name="<%- field.name %>" style="vertical-align: middle"></span>
+                        <% else if('undefined' !== typeof(field.tooltip) ) { %>
+                            <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="left" data-original-title="<%- _.__(field.tooltip) %>."></i>
+                        <% } %>                    
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+    <div>
+        <div class="AknSubsection-title">
+            <%- _.__('Map more Standard Attributes') %>
+        </div>
+        <div class="field-group">
+            <div class="AknFieldContainer-header ">
+                <label title="Code" class="AknFieldContainer-label control-label required truncate">
+                    <%- _.__('Magento Standard attribute code') %> <em>(required)</em>
+                </label>
+            </div>
+
+            <div class="field-input">
+                <input type="text" class="AknTextField label-field view-only" id="dynamic-filed-input">
+            </div>
+
+            <span class="AknButton AknButton--grey AknButton--small field-add">
+                <%- _.__('Add Field') %>
+            </span>
+        </div>
+    </div>
+    <div>
+        <div class="AknSubsection-title">
+            <%- _.__('Other Mappings') %>
+        </div>
+
+        <div class="AknFieldContainer">
+            <div class="field-header limit-width-35">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Attributes to be used as Images') %>
+                </label>
+            </div>
+            <div class="field-input limit-width-35">
+                <select name="images" id="pim_enrich_entity_form_images" class="select2 label-field AknSettingField attributeValue otherSetting" multiple="multiple" data-wrapper="otherMappings">
+                    <% selectVal = model && typeof(model['otherMappings']) !== 'undefined' && typeof(model['otherMappings']['images']) !== 'undefined' ?  model['otherMappings']['images'] : '' %>
+                    <% _.each(imageAttrs, function(attribute) { %>
+                        <% if(attribute.type == 'pim_catalog_image' || attribute.type == 'pim_catalog_asset_group') { %>
+                            <option value="<%- attribute.code %>" <% if(selectVal && (attribute.code === selectVal || selectVal.indexOf(attribute.code) !== -1) ) { %>selected="selected"<% } %> >
+                                <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                            </option>
+                        <% } %>
+                    <% }); %>
+                </select>
+                <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="Supported attribute type: Images."></i>
+            </div>
+            <span class="limit-width-35">
+                <a href="javascript:void(0);" class="AknButtonList-item AknButton AknButton--grey AknButton--small select-all" title="<%- _.__('Select all not mapped') %>" data-for="pim_enrich_entity_form_images">
+                    <%- _.__('Select all') %>
+                </a>
+                <a href="javascript:void(0);" class="AknButtonList-item AknButton AknButton--grey AknButton--small remove-all" title="<%- _.__('Deselect all') %>" data-for="pim_enrich_entity_form_images">
+                    <%- _.__('Deselect all') %>
+                </a>                
+            </span>
+        </div>
+        <div class="AknFieldContainer">
+            <div class="field-header limit-width-35">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Attributes to be used as Image alts') %>
+                    <br/>
+                    <i>(Attributes must be same order as images)</i>
+                </label>
+            </div>
+                <% 
+                    selectVal = model && typeof(model['otherMappings']) !== 'undefined' && typeof(model['otherMappings']['images_alts']) !== 'undefined' ?  model['otherMappings']['images_alts'] : ''
+                    imagesAttrs = model && typeof(model['otherMappings']) !== 'undefined' && typeof(model['otherMappings']['images']) !== 'undefined' ?  model['otherMappings']['images'] : '';
+                %>
+            <div class="field-input limit-width-35">
+                <select name="images_alts" id="pim_enrich_entity_form_images" class="select2 label-field AknSettingField attributeValue otherSetting" multiple="multiple" data-wrapper="otherMappings">
+                    <% if(selectVal.length && imagesAttrs.length == selectVal.length ) { %> disabled_wrapper <%  }  %>
+                    <% _.each(imageAlts, function(attribute) { %>
+                        <% if(attribute.type == 'pim_catalog_text') { %>
+                            <option value="<%- attribute.code %>" <% if(selectVal && (attribute.code === selectVal || selectVal.indexOf(attribute.code) !== -1) ) { %>selected="selected"<% } %> >
+                                <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                            </option>
+                        <% } %>
+                    <% }); %>
+                </select>
+                <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="Supported attribute type: Text."></i>
+
+            </div>
+        </div>
+        <div class="AknFieldContainer">
+            <div class="field-header limit-width-35">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Attributes to be used as Custom Attributes (For Export)') %>
+                    <br>
+                    <i>(Also add all Select and Variant fields here)</i>
+                </label>
+            </div>
+            <div class="field-input limit-width-35">
+                <select name="custom_fields" id="pim_enrich_entity_form_custom_fields" class="select2 label-field AknSettingField attributeValue otherSetting" multiple="multiple" data-wrapper="otherMappings">
+                    <% selectVal = model && typeof(model['otherMappings']) !== 'undefined' && typeof(model['otherMappings']['custom_fields']) !== 'undefined' ?  model['otherMappings']['custom_fields'] : '' %>
+                    <% _.each(attributes, function(attribute) { %>
+                        <% if(['pim_catalog_identifier', 'pim_catalog_file', 'pim_catalog_image', 'pim_reference_data_multiselect', 'pim_reference_data_simpleselect'].indexOf(attribute.type) === -1) { %>
+                            <option value="<%- attribute.code %>" <% if(selectVal && (attribute.code === selectVal || selectVal.indexOf(attribute.code) !== -1) ) { %>selected="selected"<% } %> 
+                                <% if((attribute.code != selectVal && _.indexOf(mappedAttributesCode, attribute.code) !== -1)) {  %>
+                                    disabled
+                                <% } %>
+                            >    
+                                <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                            </option>
+                        <% } %>
+                    <% }); %>
+                </select>
+            </div>
+            <span class="limit-width-35">
+                <a href="javascript:void(0);" class="AknButtonList-item AknButton AknButton--grey AknButton--small select-all" data-for="pim_enrich_entity_form_custom_fields" title="<%- _.__('Select all') %>">
+                    <%- _.__('Select all') %>
+                </a>
+                <a href="javascript:void(0);" class="AknButtonList-item AknButton AknButton--grey AknButton--small remove-all" data-for="pim_enrich_entity_form_custom_fields" title="<%- _.__('Deselect all') %>">
+                    <%- _.__('Deselect all') %>
+                </a>                
+            </span>
+        </div>
+       
+        <div class="AknFieldContainer">
+            <div class="field-header limit-width-35">
+                <label class="AknFieldContainer-label">
+                    <%- _.__('Attributes to be used as Custom Attributes (For Import)') %>
+                </label>
+            </div>
+            <div class="field-input limit-width-35">
+                <select name="import_custom_fields" id="pim_enrich_entity_form_import_custom_fields" class="select2 label-field AknSettingField attributeValue otherSetting" multiple="multiple" data-wrapper="otherMappings">
+                    <% selectVal = model && typeof(model['otherMappings']) !== 'undefined' && typeof(model['otherMappings']['import_custom_fields']) !== 'undefined' ?  model['otherMappings']['import_custom_fields'] : '' %>
+                    <% _.each(attributes, function(attribute) { %>
+                        <% if(['pim_catalog_identifier', 'pim_catalog_file', 'pim_catalog_image', 'pim_reference_data_multiselect', 'pim_reference_data_simpleselect'].indexOf(attribute.type) === -1) { %>
+                            <option value="<%- attribute.code %>" <% if(selectVal && (attribute.code === selectVal || selectVal.indexOf(attribute.code) !== -1) ) { %>selected="selected"<% } %> 
+                                <% if((attribute.code != selectVal && _.indexOf(mappedAttributesCode, attribute.code) !== -1)) {  %>
+                                    disabled
+                                <% } %>
+                            >
+                               <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                            </option>
+                        <% } %>
+                    <% }); %>
+                </select>
+            </div>
+            <span class="limit-width-35">
+                <a href="javascript:void(0);" class="AknButtonList-item AknButton AknButton--grey AknButton--small select-all" data-for="pim_enrich_entity_form_import_custom_fields" title="<%- _.__('Select all') %>">
+                    <%- _.__('Select all') %>
+                </a>
+                <a href="javascript:void(0);" class="AknButtonList-item AknButton AknButton--grey AknButton--small remove-all" data-for="pim_enrich_entity_form_import_custom_fields" title="<%- _.__('Deselect all') %>">
+                    <%- _.__('Deselect all') %>
+                </a>                
+            </span>
+        </div>
+
+    </div>
+    <div>
+        <div class="AknSubsection-title">
+            <%- _.__('Video Attributes Mapping') %>
+        </div>  
+    </div>
+     <!-- Youtube Video Mapping -->
+    <div class="AknFieldContainer">
+        <table class="AknGrid AknGrid--unclickable table attribute-option-view ">
+            <colgroup>
+                <col class="code" span="1">
+                <col class="fields" span="1">
+                <col class="action" span="1">
+            </colgroup>
+            <thead>
+                <tr>
+                    <th class="AknGrid-headerCell">
+                        Video Attribute
+                    </th>
+                    <th class="AknGrid-headerCell">
+                        Preview Image
+                    </th>
+                    <th class="AknGrid-headerCell AknGrid-headerCell--right">
+                        Actions
+                    </th>
+                </tr>
+            </thead>
+            <tbody class="otherSetting">
+                <% _.each(videoRows, function(videoRow, index) { %>
+                    <tr class="AknGrid-bodyRow editable-item-row" data-item-id="<%- index %>">
+                        <td class="AknGrid-bodyCell">
+                            <select data-name="videoAttrsMapping" data-item-id="<%- index %>" name='video' id="pim_enrich_entity_form_videoAttrsMapping" class="select2 label-field AknSettingField attributeValue"  data-wrapper="otherMappings">
+                                <% selectVal = model && typeof(model['otherMappings']) !== 'undefined' && typeof(model['otherMappings']['videoAttrsMapping']) !== 'undefined' && typeof(model['otherMappings']['videoAttrsMapping'][index]) !== 'undefined' ?  model['otherMappings']['videoAttrsMapping'][index]['video'] : '' %>
+                                <option><%- _.__('Select Video URL Attribute') %></option>
+                                <% _.each(attributes, function(attribute) { %>
+                                    <% if(attribute.type == 'pim_catalog_text') { %>
+                                        <option value="<%- attribute.code %>" <% if(selectVal && (attribute.code === selectVal || selectVal.indexOf(attribute.code) !== -1) ) { %>selected="selected"<% } %> >
+                                            <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                                        </option>
+                                    <% } %>
+                                <% }); %>
+                            </select>
+                            <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="Supported attribute type: Text."></i>
+                        </td>
+                        <td class="AknGrid-bodyCell">
+                            <select data-name="videoAttrsMapping" data-item-id="<%- index %>" name="video_images" id="pim_enrich_entity_form_video_images" class="select2 label-field AknSettingField attributeValue" data-wrapper="otherMappings">
+                                
+                                <% selectVal = model && typeof(model['otherMappings']) !== 'undefined' && typeof(model['otherMappings']['videoAttrsMapping']) !== 'undefined' && typeof(model['otherMappings']['videoAttrsMapping'][index]) !== 'undefined'?  model['otherMappings']['videoAttrsMapping'][index]['video_images'] : '' %>
+                                <option><%- _.__('Select Video Preview Image Attribute') %></option>
+                                <% _.each(videoImagesAttrs, function(attribute) { %>
+                                    <% if(attribute.type == 'pim_catalog_image') { %>
+                                        <option value="<%- attribute.code %>" <% if(selectVal && (attribute.code === selectVal || selectVal.indexOf(attribute.code) !== -1) ) { %>selected="selected"<% } %> >
+                                            <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                                        </option>
+                                    <% } %>
+                                <% }); %>
+                            </select>
+                            <i class="AknIconButton icon-info-sign" data-toggle="tooltip" data-placement="right" data-original-title="Supported attribute type: Image."></i>
+                        </td>
+                        <td class="AknGrid-bodyCell">
+                            <div class="AknButtonList AknButtonList--right">
+                                <span class="AknButtonList-item AknIconButton AknIconButton--round AknIconButton--important AknIconButton--remove delete-video-row" data-item-id="<%- index %>"></span>
+                            </div>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+            <tfoot>
+                <tr class="AknGrid-bodyRow">
+                    <td class="AknGrid-bodyCell" colspan="3">
+                        <span class="AknButton AknButton--grey AknButton--small video-row-add">Add Mapping Row</span>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+    <!-- Image Role Mapping -->
+    <div class="AknSubsection-title">
+        <%- _.__('Image Role Mapping (For simple and Product model)') %>
+    </div> 
+    <div class="AknFieldContainer">
+        <table class="AknGrid AknGrid--unclickable table attribute-option-view ">
+            <thead>
+                <tr>
+                    <th class="AknGrid-headerCell">
+                        Base
+                    </th>
+                    <th class="AknGrid-headerCell">
+                        Small
+                    </th>
+                    <th class="AknGrid-headerCell">
+                        Thumbnail
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="AknGrid-bodyRow editable-item-row">
+                <% 
+                selectImages = model && typeof(model['otherMappings']) !== 'undefined' && typeof(model['otherMappings']['images']) !== 'undefined' ?  model['otherMappings']['images'] : ''
+                _.each(imageRoles, function(imageRole, imageRoleKey) { %>
+                    <td class="AknGrid-bodyCell">
+                        <select name="<%-imageRole %>" id="pim_enrich_entity_form_<%- imageRole %>" class="select2 label-field AknSettingField attributeValue" data-wrapper="otherMappings">
+                            <%
+                            if(_.isEmpty(selectImages)) { %>
+                                <option><%- _.__('Select Image Attribute') %></option>
+                            <% }
+                            selectVal = model 
+                            && typeof(model['otherMappings']) !== 'undefined' 
+                            && typeof(model['otherMappings'][imageRole]) !== 'undefined' 
+                            && model['otherMappings'][imageRole] != 'Select Image Attribute'
+                            && model['otherMappings'][imageRole] ?  model['otherMappings'][imageRole] : defaultImage 
+                            %>
+                            <% _.each(imageAttrs, function(attribute) { %>
+                                <% if(attribute.type == 'pim_catalog_image' && selectImages.indexOf(attribute.code) !== -1) { %>
+                                    <option value="<%- attribute.code %>" <% if(selectVal && attribute.code === selectVal) { %>selected="selected"<% } %> >
+                                        <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                                    </option>
+                                <% } %>
+                            <% }); %>
+                        </select>
+                    </td>
+                <% }); %>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="AknSubsection-title">
+        <%- _.__('Image Role Mapping (For variant product)') %>
+    </div> 
+    <div class="AknFieldContainer">
+        <table class="AknGrid AknGrid--unclickable table attribute-option-view ">
+            <thead>
+                <tr>
+                    <th class="AknGrid-headerCell">
+                        Base
+                    </th>
+                    <th class="AknGrid-headerCell">
+                        Small
+                    </th>
+                    <th class="AknGrid-headerCell">
+                        Thumbnail
+                    </th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="AknGrid-bodyRow editable-item-row">
+                <% 
+                selectImages = model && typeof(model['otherMappings']) !== 'undefined' && typeof(model['otherMappings']['images']) !== 'undefined' ?  model['otherMappings']['images'] : ''
+                _.each(childImageRoles, function(imageRole, imageRoleKey) { %>
+                    <td class="AknGrid-bodyCell">
+                        <select name="<%-imageRole %>" id="pim_enrich_entity_form_<%- imageRole %>" class="select2 label-field AknSettingField attributeValue" data-wrapper="otherMappings">
+                            <%
+                            if(_.isEmpty(selectImages)) { %>
+                                <option><%- _.__('Select Image Attribute') %></option>
+                            <% }
+                            selectVal = model 
+                            && typeof(model['otherMappings']) !== 'undefined' 
+                            && typeof(model['otherMappings'][imageRole]) !== 'undefined' 
+                            && model['otherMappings'][imageRole] != 'Select Image Attribute'
+                            && model['otherMappings'][imageRole] ?  model['otherMappings'][imageRole] : defaultImage 
+                            %>
+                            <% _.each(imageAttrs, function(attribute) { %>
+                                <% if(attribute.type == 'pim_catalog_image' && selectImages.indexOf(attribute.code) !== -1) { %>
+                                    <option value="<%- attribute.code %>" <% if(selectVal && attribute.code === selectVal) { %>selected="selected"<% } %> >
+                                        <%- 'undefined' !== typeof(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                                    </option>
+                                <% } %>
+                            <% }); %>
+                        </select>
+                    </td>
+                <% }); %>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

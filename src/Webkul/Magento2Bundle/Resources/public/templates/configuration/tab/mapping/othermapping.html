@@ -1,0 +1,141 @@
+<div class="AknSubsection-title">
+    <%- _.__('Other Mappings') %>
+</div>
+
+<div class="AknFieldContainer">
+    <div class="field-header limit-width-35">
+        <label class="AknFieldContainer-label">
+            <%- _.__('Attributes to be used as Images') %>
+        </label>
+    </div>
+    <div class="field-input limit-width-35">
+        <select name="images" id="pim_enrich_entity_form_images" 
+            class="select2 select2_of_attribute_export label-field AknSettingField attributeValue otherSetting"
+            multiple="multiple" data-wrapper="otherMappings">
+
+            <% selectVal = model && typeof(model['otherMappings']) !== 'undefined' && typeof(model['otherMappings']['images']) !== 'undefined' ?  model['otherMappings']['images'] : '' %>
+            <% _.each(imageAttrs, function(attribute) { %>
+                <option value="<%- attribute.code %>" 
+                    <% if(selectVal && (attribute.code === selectVal || selectVal.indexOf(attribute.code) !== -1) ) { %>selected="selected"<% } %> >
+                    <%- attribute.code  %>
+                </option>
+            <% }); %>
+        </select>
+    </div>
+    <span class="limit-width-35">
+      
+        <a href="javascript:void(0);" class="AknButtonList-item AknButton AknButton--grey AknButton--small select-all" 
+            title="<%- _.__('Select all not mapped') %>" data-for="pim_enrich_entity_form_images" 
+            >
+            <%- _.__('Select all') %>
+        </a>
+        <a href="javascript:void(0);" class="AknButtonList-item AknButton AknButton--grey AknButton--small remove-all" 
+            title="<%- _.__('Deselect all') %>" data-for="pim_enrich_entity_form_images"
+            >
+            <%- _.__('Deselect all') %>
+        </a>                
+    </span>
+</div>
+<div class="AknFieldContainer">
+    <% selectVal = model && typeof(model['otherMappings']) !== 'undefined' && typeof(model['otherMappings']['custom_fields']) !== 'undefined' ?  model['otherMappings']['custom_fields'] : '' %>
+    <div class="field-header limit-width-35">
+        <label class="AknFieldContainer-label">
+            <%- _.__('Attributes to be used as Custom Attributes (For Export)') %>
+            <br>
+            <i>(Also add all Select and Variant fields here)</i>
+            <br>
+            <span class='selected-attributes'> <% if(_.isArray(selectVal)) { %> 
+               Selected Attriubtes : <b> <%- selectVal.length %> </b>
+             <% } %>
+            </span> 
+        </label>
+    </div>
+    <div class="field-input limit-width-35">
+        <select name="custom_fields" id="pim_enrich_entity_form_custom_fields" 
+            class="select2 select2_of_attribute_export label-field AknSettingField attributeValue otherSetting export-attributes" 
+            multiple="multiple" data-wrapper="otherMappings">
+
+            
+            <% _.each(attributes, function(attribute) { %>
+                <% if(['pim_catalog_identifier', 'pim_catalog_file', 'pim_catalog_image', 'pim_reference_data_multiselect', 'pim_reference_data_simpleselect'].indexOf(attribute.type) === -1) { %>
+                    <option value="<%- attribute.code %>" <% if(selectVal && (attribute.code === selectVal || selectVal.indexOf(attribute.code) !== -1) ) { %>selected="selected"<% } %> 
+                        <% if((attribute.code != selectVal && _.indexOf(mappedAttributesCode, attribute.code) !== -1)) {  %>
+                            disabled
+                        <% } %>
+                    >    
+                    <% selectVal = _.without(selectVal, attribute.code) %>
+
+                        <%- !_.isUndefined(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                    </option>
+                <% } %>
+            <% }); %>
+
+            <% _.each(selectVal, function(selectValOption) { %>
+                <option value="<%- selectValOption %>" class='select-val-class' selected = "selected" >
+                    <%- selectValOption %>
+                </option>
+            <% }) %>
+        </select>
+    </div>
+    <span class="limit-width-35">       
+        <a href="javascript:void(0);"
+            class="AknButtonList-item AknButton AknButton--grey AknButton--small select-all-export-import-attribute" 
+            data-for="custom_fields"  title="<%- _.__('Select all') %>"
+            data-page="<%- attributePage %>">
+            <%- _.__('Select 200') %>
+        </a>
+        <a href="javascript:void(0);" class="AknButtonList-item AknButton AknButton--grey AknButton--small remove-all"
+            data-for="pim_enrich_entity_form_custom_fields" title="<%- _.__('Deselect all') %>">
+            <%- _.__('Deselect all') %>
+        </a>                
+    </span>
+</div>
+
+<div class="AknFieldContainer">
+    <% selectVal = model && typeof(model['otherMappings']) !== 'undefined' && typeof(model['otherMappings']['import_custom_fields']) !== 'undefined' ?  model['otherMappings']['import_custom_fields'] : '' %>
+    <div class="field-header limit-width-35">
+        <label class="AknFieldContainer-label">
+            <%- _.__('Attributes to be used as Custom Attributes (For Import)') %>
+        </label>
+        <span class='selected-attributes'> <% if(_.isArray(selectVal)) { %> 
+            Selected Attriubtes : <b> <%- selectVal.length %> </b>
+          <% } %>
+         </span> 
+    </div>
+    <div class="field-input limit-width-35">
+        <select name="import_custom_fields" id="pim_enrich_entity_form_import_custom_fields" 
+                    class="select2 select2_of_attribute_export label-field AknSettingField attributeValue otherSetting" 
+                    multiple="multiple" data-wrapper="otherMappings">
+           
+            <% _.each(attributes, function(attribute) { %>
+                <% if(['pim_catalog_identifier', 'pim_catalog_file', 'pim_catalog_image', 'pim_reference_data_multiselect', 'pim_reference_data_simpleselect'].indexOf(attribute.type) === -1) { %>
+                    <option value="<%- attribute.code %>" <% if(selectVal && (attribute.code === selectVal || selectVal.indexOf(attribute.code) !== -1) ) { %>selected="selected"<% } %> 
+                        <% if((attribute.code != selectVal && _.indexOf(mappedAttributesCode, attribute.code) !== -1)) {  %>
+                            disabled
+                        <% } %>
+                    >
+                    <% selectVal = _.without(selectVal, attribute.code) %>
+                       <%- !_.isUndefined(attribute.labels[currentLocale]) ? attribute.labels[currentLocale] : attribute.code  %>
+                    </option>
+                <% } %>
+            <% }); %>
+            <% _.each(selectVal, function(selectValOption) { %>
+                <option value="<%- selectValOption %>" class='select-val-class' selected = "selected" >
+                    <%- selectValOption %>
+                </option>
+            <% }) %>
+        </select>
+    </div>
+    <span class="limit-width-35">
+        <a href="javascript:void(0);" 
+            class="AknButtonList-item AknButton AknButton--grey AknButton--small select-all-export-import-attribute" 
+            data-for="import_custom_fields" title="<%- _.__('Select all') %>"
+            data-page="<%- attributeImportPage %>">
+            <%- _.__('Select 200') %>
+        </a>
+        <a href="javascript:void(0);" class="AknButtonList-item AknButton AknButton--grey AknButton--small remove-all" 
+            data-for="pim_enrich_entity_form_import_custom_fields" title="<%- _.__('Deselect all') %>">
+            <%- _.__('Deselect all') %>
+        </a>                
+    </span>
+</div>

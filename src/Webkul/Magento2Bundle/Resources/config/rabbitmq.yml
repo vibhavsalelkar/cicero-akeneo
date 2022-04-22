@@ -1,0 +1,82 @@
+# rabbimq export (not enabled)
+# only available for enterprize edition, not using because need server load management when large queue
+# only for magento EE
+services:
+    ## jobs ##
+    webkul_magento2_rabbitmq_export.job:
+        class: '%pim_connector.job.simple_job.class%'
+        arguments:
+            - '%webkul_mage2_rabbitmq_export_connector.job_name%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                # - '@webkul.step.rabbitmq_check_module'
+                - '@webkul.step.magento2_rabbitmq_product_export'
+                - '@webkul.step.rabbitmq_product_model_export'
+        tags:
+            - { name: akeneo_batch.job, connector: '%webkul_magento2.connector.name%', type: '%pim_connector.job.export_type%' }    
+
+    ## steps ##
+    webkul.step.magento2_rabbitmq_product_export:
+        class: '%webkul_magento2.export.step%'
+        arguments:
+            - 'rabbitmq_product_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@pim_connector.reader.database.product'
+            - '@webkul_magento2.processor.rabbitmq.magento_normalization.product' # - '@webkul_magento2.processor.magento_normalization.product'
+            - '@webkul_magento2.writer.product.rabbitmq_api'
+            - 10
+    
+    webkul.step.rabbitmq_product_model_export:
+        class: '%webkul_magento2.export.step%'
+        arguments:
+            - 'rabbimq_product_model_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@webkul_magento2.reader.buffered.product_models'
+            - '@webkul_magento2.processor.buffered.product_models'
+            - '@webkul_magento2.writer.product_model.rabbitmq_api'
+            - 10
+
+    ## processors ##
+    webkul_magento2.processor.buffered.product_models:
+        class: Webkul\Magento2Bundle\Connector\Processor\BufferedProductModelProcessor
+        arguments:
+            - '@pim_catalog.normalizer.standard.product'
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_connector.processor.bulk_media_fetcher'
+            - '@?pim_catalog.values_filler.product'
+            - '@pim_connector.doctrine.cache_clearer'   
+
+    webkul_magento2.processor.rabbitmq.magento_normalization.product:
+        class: 'Webkul\Magento2Bundle\Connector\Processor\ProductQueueProcessor'
+        arguments:
+            - '@webkul_magento2.product.normalizer'
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.repository.attribute'
+            - '@akeneo_storage_utils.doctrine.object_detacher'
+            - '@pim_connector.processor.bulk_media_fetcher'
+            - '@?pim_catalog.values_filler.product'
+            - '@router'
+            - '@magento2.connector.service'
+
+    # writers
+    webkul_magento2.writer.product.rabbitmq_api:
+        class: 'Webkul\Magento2Bundle\Connector\Writer\ProductQueueWriter'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.connector.service'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_catalog.repository.family_variant'
+            - '@magento2.temp_data.manager'
+
+    webkul_magento2.writer.product_model.rabbitmq_api:
+        class: 'Webkul\Magento2Bundle\Connector\Writer\ProductModelQueueWriter'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.connector.service'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_catalog.repository.family_variant'
+            - '@magento2.temp_data.manager'

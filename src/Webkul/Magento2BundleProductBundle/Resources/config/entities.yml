@@ -1,0 +1,3 @@
+parameters:
+    # override
+    pim_catalog.entity.product.class:  Webkul\Magento2BundleProductBundle\Entity\Product

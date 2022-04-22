@@ -1,0 +1,82 @@
+# override entity
+parameters:
+    Pim\Component\Catalog\Model\Product: 'Webkul\Magento2BundleProductBundle\Entity\Product'
+services:
+
+    webkul.magento2.controller.rest.bundle.product:
+        class: Webkul\Magento2BundleProductBundle\Controller\Rest\Akeneo5\BundleProductController
+        public: true
+        arguments:
+            - '@pim_catalog.repository.product'
+            - '@pim_catalog.repository.product'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_catalog.updater.product'
+            - '@pim_catalog.saver.product'
+            - '@pim_internal_api_serializer'
+            - '@pim_catalog.validator.product'
+            - '@pim_user.context.user'
+            - '@pim_catalog.filter.chained'
+            - '@pim_enrich.filter.product_edit_data'
+            - '@pim_catalog.remover.product'
+            - '@pim_catalog.builder.product'
+            - '@pim_catalog.localization.localizer.converter'
+            - '@pim_catalog.comparator.filter.product'
+            - '@pim_enrich.converter.enrich_to_standard.product_value'
+            - '@pim_enrich.normalizer.product_violation'
+            - '@pim_catalog.builder.product'
+            - '@?pim_enrich.filter.product_attribute_filter'
+            - '@pim_catalog.entity_with_family_variant.remove_parent_from_product'
+            - '@?akeneo_elasticsearch.client.product_and_product_model'
+            - '@magento2.connector.service'
+
+    webkul.magento2_bundle_product.controller.rest.product:
+        class: Webkul\Magento2BundleProductBundle\Controller\Rest\Akeneo5\ProductController
+        arguments:
+            - '@pim_catalog.repository.product'
+            - '@pim_catalog.repository.product'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_catalog.updater.product'
+            - '@pim_catalog.saver.product'
+            - '@pim_internal_api_serializer'
+            - '@pim_catalog.validator.product'
+            - '@pim_user.context.user'
+            - '@pim_catalog.filter.chained'
+            - '@pim_enrich.filter.product_edit_data'
+            - '@pim_catalog.remover.product'
+            - '@pim_catalog.builder.product'
+            - '@pim_catalog.localization.localizer.converter'
+            - '@pim_catalog.comparator.filter.product'
+            - '@pim_enrich.converter.enrich_to_standard.product_value'
+            - '@pim_enrich.normalizer.product_violation'
+            - '@pim_catalog.builder.product'
+            - '@?pim_enrich.filter.product_attribute_filter'
+            - '@pim_catalog.entity_with_family_variant.remove_parent_from_product'
+            - '@magento2.connector.service'
+            - '@pim_catalog.association.filter.parent_associations'
+
+    bundle_adon.service:
+        class: Webkul\Magento2BundleProductBundle\Services\ConnectorService
+        arguments:
+            - '@akeneo_file_storage.file_storage.filesystem_provider'
+            - '@doctrine.orm.entity_manager'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_catalog.repository.category'
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.repository.locale'
+            - '@pim_catalog.repository.attribute_group'
+            - '@pim_catalog.repository.attribute_option'
+            - '@pim_catalog.repository.family'
+            - '@pim_catalog.repository.family_variant'
+            - '@pim_catalog.repository.product'
+            - '@pim_catalog.repository.product_model'
+            - '@pim_catalog.factory.family_variant'
+            - '@pim_catalog.updater.family_variant'
+            - '@pim_catalog.saver.family'
+            - '@pim_catalog.saver.family_variant'
+            - '@pim_catalog.updater.family'
+            - '@pim_catalog.updater.setter.registry'
+            - '@pim_enrich.normalizer.violation'
+            - '@pim_internal_api_serializer'
+            - '@router'
+            - '@service_container'
+            - '@validator'

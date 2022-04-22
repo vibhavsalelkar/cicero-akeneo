@@ -1,0 +1,31 @@
+<div class="AknFieldContainer magento-category" data-code="magentoEntityId" <%  if(type != 'category') { %> style="display: none" <% } %>>
+    <div class="AknFieldContainer-header">
+        <label for="magentoEntityId" class="AknFieldContainer-label control-label required">
+            <%- label %> <em><%- required %></em>
+        </label>
+    </div>
+
+    <!-- Select Field -->
+    <div class="AknFieldContainer-inputContainer field-input">
+        <select class="select2 select-field" name="magentoEntityId" id="pim_enrich_entity_form_magentoCategoryId" required>
+            <% _.each(categories, function(category) { %>
+                <option value="<%- category.id %>" <%- category.id === magentoCategoryId ? 'selected' : '' %>><%- category.label %></option>
+            <% }); %>
+        </select>
+    </div>
+    <!-- //Select Field -->
+
+    <!-- Validation Error block -->
+    <%  if(error) { %>
+        <div class="AknFieldContainer-footer">
+            <div class="AknFieldContainer-validationErrors validation-errors">
+                <div class="AknFieldContainer-validationError">
+                    <i class="icon-warning-sign"></i>
+                    <%- error %>
+                </div>
+            </div>
+        </div>
+    <% } %>
+    <!-- //Validation Error block -->
+    
+</div>

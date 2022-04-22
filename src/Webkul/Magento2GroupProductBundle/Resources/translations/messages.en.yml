@@ -1,0 +1,3 @@
+batch_jobs:
+  magento2_import_group_product:
+      label: Magento2 Grouped Products Import

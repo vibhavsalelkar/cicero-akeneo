@@ -1,0 +1,359 @@
+extensions:
+    pim-product-group-edit-form:
+        module: pim/form/common/edit-form
+
+    pim-product-group-edit-form-breadcrumbs:
+        module: pim/common/breadcrumbs
+        parent: pim-product-group-edit-form
+        targetZone: breadcrumbs
+        config:
+            tab: pim-menu-products
+            itemPath: identifier
+
+    pim-product-group-edit-form-user-navigation:
+        module: pim/menu/user-navigation
+        parent: pim-product-group-edit-form
+        targetZone: user-menu
+        config:
+            userAccount: pim_menu.user.user_account
+            logout: pim_menu.user.logout
+
+    pim-product-group-edit-form-main-image:
+        module: pim/form/common/main-image
+        parent: pim-product-group-edit-form
+        targetZone: main-image
+
+    pim-product-group-edit-form-variant-navigation:
+        module: pim/product-edit-form/variant-navigation
+        parent: pim-product-group-edit-form
+        targetZone: navigation
+
+    pim-product-group-edit-form-cache-invalidator:
+        module: pim/cache-invalidator
+        parent: pim-product-group-edit-form
+        position: 1000
+
+    pim-product-group-edit-form-sequential-edit:
+        module: pim/product-edit-form/sequential-edit
+        parent: pim-product-group-edit-form
+        targetZone: bottom-panel
+        aclResourceId: pim_enrich_product_edit_attributes
+        position: 100
+
+    pim-product-group-edit-form-left-column:
+        module: pim/form/common/column
+        parent: pim-product-group-edit-form
+        position: 5
+        targetZone: column
+        config:
+          stateCode: product_edit_form
+          navigationTitle: pim_enrich.entity.product.navigation
+
+    pim-product-group-edit-form-column-tabs-navigation:
+        module: pim/form/common/column-tabs-navigation
+        parent: pim-product-group-edit-form-left-column
+        targetZone: navigation
+        position: 10
+        config:
+          title: pim_enrich.entity.product.navigation
+
+    pim-product-group-edit-form-meta:
+        module: pim/form/common/meta
+        parent: pim-product-group-edit-form-left-column
+        targetZone: bottom
+        position: 10
+        config:
+            label: pim_enrich.entity.product.infos
+
+    pim-product-group-edit-form-column-tabs:
+        module: pim/form/common/column-tabs
+        parent: pim-product-group-edit-form
+        targetZone: content
+        position: 100
+
+    pim-product-group-edit-form-product-label:
+        module: pim/product-edit-form/product-label
+        parent: pim-product-group-edit-form
+        targetZone: title
+        position: 100
+
+    pim-product-group-edit-form-product-completeness:
+        module: pim/product-edit-form/product-completeness
+        parent: pim-product-group-edit-form
+        targetZone: meta
+        position: 100
+
+    pim-product-group-edit-form-total-missing-required-attributes:
+        module: pim/product-edit-form/total-missing-required-attributes
+        parent: pim-product-group-edit-form
+        targetZone: meta
+        position: 120
+
+    pim-product-group-edit-form-secondary-actions:
+        module: pim/form/common/secondary-actions
+        parent: pim-product-group-edit-form
+        targetZone: buttons
+        position: 50
+
+    pim-product-group-edit-form-delete:
+        module: pim/product-edit-form/delete
+        parent: pim-product-group-edit-form-secondary-actions
+        targetZone: secondary-actions
+        aclResourceId: pim_enrich_product_remove
+        position: 100
+        config:
+            trans:
+                title: confirmation.remove.product
+                subTitle: pim_menu.item.product
+                content: pim_enrich.confirmation.delete_item
+                success: pim_enrich.entity.product.info.deletion_successful
+                fail: pim_enrich.entity.product.info.deletion_failed
+            redirect: pim_enrich_product_index
+
+    pim-product-group-edit-form-download-pdf:
+        module: pim/product-edit-form/download-pdf
+        parent: pim-product-group-edit-form-secondary-actions
+        targetZone: secondary-actions
+        aclResourceId: pim_pdf_generator_product_download
+        position: 50
+
+    pim-product-group-edit-form-start-copy:
+        module: pim/product-edit-form/start-copy
+        parent: pim-product-group-edit-form-secondary-actions
+        targetZone: secondary-actions
+        position: 80
+
+    pim-product-group-edit-form-save-buttons:
+        module: pim/form/common/save-buttons
+        parent: pim-product-group-edit-form
+        targetZone: buttons
+        position: 120
+
+    pim-product-group-edit-form-save:
+        module: pim/product-edit-form/save
+        parent: pim-product-group-edit-form
+        targetZone: buttons
+        position: 0
+
+    pim-product-group-edit-form-state:
+        module: pim/form/common/state
+        parent: pim-product-group-edit-form
+        targetZone: state
+        position: 900
+        config:
+            entity: pim_enrich.entity.product.title
+
+    pim-product-group-edit-form-family:
+        module: pim/product-edit-form/meta/family
+        parent: pim-product-group-edit-form-meta
+        targetZone: meta
+        position: 70
+
+    pim-product-group-edit-form-family-variant:
+        module: pim/product-edit-form/meta/family-variant
+        parent: pim-product-group-edit-form-meta
+        targetZone: meta
+        position: 75
+
+    pim-product-group-edit-form-status-switcher:
+        module: pim/product-edit-form/meta/status-switcher
+        parent: pim-product-group-edit-form-meta
+        targetZone: meta
+        aclResourceId: pim_enrich_product_change_state
+        position: 80
+
+    pim-product-group-edit-form-change-family:
+        module: pim/product-edit-form/meta/change-family
+        parent: pim-product-group-edit-form-family
+        targetZone: buttons
+        aclResourceId: pim_enrich_product_change_family
+        position: 100
+
+    pim-product-group-edit-form-created:
+        module: pim/product-edit-form/meta/created
+        parent: pim-product-group-edit-form-meta
+        targetZone: meta
+        position: 90
+        config:
+            label: pim_enrich.entity.product.meta.created
+            labelBy: pim_enrich.entity.product.meta.created_by
+
+    pim-product-group-edit-form-updated:
+        module: pim/product-edit-form/meta/updated
+        parent: pim-product-group-edit-form-meta
+        targetZone: meta
+        position: 100
+        config:
+            label: pim_enrich.entity.product.meta.updated
+            labelBy: pim_enrich.entity.product.meta.updated_by
+
+    pim-product-group-edit-form-groups:
+        module: pim/product-edit-form/meta/groups
+        parent: pim-product-group-edit-form-meta
+        targetZone: meta
+        position: 110
+
+    pim-product-group-edit-form-attributes:
+        module: pim/product-edit-form/attributes
+        parent: pim-product-group-edit-form-column-tabs
+        targetZone: container
+        aclResourceId: pim_enrich_product_edit_attributes
+        position: 90
+        config:
+            removeAttributeRoute: pim_enrich_product_remove_attribute_rest
+            removeAttributeACL: pim_enrich_product_remove_attribute
+            tabTitle: pim_enrich.form.product.tab.attributes.title
+            deletionFailed: pim_enrich.form.product.flash.attribute_deletion_error
+
+    pim-product-group-edit-form-completeness:
+        module: pim/product-edit-form/completeness
+        parent: pim-product-group-edit-form-column-tabs
+        targetZone: container
+        position: 100
+
+    pim-product-group-edit-form-categories:
+        module: pim/product-edit-form/categories
+        parent: pim-product-group-edit-form-column-tabs
+        targetZone: container
+        aclResourceId: pim_enrich_product_categories_view
+        position: 110
+        config:
+            itemCategoryListRoute: pim_enrich_product_listcategories
+            itemCategoryTreeRoute: pim_enrich_product_category_rest_list
+
+    pim-product-group-edit-form-group-product:
+        module: magento2GroupProduct/product/form/grouped
+        parent: pim-product-group-edit-form-column-tabs
+        targetZone: container
+        aclResourceId: pim_enrich_associations_view
+        position: 120
+        config:
+            aclAddAssociations: pim_enrich_associations_edit
+            datagridName: 'association-product-grid'
+            # datagridName: 'groupped-product-grid'
+
+    pim-product-group-edit-form-associations:
+        module: pim/product-edit-form/associations
+        parent: pim-product-group-edit-form-column-tabs
+        targetZone: container
+        aclResourceId: pim_enrich_associations_view
+        position: 130
+        config:
+            aclAddAssociations: pim_enrich_associations_edit
+            datagridName: 'association-product-grid'
+    
+    pim-product-group-edit-form-attribute-group-selector:
+        module: pim/form/common/attributes/attribute-group-selector
+        parent: pim-product-group-edit-form-attributes
+        targetZone: other-actions
+        position: 100
+
+    pim-product-group-edit-form-attribute-filter:
+        module: pim/product-edit-form/attribute-filter
+        parent: pim-product-group-edit-form-attributes
+        targetZone: other-actions
+        position: 110
+
+    pim-product-group-edit-form-attribute-filter-all:
+        module: pim/product-edit-form/attribute-filter-all
+        parent: pim-product-group-edit-form-attribute-filter
+        position: 100
+
+    pim-product-group-edit-form-attribute-filter-missing-required:
+        module: pim/product-edit-form/attribute-filter-missing-required
+        parent: pim-product-group-edit-form-attribute-filter
+        position: 110
+
+    pim-product-group-edit-form-attribute-filter-at-this-level-filter:
+        module: pim/product-edit-form/attribute-filter-at-this-level
+        parent: pim-product-group-edit-form-attribute-filter
+        targetZone: self
+        position: 120
+
+    pim-product-group-edit-form-copy:
+        module: pim/form/common/attributes/copy
+        parent: pim-product-group-edit-form-attributes
+        targetZone: header
+        position: 100
+
+    pim-product-group-edit-form-attribute-scope-switcher:
+        module: pim/product-edit-form/scope-switcher
+        parent: pim-product-group-edit-form
+        targetZone: context
+        position: 100
+        config:
+            context: base_product
+
+    pim-product-group-edit-form-attribute-locale-switcher:
+        module: pim/product-edit-form/locale-switcher
+        parent: pim-product-group-edit-form
+        targetZone: context
+        position: 110
+        config:
+            context: base_product
+
+    pim-product-group-edit-form-validation:
+        module: pim/product-edit-form/attributes/validation
+        parent: pim-product-group-edit-form-attributes
+        targetZone: header
+        position: 100
+
+    pim-product-group-edit-form-read-only-parent-attributes:
+        module: pim/product-edit-form/attributes/read-only-parent-attributes
+        parent: pim-product-group-edit-form-attributes
+        targetZone: self
+        position: 100
+
+    pim-product-group-edit-form-read-only-variant-axes:
+        module: pim/product-edit-form/attributes/variant-axes
+        parent: pim-product-group-edit-form-attributes
+        targetZone: self
+        position: 110
+
+    pim-product-group-edit-form-locale-specific:
+        module: pim/product-edit-form/attributes/locale-specific
+        parent: pim-product-group-edit-form-attributes
+        targetZone: self
+        position: 100
+
+    pim-product-group-edit-form-completeness-filter:
+        module: pim/product-edit-form/attributes/completeness
+        parent: pim-product-group-edit-form-attributes
+        targetZone: self
+        position: 100
+
+    pim-product-group-edit-form-localizable:
+        module: pim/product-edit-form/attributes/localizable
+        parent: pim-product-group-edit-form-attributes
+        targetZone: self
+        position: 90
+
+    pim-product-group-edit-form-comments:
+        module: pim/product-edit-form/comments
+        parent: pim-product-group-edit-form-column-tabs
+        targetZone: container
+        aclResourceId: pim_enrich_product_comment
+        position: 140
+
+    pim-product-group-edit-form-history:
+        module: pim/product-edit-form/history
+        parent: pim-product-group-edit-form-column-tabs
+        targetZone: container
+        aclResourceId: pim_enrich_product_history
+        position: 150
+
+    pim-product-group-edit-form-copy-scope-switcher:
+        module: pim/product-edit-form/scope-switcher
+        parent: pim-product-group-edit-form-copy
+        targetZone: context-selectors
+        position: 100
+        config:
+            context: copy_product
+
+    pim-product-group-edit-form-copy-locale-switcher:
+        module: pim/product-edit-form/locale-switcher
+        parent: pim-product-group-edit-form-copy
+        targetZone: context-selectors
+        position: 110
+        config:
+            context: copy_product 

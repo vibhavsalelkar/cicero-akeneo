@@ -1,0 +1,3 @@
+css:
+    bem:
+        - bundles/webkulgallery/less/gallery_style.less

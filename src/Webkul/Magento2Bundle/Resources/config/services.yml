@@ -1,0 +1,135 @@
+parameters:
+    webkul_magento2.job_name.update_product: magento_2_update_fields
+    webkul_magento2.job.job_parameters.default_values_provider.product_csv_export.class: Webkul\Magento2Bundle\JobParameters\ProductCsvDefaultValues
+    webkul_magento2.job.job_parameters.constraint_collection_provider.product_csv_export.class: Webkul\Magento2Bundle\JobParameters\ProductCsvConstraints
+    webkul.category.image.class: Webkul\Magento2Bundle\Connector\Writer\CategoryImageDescription
+    pim_connector.archiver.archivable_file_writer_archiver.class: Webkul\Magento2Bundle\Archiver\ArchivableFileWriterArchiver
+    
+    
+services:
+    quick_export_magento2:
+        class: Webkul\Magento2Bundle\Magento2Bundle
+        tags:
+            - { name: wk_quick_export_register }
+
+    magento2.temp_path.provider:
+        class: Webkul\Magento2Bundle\Component\TempStoragePathProvider
+        arguments:
+            - '@service_container'
+    #job parameters 
+    webkul_mage2.job.job_parameters.magento2_product_export:
+        class: 'Webkul\Magento2Bundle\JobParameters\Magento2Export'
+        arguments:
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.repository.locale'
+            - ['%webkul_mage2_connector.job_name%', '%webkul_mage2_family_connector.job_name%', '%webkul_mage2_category_connector.job_name%', '%webkul_mage2_attribute_and_option_connector.job_name%', '%webkul_mage2_attribute_option_connector.job_name%', '%webkul_mage2_product_only_connector.job_name%', '%webkul_mage2_association_connector.job_name%', '%webkul_mage2_rabbitmq_export_connector.job_name%', '%webkul_mage2_configurable_product_only_connector.job_name%', '%webkul_mage2_simple_product_only_connector.job_name%' ]
+        tags:
+            - { name: akeneo_batch.job.job_parameters.constraint_collection_provider }
+            - { name: akeneo_batch.job.job_parameters.default_values_provider }
+
+    webkul_mage2.job.job_parameters.magento2_quick_export:
+        class: 'Webkul\Magento2Bundle\JobParameters\Magento2QuickExport'
+        arguments:
+            - ['magento2_quick_export']
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.repository.locale'
+        tags:
+            - { name: akeneo_batch.job.job_parameters.constraint_collection_provider }
+            - { name: akeneo_batch.job.job_parameters.default_values_provider }
+
+
+    #form entry 
+    webkul_mage2.provider.form.job_instance:
+        class: '%pim_enrich.provider.form.job_instance.class%'
+        arguments:
+            -
+                magento2_product_export: pim-job-instance-magento2-product-export
+                magento2_product_only_export: pim-job-instance-magento2-product-export-changed
+                magento2_category_export: pim-job-instance-magento2-category-export
+                magento2_family_export: pim-job-instance-magento2-individual-export
+                magento2_attribute_export: pim-job-instance-magento2-attribute-export
+                magento2_attribute_option_export: pim-job-instance-magento2-individual-export
+                custom_associations: pim-job-instance-custom_associations
+                magento2_association_export: pim-job-instance-magento2-product-association-export
+                rabbitmq_product_export: pim-job-instance-magento2-product-export
+                '%webkul_mage2_configurable_product_only_connector.job_name%': pim-job-instance-magento2-product-export
+                '%webkul_mage2_simple_product_only_connector.job_name%': pim-job-instance-magento2-product-export
+        tags:
+            - { name: pim_enrich.provider.form }
+
+    magento2.provider.form.job_instance:
+        class: '%pim_enrich.provider.form.job_instance.class%'
+        arguments:
+            -
+                '%webkul_mage2_product_connector.product_csv_for_magento2%': pim-job-instance-magento-csv-only-product-export
+                '%webkul_mage2_product_export_csv.job_name%': pim-job-instance-magento-csv-product-export
+        tags:
+            - { name: pim_enrich.provider.form }
+
+    # services
+    magento2.connector.service:
+        public: true
+        lazy: true
+        class: 'Webkul\Magento2Bundle\Services\Magento2Connector'
+        arguments:
+            - '@akeneo_file_storage.file_storage.filesystem_provider'
+            - '@doctrine.orm.entity_manager'
+            - '@pim_catalog.repository.attribute'
+            - '@pim_catalog.repository.category'
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.repository.locale'
+            - '@pim_catalog.repository.attribute_group'
+            - '@pim_catalog.repository.attribute_option'
+            - '@pim_catalog.repository.family'
+            - '@pim_catalog.repository.family_variant'
+            - '@pim_catalog.repository.product'
+            - '@pim_catalog.repository.product_model'
+            - '@pim_catalog.factory.family_variant'
+            - '@pim_catalog.updater.family_variant'
+            - '@pim_catalog.saver.family'
+            - '@pim_catalog.saver.family_variant'
+            - '@pim_catalog.updater.family'
+            - '@pim_catalog.updater.setter.registry'
+            - '@pim_enrich.normalizer.violation'
+            - '@pim_internal_api_serializer'
+            - '@router'
+            - '@service_container'
+            - '@validator'
+
+    magento2.valid_credential_validator.service:
+        class: Webkul\Magento2Bundle\Component\Validator\ValidCredentialsValidator
+        arguments:
+            - '@magento2.connector.service'
+        tags:
+            - { name: validator.constraint_validator, alias: magento2.valid_credential_validator.service }
+    
+    magento2.valid_job_credential_validator.service:
+        class: Webkul\Magento2Bundle\Component\Validator\ValidJobCredentialsValidator
+        arguments:
+        tags:
+            - { name: validator.constraint_validator, alias: magento2.valid_job_credential_validator.service }
+
+    # pim_connector.archiver.archivable_file_writer_archiver:
+    #     class: '%pim_connector.archiver.archivable_file_writer_archiver.class%'
+    #     arguments:
+    #         - '@pim_connector.factory.zip_filesystem'
+    #         - '@oneup_flysystem.archivist_filesystem'
+    #         - '@akeneo_batch.job.job_registry'
+
+  
+    akeneo.image.description.connector:
+        class: 'Webkul\Magento2Bundle\Services\CategoryImageDescription'
+        # arguments:
+        #     - '@doctrine.orm.entity_manager'
+        #     - '@service_container'
+
+    magento2.temp_data.manager:
+        class: Webkul\Magento2Bundle\Services\TemporaryDataManager
+
+    magento2_pim_enrich.controller.product:
+        public: true
+        class: 'Webkul\Magento2Bundle\Controller\Rest\CustomCategoryController'
+        arguments:
+            - '@pim_catalog.repository.category'
+            - '%pim_catalog.entity.category.class%'
+            - '@@AkeneoPimEnrichment/Product/listCategories.json.twig'

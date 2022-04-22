@@ -1,0 +1,168 @@
+parameters:
+    webkul_magento2.export.step: 'Webkul\Magento2Bundle\Step\BaseStep'
+    webkul_magento2.credential_check.step: 'Webkul\Magento2Bundle\Step\ItemStep'
+    webkul.step.magento2_delete_category_magento.class: 'Webkul\Magento2Bundle\Step\DeleteCategory'
+services:
+    webkul.step.magento2_credential_check.export:
+        class: '%webkul_magento2.credential_check.step%'
+        arguments:
+            - 'credential_check'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@magento2.connector.service'
+
+    webkul.step.magento2_delete_category_magento.export:
+        class: '%webkul.step.magento2_delete_category_magento.class%'
+        arguments:
+            - 'delete_category'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@magento2.connector.service'
+            - '@doctrine.orm.entity_manager'
+            - 10
+    
+
+    webkul.step.magento2_product_model_with_variants.export:
+        class: '%webkul_magento2.export.step%'
+        arguments:
+            - 'product_model_variants_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@doctrine.orm.entity_manager'
+            - '@wk_pim_connector.reader.database.variant_product'
+            - '@webkul_magento2.processor.magento_normalization.product'
+            - '@webkul_magento2.writer.product.api'
+            - 100
+
+    webkul.step.magento2_simple_product.export:
+        class: '%webkul_magento2.export.step%'
+        arguments:
+            - 'simple_product_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@doctrine.orm.entity_manager'
+            - '@wk_pim_connector.reader.database.simple_product'
+            - '@webkul_magento2.processor.magento_normalization.product'
+            - '@webkul_magento2.writer.product.api'
+            - 100
+
+    # non product steps
+    webkul.step.magento2_category.export:
+        class: '%webkul_magento2.export.step%'
+        arguments:
+            - 'category_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.reader.database.category' #'@pim_connector.reader.database.category'
+            - '@pim_connector.processor.normalization.category'
+            - '@webkul_magento2.writer.category.api' 
+            - 10
+            
+    webkul.step.magento2_attribute.export:
+        class: '%webkul_magento2.export.step%'
+        arguments:
+            - 'attribute_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@doctrine.orm.entity_manager'
+            - '@webkul_magento2.reader.database.attribute' #'@pim_connector.reader.database.attribute'
+            - '@pim_connector.processor.normalization.attribute' # - '@webkul_magento2.processor.normalization.attribute'
+            - '@webkul_magento2.writer.attribute.api'
+            - 10
+
+    webkul.step.magento2.attribute_group.export:
+        class: '%webkul_magento2.export.step%'
+        arguments:
+            - 'attribute_group'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@doctrine.orm.entity_manager'
+            - '@pim_connector.reader.database.attribute_group'
+            - '@pim_connector.processor.normalization.attribute_group'
+            - '@webkul_magento2.writer.group.api'
+            - 10
+
+    webkul.step.magento2_attribute_option.export:
+        class: '%webkul_magento2.export.step%'
+        arguments:
+            - 'attribute_option'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@doctrine.orm.entity_manager'
+            - '@webkul_magento2.reader.database.attribute_option'
+            - '@pim_connector.processor.normalization.attribute_option'
+            - '@webkul_magento2.writer.attribute_option.api'
+            - 10
+
+    # metric attribute option step
+    webkul.step.magento2.add.metrice.attribute.options:
+        class: '%webkul_magento2.export.step%'
+        arguments:
+            - 'metric_attribute_option'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@doctrine.orm.entity_manager'
+            - '@webkul_magento2.reader.database.metric_attribute_option'
+            - '@webkul_magento2.product.metric_attribute_option.processor'
+            - '@webkul_magento2.writer.attribute_option.api'
+            - 10
+
+    webkul.step.magento2_family.export:
+        class: '%webkul_magento2.export.step%'
+        arguments:
+            - 'families_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@doctrine.orm.entity_manager'
+            - '@pim_connector.reader.database.family'
+            - '@pim_connector.processor.normalization.family' # - '@webkul_magento2.processor.normalization.family'
+            - '@webkul_magento2.writer.family.api'
+            - 10
+
+    # steps for quick exports
+    webkul.step.magento2_product.quick_export:
+        class: '%webkul_magento2.export.step%'
+        arguments:
+            - 'product_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@doctrine.orm.entity_manager'
+            - '@pim_enrich.reader.database.product_and_product_model'
+            - '@webkul_magento2.processor.magento_normalization.product' # - '@pim_enrich.connector.processor.quick_export.product'
+            # - '@webkul_magento2.magento2.processor.normalization.product_model'
+            - '@webkul_magento2.writer.product.api'
+            - 10
+            
+    webkul.step.magento2_product.csv_export:
+        class: '%webkul_magento2.export.step%'
+        arguments:
+            - 'product_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@doctrine.orm.entity_manager'
+            - '@pim_connector.reader.database.product'
+            # - '@webkul_magento_csv.processor.normalization.product'
+            - '@webkul_magento2.magento2.processor.normalization.product'
+            - '@magento2.writer.file.csv_product'
+            - 50
+
+    webkul.step.magento2_product_model.csv_export:
+        class: '%webkul_magento2.export.step%'
+        arguments:
+            - 'product_model_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@doctrine.orm.entity_manager'
+            - '@pim_connector.reader.database.product_model'
+            - '@pim_connector.processor.normalization.product_model'
+            - '@magento2.writer.file.csv_product'
+            - 50
+        
+    webkul.step.magento2.upload_csv:
+        class: 'Webkul\Magento2Bundle\Step\CsvUpload'
+        arguments:
+            - 'upload_csv'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@magento2.connector.service'

@@ -1,0 +1,32 @@
+parameters:
+
+services:
+    # steps
+    webkul.step.amasty_product_parts_export:
+        class: '%pim_connector.step.item_step.class%'
+        arguments:
+            - 'amasty_product_parts_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@pim_connector.reader.database.product'
+            - '@webkul_magento_csv.processor.normalization.product'
+            - '@magento2.writer.api.amasty_product_parts'
+            - 10
+
+    webkul.step.quick_amasty_product_parts_export:
+        class: '%pim_connector.step.item_step.class%'
+        arguments:
+            - 'amasty_quick_product_parts_export'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            - '@pim_enrich.reader.database.product_and_product_model'
+            - '@pim_enrich.connector.processor.quick_export.product'
+            - '@magento2.writer.api.amasty_product_parts'
+            - 10
+
+    #writers
+    magento2.writer.api.amasty_product_parts:
+        class: 'Webkul\Magento2Bundle\Connector\Writer\AmastyProductPartsWriter'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@magento2.connector.service'

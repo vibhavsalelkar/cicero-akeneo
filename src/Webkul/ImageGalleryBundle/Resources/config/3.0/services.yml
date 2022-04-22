@@ -1,0 +1,4 @@
+parameters:
+    webkul_gallery.factory.asset_value.class: Webkul\ImageGalleryBundle\Factory\Akeneo3\GalleryMediaValueFactory
+    webkulgallery.entity.value.class: Webkul\ImageGalleryBundle\Model\Akeneo3\GalleryMediaValue
+    pim_enrich.provider.form.job_instance.class: Akeneo\Platform\Bundle\ImportExportBundle\Provider\Form\JobInstanceFormProvider 

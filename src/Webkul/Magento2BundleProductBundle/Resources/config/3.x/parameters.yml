@@ -1,0 +1,3 @@
+parameters:
+    targetEntityParams: 'Pim\Bundle\CatalogBundle\Doctrine\ORM\Repository\ProductRepository'
+    pim_serializer_normalizer: pim_datagrid_serializer.normalizer

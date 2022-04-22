@@ -1,0 +1,13 @@
+<div class="AknFieldContainer-header">
+    <label class="AknFieldContainer-label control-label" for="pim_enrich_form_6471072778549825" style="margin-top: 20px;">
+        <%= _.__('gellerytGroupLabel') %>
+    </label>
+</div>
+
+<select class="select2 gallerygroup" id="gallerygroup" title="gellerytGroupLabel" >
+    <option value="" ><%- _.__('Select Group') %> </option>
+    <% _.each(config, function (value,key) { %>
+            <option value="<%- value %>"  <% if(gallery == value){ %> selected = "selected" <%};%>><%- value %></option>
+    <% }); %>
+</select>
+<!-- <input class="select2 gallerygroup" title="" type="text" id="group-select" value=<%- gallery %>> -->

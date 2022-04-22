@@ -1,0 +1,132 @@
+<!-- Styles for grid view -->
+<style>
+    .AknFormContainer-Locale-mappings {
+        width: 50%;
+        float: left;
+    }
+    .AknFieldContainer {
+        display: inline-block;
+        width: 100%;
+    }
+    .AknFormContainer-Locale-mappings .AknFieldContainer-header {
+        width: 50%;
+        float: left;
+        padding-right: 10px;
+        margin-bottom: 0;
+        vertical-align: middle;
+        padding-top: 10px;
+    }
+    .AknFormContainer-Locale-mappings .AknFieldContainer-inputContainer {
+        width: 50%;
+        float: left;
+        padding: 0 10px;
+    }
+    .AknForm-header {
+        border-bottom: 2px solid #67768A;
+        display: inline-block;
+        width: 100%;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+    .AknForm-header .header-col {
+        color: #67768A;
+        font-size: 14px;
+        text-transform: uppercase;
+        line-height: 44px;
+        float: left;
+        justify-content: space-between;
+        align-items: center;
+        width: 50%;
+        font-weight: bold;
+    }
+    .AknFieldContainer.Locale-mapping-filed-form {
+        padding-top: 20px;
+        border-top: 2px solid;
+        margin-top: 20px;
+    }
+    .AknFieldContainer.Locale-mapping-form .AknFieldContainer-header{
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .AknFullPage-title {
+        text-align: left !important;
+    }
+    .AknButtonList--right .AknButtonList-item {
+        background-color: #c1422f !important;
+    }
+</style>
+<!-- //Styles for grid view -->
+
+<!-- //HTML for form grid view -->
+<div class="AknFormContainer AknFormContainer--withPadding  AknFormContainer-Locale-mappings">
+
+    <!-- Locale Mapping Field Form Container -->
+    <div class="AknFieldContainer Locale-mapping-form">
+        <div class="AknFullPage-title">Map Locale</div>
+
+        <div class="AknFieldContainer-header">
+            <label title="Code" class="AknFieldContainer-label control-label required truncate">
+                Akeneo Locale <em><%- _.__('pim_enrich.form.required') %></em>
+            </label>
+        </div>
+
+        <div class="AknFieldContainer-inputContainer field-input" style="padding-left: 0;">
+            <select class="select2 select-field" id="locale-mapping-input" required>
+            <% _.each(locales, function(locale) { %>
+                <option value="<%- locale.code %>" <%- locale.code === 'en_US' ? 'selected' : '' %>><%- locale.label + ' - ' + locale.code %></option>
+            <% }); %>
+            </select>
+        </div>
+
+        <!-- Add More Button -->
+        <span class="AknButton AknButton--grey AknButton--small field-locale-mapping" style="margin-top: 5px;">Add Locale</span>
+        <!-- //Add More Button -->
+
+    </div>
+    <!-- //Locale Mapping Field Form Container -->
+
+    <!-- Header-->
+    <div class="AknForm-header widget-header">
+        <div class="header-col">
+            <%- _.__('webkul_translator_connector.form.configuration.group.locale_mapping.field.akeneo_locale') %>
+        </div>
+        <div class="header-col">
+            <%- _.__('webkul_translator_connector.form.configuration.group.locale_mapping.field.translator_locale_id') %>
+        </div>
+    </div>
+    <!-- //Header-->
+
+    <!-- Locale Row -->
+    <% _.each(localeMappings, function (translator, akeneoLocale) { %>
+        <div class="AknFieldContainer Locale-mapping <%- akeneoLocale %>">
+            <div class="AknFieldContainer-header">
+                <label class="AknFieldContainer-label">
+                    <% _.each(locales, function(locale) {
+                        if(locale.code === akeneoLocale){
+                           %>  <%- _.__(locale.label) + ' - ' + locale.code %> <%
+                        }
+                    });
+                    %>
+                </label>
+            </div>
+
+            <div class="AknFieldContainer-inputContainer field-input">
+                <input type="text" name="<%- akeneoLocale %>" id="pim_enrich_entity_form_<%- akeneoLocale %>" class="AknTextField locale-mapping-field" value="<%- translator %>" required>
+                
+                <div class="AknButtonList AknButtonList--right">
+                    <span class="AknButtonList-item AknIconButton AknIconButton--round AknIconButton--important AknIconButton--remove delete-row" data-name="<%- akeneoLocale %>"></span>
+                </div>
+            </div>
+            
+        </div>
+    <% }); %>
+    <!-- //Locale Row -->
+
+    <% if(!localeMappings) { %>
+        <div class="AknGridContainer-noDataSubtitle">
+            <%- _.__('webkul_translator_connector.form.configuration.group.locale_mapping.title.no_locale') %>
+        </div>
+    <% } %>
+    
+</div>
+<!-- //HTML for form grid view -->

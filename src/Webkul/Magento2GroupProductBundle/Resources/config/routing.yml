@@ -1,0 +1,9 @@
+webkul_magento2_group_product_connector_product_group_rest_create:
+    path: /magento2-configuration/rest/grouped-product/
+    defaults: { _controller: webkul.magento2_grouped_product.controller.rest.grouped.product:createAction }
+    methods: [POST]
+    
+webkul_magento2_group_product_connector_product_rest_create:
+    path: /enrich/product/rest
+    defaults: { _controller: webkul.magento2_grouped_product.controller.rest.product:createAction }
+    methods: [POST]

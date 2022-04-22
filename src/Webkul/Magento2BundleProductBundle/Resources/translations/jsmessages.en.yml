@@ -1,0 +1,64 @@
+# pim_enrich.form.product.tab.bundled-product.title: 	
+batch_jobs:
+  magento2_import_bundle_product:
+      label: Magento2 Bundle Products Import
+      credential_check.label: Credential Validate	
+      bundle_product_import.label: Magento2 Bundle Products Import	
+      bundle_product_associated_product_import.label: Magento2 Bundle Associated Products Import	
+
+
+# extra translations
+not_available: N/A
+
+confirmation:
+  title: Confirm
+  remove:
+    product: Are you sure you want to delete this product?
+
+pim_menu:
+  tab:
+    products: Products
+    
+pim_enrich:
+  confirmation:
+    delete_item: Confirm deletion
+    remove:
+      product: Are you sure you want to delete this product?
+  entity:
+    product:
+      message.created: Bundel Product Successfully Created.
+      create: Create
+      subTitle: Create Product
+      create_popin.title: Create Product
+      modalTitle: Select your action
+      infos: Product Infos
+      navigation: Product navigation
+      meta:
+        created: Created
+        updated: Updated
+        created_by: By
+        updated_by: By
+        family.title: Family
+    fallback:
+      flash:
+        generic_error: An error occured
+        update:
+          discard_changes_title: Are you sure?
+
+  form:
+    product:
+      tab:
+        attributes.title: Attributes
+        associations:
+          title: Associations
+          none_exist: No association types exist.
+          association_type_selector: Association type
+          target: Target
+          manage: Add {{ associationType }} associations
+          manage_description: Select the products you want to associate with the current product
+          add_associations: Add associations
+          info:
+            number_of_associations: "{{ productCount }} product(s), {{ productModelCount }} product model(s) and {{ groupCount }} group(s)"
+            show_products: Display products
+            show_groups: Display groups
+        bundled-product.title: Bundled Products      

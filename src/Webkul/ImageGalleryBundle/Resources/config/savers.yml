@@ -1,0 +1,20 @@
+parameters:
+    webkul_gallery.saver.media.class: Webkul\ImageGalleryBundle\Saver\BaseSaver
+    webkul_gallery.enitity.media.savers.class: Webkul\ImageGalleryBundle\Entity\Gallery
+    # webkul_gallery.entity.mediacategory.saver.class: Webkul\ImageGalleryBundle\Entity\MediaCategory
+
+
+services:
+    webkul_gallery.saver.media:
+        class: '%webkul_gallery.saver.media.class%'
+        arguments:
+            - '@doctrine.orm.entity_manager'
+            - '@event_dispatcher'
+            - '%webkul_gallery.enitity.media.savers.class%'
+    
+    # webkul_gallery.saver.category:
+    #     class: '%webkul_gallery.saver.media.class%'
+    #     arguments:
+    #         - '@doctrine.orm.entity_manager'
+    #         - '@event_dispatcher'
+    #         - '%webkul_galllery.entity.mediacategory.saver.class%'

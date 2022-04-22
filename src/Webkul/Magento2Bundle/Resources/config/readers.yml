@@ -1,0 +1,82 @@
+parameters:
+    webkul_magento2.category.reader: 'Webkul\Magento2Bundle\Connector\Reader\CategoryReader'
+    webkul_magento2.database.attribute.reader: 'Webkul\Magento2Bundle\Connector\Reader\AttributeReader'
+    webkul_magento2.attribute_option.reader.class: 'Webkul\Magento2Bundle\Connector\Reader\AttributeOptionReader'
+    webkul_magento2.database.reader: 'Webkul\Magento2Bundle\Connector\Reader\Reader'
+
+    webkul_magento2.category.quick_reader.class: 'Webkul\Magento2Bundle\Connector\Reader\CategoryQuickReader'
+    webkul_magento2.attributes.quick_reader.class: 'Webkul\Magento2Bundle\Connector\Reader\AttributeQuickReader'
+    webkul_magento2.attribute_option.quick_reader.class: 'Webkul\Magento2Bundle\Connector\Reader\AttributeOptionQuickReader'
+    webkul_magento2.family.quick_reader.class: 'Webkul\Magento2Bundle\Connector\Reader\FamilyQuickReader'
+    webkul_magento2.metric_attribute_option.reader.class: 'Webkul\Magento2Bundle\Connector\Reader\MetricOptionReader'    
+
+services:
+    wk_pim_connector.reader.database.variant_product:
+        class: 'Webkul\Magento2Bundle\Connector\Reader\VariantProductReader'
+        arguments:
+            - '@pim_catalog.query.product_query_builder_factory'
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.converter.metric'
+            - '@magento2.connector.service'
+
+    wk_pim_connector.reader.database.simple_product:
+        class: 'Webkul\Magento2Bundle\Connector\Reader\SimpleProductReader'
+        arguments:
+            - '@pim_catalog.query.product_query_builder_factory'
+            - '@pim_catalog.repository.channel'
+            - '@pim_catalog.converter.metric'
+            - '@magento2.connector.service'
+
+    magento2.reader.database.category:
+        class: '%webkul_magento2.category.reader%'
+        arguments:
+            - '@pim_catalog.repository.category'
+            - '@pim_catalog.repository.channel'
+
+    webkul_magento2.reader.database.attribute:
+        class: '%webkul_magento2.database.attribute.reader%'
+        arguments:
+            - '@pim_catalog.repository.attribute'
+            - '@magento2.connector.service'
+
+    webkul_magento2.reader.database.attribute_option:
+        class: '%webkul_magento2.attribute_option.reader.class%'
+        arguments:
+            - '@pim_catalog.repository.attribute_option'
+            - '@magento2.connector.service'
+
+    # metric attribute option reader
+    webkul_magento2.reader.database.metric_attribute_option:
+        class: '%webkul_magento2.metric_attribute_option.reader.class%'
+        arguments:
+            - '@pim_catalog.repository.attribute_option'
+            - '@magento2.connector.service'
+
+    # quick readers
+    webkul_magento2.quick_reader.database.category:
+        class: '%webkul_magento2.category.quick_reader.class%'
+        arguments:
+            - '@pim_catalog.repository.category'
+            - '@pim_catalog.repository.channel'
+
+    webkul_magento2.quick_reader.database.attribute:
+        class: '%webkul_magento2.attributes.quick_reader.class%'
+        arguments:
+            - '@pim_catalog.repository.attribute'
+            - '@magento2.connector.service'
+
+    webkul_magento2.quick_reader.database.attribute_option:
+        class: '%webkul_magento2.attribute_option.quick_reader.class%'
+        arguments:
+            - '@pim_catalog.repository.attribute_option'
+            - '@magento2.connector.service'
+
+    webkul_magento2.quick_reader.database.family:
+        class: '%webkul_magento2.family.quick_reader.class%'
+        arguments:
+            - '@pim_catalog.repository.family'
+    
+    webkul_magento2.reader.buffered.product_models:
+        class: Webkul\Magento2Bundle\Connector\Reader\BufferedProductModelReader
+        arguments:
+            - '@magento2.temp_data.manager'

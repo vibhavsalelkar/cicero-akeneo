@@ -1,0 +1,181 @@
+parameters:
+    webkul_magento2.connector.name: Webkul Magento2 Akeneo Connector
+    webkul_mage2_connector.job_name: magento2_product_export
+    webkul_mage2_category_connector.job_name: magento2_category_export
+    webkul_mage2_family_connector.job_name: magento2_family_export
+    webkul_mage2_attribute_and_option_connector.job_name: magento2_attribute_export
+    webkul_mage2_attribute_option_connector.job_name: magento2_attribute_option_export
+    webkul_mage2_product_only_connector.job_name: magento2_product_only_export
+    webkul_mage2_product_connector.quick_export_job_name: magento2_quick_export
+    webkul_mage2_product_connector.product_model_csv_for_magento2: product_model_csv_export_magento2
+    webkul_mage2_product_connector.product_csv_for_magento2: product_csv_export_magento2
+    webkul_mage2_association_connector.job_name: magento2_association_export
+    webkul_mage2_rabbitmq_export_connector.job_name: rabbitmq_product_export
+    webkul_mage2_product_export_csv.job_name: magento2_product_export_csv
+    pim_connector.job.export_type: export
+    webkul_mage2_configurable_product_only_connector.job_name: magento2_configurable_product_export
+    webkul_mage2_simple_product_only_connector.job_name: webkul_mage2_simple_product_only_connector
+    
+services:
+    webkul_magento2_connector.job.mage_product_export:
+        class: '%pim_connector.job.simple_job.class%'
+        arguments:
+            - '%webkul_mage2_connector.job_name%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                - '@webkul.step.magento2_credential_check.export'   
+                - '@webkul.step.magento2_category.export'
+                - '@webkul.step.magento2_attribute.export'
+                - '@webkul.step.magento2_attribute_option.export'
+                - '@webkul.step.magento2.add.metrice.attribute.options'
+                - '@webkul.step.magento2_family.export'
+                - '@webkul.step.magento2_simple_product.export'
+                - '@webkul.step.magento2_product_model_with_variants.export'
+                - '@webkul.step.magento2_product_association_export'
+                - '@?webkul.step.magento2_grouped_product_link_export'
+                - '@?webkul.step.product_attachments_export'
+                # - '@?webkul.step.product_model_attachments_export'
+                - '@?webkul.step.amasty_product_attachments_export'
+                - '@?webkul.step.amasty_product_parts_export'
+            - true
+        tags:
+            - { name: akeneo_batch.job, connector: '%webkul_magento2.connector.name%', type: '%pim_connector.job.export_type%' }
+
+    webkul_magento2_connector.job.mage_product_export_csv:
+        class: '%pim_connector.job.simple_job.class%'
+        arguments:
+            - '%webkul_mage2_product_export_csv.job_name%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                - '@webkul.step.magento2_credential_check.export'   
+                - '@webkul.step.magento2_category.export'
+                - '@webkul.step.magento2_attribute.export'
+                - '@webkul.step.magento2_attribute_option.export'
+                - '@webkul.step.magento2.add.metrice.attribute.options'
+                - '@webkul.step.magento2_family.export'
+                - '@webkul.step.magento2_product.csv_export'
+                - '@webkul.step.magento2_product_model.csv_export'
+                - '@?webkul.step.magento2_bundle_products.csv_export'
+                - '@webkul.step.magento2.upload_csv'
+                - '@webkul.step.magento2_product_association_export'
+                - '@?webkul.step.product_attachments_export'
+                - '@?webkul.step.product_model_attachments_export'
+                - '@?webkul.step.amasty_product_attachments_export'
+                - '@?webkul.step.amasty_product_model_attachments_export'
+                - '@?webkul.step.amasty_product_parts_export'
+            - true
+        tags:
+            - { name: akeneo_batch.job, connector: '%webkul_magento2.connector.name%', type: '%pim_connector.job.export_type%' }
+
+    
+    webkul_magento2_connector.job.magento2_category_export:
+        class: '%pim_connector.job.simple_job.class%'
+        arguments:
+            - '%webkul_mage2_category_connector.job_name%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                - '@webkul.step.magento2_credential_check.export'
+                - '@webkul.step.magento2_delete_category_magento.export'
+                - '@webkul.step.magento2_category.export'
+            - true
+        tags:
+            - { name: akeneo_batch.job, connector: '%webkul_magento2.connector.name%', type: '%pim_connector.job.export_type%' }
+
+    webkul_magento2_connector.job.magento2_attribute_and_option_export:
+        class: '%pim_connector.job.simple_job.class%'
+        arguments:
+            - '%webkul_mage2_attribute_and_option_connector.job_name%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                - '@webkul.step.magento2_credential_check.export'   
+                - '@webkul.step.magento2_attribute.export'  
+                - '@webkul.step.magento2_attribute_option.export'
+                - '@webkul.step.magento2.add.metrice.attribute.options'
+            - true
+        tags:
+            - { name: akeneo_batch.job, connector: '%webkul_magento2.connector.name%', type: '%pim_connector.job.export_type%' }
+
+    webkul_magento2_connector.job.magento2_family_export:
+        class: '%pim_connector.job.simple_job.class%'
+        arguments:
+            - '%webkul_mage2_family_connector.job_name%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                - '@webkul.step.magento2_credential_check.export'   
+                - '@webkul.step.magento2_family.export'
+            - true
+        tags:
+            - { name: akeneo_batch.job, connector: '%webkul_magento2.connector.name%', type: '%pim_connector.job.export_type%' }
+
+    webkul_magento2_connector.job.magento2_configurable_product_only_export:
+        class: '%pim_connector.job.simple_job.class%'
+        arguments:
+            - '%webkul_mage2_configurable_product_only_connector.job_name%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                - '@webkul.step.magento2_credential_check.export'
+                - '@webkul.step.magento2_product_model_with_variants.export'
+            - true             
+        tags:
+            - { name: akeneo_batch.job, connector: '%webkul_magento2.connector.name%', type: '%pim_connector.job.export_type%' }
+
+    webkul_magento2_connector.job.mage_simple_product_only_export:
+        class: '%pim_connector.job.simple_job.class%'
+        arguments:
+            - '%webkul_mage2_simple_product_only_connector.job_name%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                - '@webkul.step.magento2_credential_check.export'   
+                - '@webkul.step.magento2_simple_product.export'
+            - true
+        tags:
+            - { name: akeneo_batch.job, connector: '%webkul_magento2.connector.name%', type: '%pim_connector.job.export_type%' }
+        
+    webkul_magento2_connector.job.mage_product_only_export:
+        class: '%pim_connector.job.simple_job.class%'
+        arguments:
+            - '%webkul_mage2_product_only_connector.job_name%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                - '@webkul.step.magento2_credential_check.export'   
+                - '@webkul.step.magento2_simple_product.export'
+                - '@webkul.step.magento2_product_model_with_variants.export'
+                - '@?webkul.step.magento2_grouped_product_link_export'
+                - '@webkul.step.magento2_product_association_export'
+                - '@?webkul.step.product_attachments_export'
+                # - '@?webkul.step.product_model_attachments_export'
+                - '@?webkul.step.amasty_product_attachments_export'
+                - '@?webkul.step.amasty_product_parts_export'
+            - true
+        tags:
+            - { name: akeneo_batch.job, connector: '%webkul_magento2.connector.name%', type: '%pim_connector.job.export_type%' }
+
+    webkul_magento2_connector.product_csv_for_magento2:
+        class: '%pim_connector.job.simple_job.class%'
+        arguments:
+            - '%webkul_mage2_product_connector.product_csv_for_magento2%'
+            - '@event_dispatcher'
+            - '@akeneo_batch.job_repository'
+            -
+                 - '@webkul.step.magento2_credential_check.export'
+                 - '@webkul.step.magento2_product.csv_export'
+                 - '@webkul.step.magento2_product_model.csv_export'
+                 - '@?webkul.step.magento2_bundle_products.csv_export'
+                 - '@webkul.step.magento2.upload_csv'
+                 - '@webkul.step.magento2_product_association_export'
+                 - '@?webkul.step.product_attachments_export'
+                 - '@?webkul.step.product_model_attachments_export'
+                 - '@?webkul.step.amasty_product_attachments_export'
+                 - '@?webkul.step.amasty_product_model_attachments_export'
+                 - '@?webkul.step.amasty_product_parts_export'
+            - true     
+        tags:
+            - { name: akeneo_batch.job, connector: '%webkul_magento2.connector.name%', type: '%pim_connector.job.export_type%' }

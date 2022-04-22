@@ -1,0 +1,21 @@
+services:
+    # form entry 
+    webkul_magento2.provider.form.job_instance:
+        class: '%pim_enrich.provider.form.job_instance.class%'
+        arguments:
+            -
+                magento2_association_import: pim-job-instance-magento2-product-import
+                # pim-job-instance-magento2-product-import
+                magento2_product_import: pim-job-instance-magento2-product-import
+                magento2_product_model_import: pim-job-instance-magento2-product-import            
+                # pim-job-instance-magento2-individual-import
+                magento2_family_import: pim-job-instance-magento2-individual-import
+                magento2_attribute_group_import: pim-job-instance-magento2-individual-import
+                # pim-job-instance-magento2-with_locales-import
+                magento2_attribute_import: pim-job-instance-magento2-with_locales-import
+                magento2_attribute_option_import: pim-job-instance-magento2-with_locales-import
+                magento2_category_import: pim-job-instance-magento2-with_locales-import
+                #pim-job-instance-magento2-all-import
+                magento_2_all_import: pim-job-instance-magento2-all-import
+        tags:
+            - { name: pim_enrich.provider.form }

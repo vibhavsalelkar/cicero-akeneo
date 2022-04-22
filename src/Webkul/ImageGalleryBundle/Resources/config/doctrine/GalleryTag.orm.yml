@@ -1,0 +1,17 @@
+Webkul\ImageGalleryBundle\Entity\GalleryTag:
+    type: entity
+    table: wk_product_gallery_tag
+    fields:
+        id:
+            type: integer
+            id: true
+            generator:
+                strategy: AUTO
+        code:
+            type: string
+            length: 255
+            unique: true
+    manyToMany:
+        gallery:
+            targetEntity: Webkul\ImageGalleryBundle\Entity\Gallery
+            mappedBy: tags

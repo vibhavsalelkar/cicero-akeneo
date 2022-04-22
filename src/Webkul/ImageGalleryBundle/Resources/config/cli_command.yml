@@ -1,0 +1,4 @@
+services:
+    Webkul\ImageGalleryBundle\Command\ImageGalleryCommand:
+        tags:
+            - { name: console.command }

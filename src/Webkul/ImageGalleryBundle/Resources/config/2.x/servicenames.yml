@@ -1,0 +1,3 @@
+parameters:
+    webkul_gallery.factory.asset_value.class: Webkul\ImageGalleryBundle\Factory\GalleryMediaValueFactory
+    webkulgallery.entity.value.class: Webkul\ImageGalleryBundle\Model\GalleryMediaValue

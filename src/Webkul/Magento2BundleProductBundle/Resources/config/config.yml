@@ -1,0 +1,13 @@
+parameters:
+    targetEntityParams: 'Pim\Bundle\CatalogBundle\Doctrine\ORM\Repository\ProductRepository'
+    originEntity: 'Pim\Component\Catalog\Model\Product'
+doctrine:
+    orm:
+        resolve_target_entities:
+            Pim\Bundle\CatalogBundle\ProductRepository: '%targetEntityParams%'
+
+akeneo_storage_utils:
+    mapping_overrides:
+        -
+            original: '%originEntity%'
+            override: Webkul\Magento2BundleProductBundle\Entity\Product

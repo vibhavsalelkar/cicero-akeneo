@@ -1,0 +1,6 @@
+extensions:
+    webkul-magento2-connector-configuration-tab-importjobs:
+        module: magento2/form/configuration/importjobs
+        parent: webkul-magento2-connector-configuration-form
+        targetZone: buttons
+        position: 110

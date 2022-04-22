@@ -1,0 +1,10 @@
+parameters:
+    webkulgallery.comparator.attribute.class: Webkul\ImageGalleryBundle\Updater\Comparator\GalleryComparator
+
+services:
+    webkulgallery.comparator.attribute.asset:
+        class: '%webkulgallery.comparator.attribute.class%'
+        arguments:
+            - ['pim_catalog_gallery_group']
+        tags:
+            - { name: pim_catalog.attribute.comparator }
