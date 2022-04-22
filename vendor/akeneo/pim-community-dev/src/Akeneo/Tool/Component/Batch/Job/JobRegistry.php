@@ -37,6 +37,7 @@ class JobRegistry
                 sprintf('The job "%s" is already registered', $job->getName())
             );
         }
+    
         $this->jobs[$job->getName()] = $job;
         $this->jobsByType[$jobType][$job->getName()] = $job;
         $this->jobsByTypeGroupByConnector[$jobType][$connector][$job->getName()] = $job;
