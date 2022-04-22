@@ -1,8 +1,0 @@
-services:
-
-  wk_magento2_ee_services:
-    class: Webkul\Magento2Bundle\Classes\EnterpriceMediaAttributeSupport
-    arguments:
-        - '@?pimee_product_asset.repository.asset'
-        - '@pim_catalog.repository.channel'
-        - '@pim_catalog.repository.locale'

@@ -1,6 +1,0 @@
-services:
-  wk_magento2_media_file_path_generator:
-      class: Webkul\Magento2Bundle\Component\FilePathGenerator\MediaFile
-      arguments:
-          - 
-            '@akeneo_file_storage.repository.file_info'

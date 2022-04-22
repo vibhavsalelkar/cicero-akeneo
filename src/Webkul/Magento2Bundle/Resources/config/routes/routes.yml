@@ -1,3 +1,0 @@
-magento2:
-    resource: "@Magento2Bundle/Resources/config/routing.yml"
-    prefix:   /

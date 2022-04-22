@@ -1,6 +1,0 @@
-extensions:        
-  magento2-job-category-filter:
-    module: magento2/job/common/edit/category
-    # config:
-    #   itemCategoryListRoute: pim_enrich_product_listcategories
-    #   itemCategoryTreeRoute: pim_enrich_product_category_rest_list

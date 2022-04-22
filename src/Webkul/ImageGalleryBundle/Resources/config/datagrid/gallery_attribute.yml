@@ -1,8 +1,0 @@
-parameters:
-    pim_datagrid.product.attribute_type.pim_catalog_gallery_group.template: ImageGalleryBundle:datagrid/property:gallery.html.twig
-    pim_datagrid.product.attribute_type.pim_catalog_gallery_group:
-        column:
-            type:          product_value_field
-            frontend_type: webkul-gallery
-        sorter: ~
-        filter: ~

@@ -1,2 +1,0 @@
-parameters:
-  akeneo_batch.job.job_parameters.class: Webkul\Magento2Bundle\JobParameters\JobParameters

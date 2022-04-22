@@ -1,8 +1,0 @@
-parameters:
-    webkulgallery.provider.field.media.class: Webkul\ImageGalleryBundle\Provider\GalleryAttributeProvider
-
-services:
-    webkulgallery.provider.field.media:
-        class: '%webkulgallery.provider.field.media.class%'
-        tags:
-            - { name: pim_enrich.provider.field, priority: 90 }

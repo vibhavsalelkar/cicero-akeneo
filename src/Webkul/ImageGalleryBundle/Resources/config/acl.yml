@@ -1,4 +1,0 @@
-image_gallery_configuration:
-    type: action
-    label: Image Gallery Configuration
-    group_name: pim_enrich.acl_group.akeneo_image_gallery
