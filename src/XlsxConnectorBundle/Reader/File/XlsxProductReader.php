@@ -91,7 +91,12 @@ class XlsxProductReader implements
         ]);
 
         $client->getFamilyApi()->upsert($filenamecode, [
-           
+            'attributes'             => ['sku', 'name', 'description', 'short_description', 'brand', 'price', 'color', 'product_info'],
+            'attribute_requirements' => [
+                'ecommerce' => ['sku'],
+                'mobile' => ['sku'],
+                'print' =>  ['sku'],
+            ],
             'labels'                 => [
                 'en_US' => $filename,
                 'fr_FR' => $filename,
@@ -160,8 +165,8 @@ class XlsxProductReader implements
         $product_info_value = '';
         foreach(array_keys($item) as $attribute) {
             $attributes = $this->attributeRepository->findBy(['code' => $attribute]);
-            
-            if($attribute !== 'sku' && $attribute !== 'Short_description-en_US-ecommerce' && empty($attributes)) {
+
+            if($attribute !== 'sku' && $attribute !== 'Short_description-en_US-ecommerce') {
                 $product_info_value = $product_info_value.$attribute.':'.$item[$attribute].';';
                 unset($item[$attribute]);
             }   
