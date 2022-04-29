@@ -1,0 +1,13 @@
+services:
+    acme_xlsx_connector.step.xlsx_custom_product_import.import:
+            class: '%pim_connector.step.item_step.class%'
+            arguments:
+                - 'import'
+                - '@event_dispatcher'
+                - '@akeneo_batch.job_repository'
+                # - '@pim_connector.reader.file.xlsx_product'
+                - '@acme_xlsx_connector.reader.file.xlsx_product'
+                # - '@pim_connector.processor.denormalization.product'
+                - '@acme.connector.processor.custom'
+                - '@pim_connector.writer.database.product'
+                - 10
