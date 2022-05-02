@@ -145,6 +145,14 @@ class XlsxProductReader implements
             $attributes = $this->attributeRepository->findBy(['code' => $attribute]);
 
             if(!empty($attributes)) {
+                if($attributes[0]->getType() === 'pim_catalog_simpleselect') {
+                    $attr_modified = preg_replace("/[^a-zA-Z0-9]/", "", $item[$attribute]);
+                    $client->getAttributeOptionApi()->upsert(strtolower($attribute), $attr_modified, [
+                        'labels'     => [
+                            'en_US' => $item[$attribute]
+                        ]
+                    ]);
+                }
                 array_push($supported_attr, $attribute);
             }
 
