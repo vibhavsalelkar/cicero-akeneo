@@ -68,6 +68,9 @@ class XlsxProductReader implements
 
     public function read()
     {
+        $clientBuilder = new \Akeneo\Pim\ApiClient\AkeneoPimClientBuilder('http://akeneorepo.local.com/');
+        $client = $clientBuilder->buildAuthenticatedByPassword('7_4x6el698r4aooggs8wkcsk8k4co8cksgkco8o8c8c8o0gcg00s', '26fdmckc4n284ssw444ggwkkg0kg448ok0ksgws08swo88oo88', 'admin_9129', '2716469b2');
+      
         $jobParameters = $this->stepExecution->getJobParameters();
         $filePath = $jobParameters->get('filePath');
         $filename = basename($filePath, '.xlsx');
@@ -77,32 +80,6 @@ class XlsxProductReader implements
             $filenamecode = str_replace('-', '_', $filenamecode);
             $filenamecode = str_replace(' ', '_', $filenamecode);
         }
-
-        $clientBuilder = new \Akeneo\Pim\ApiClient\AkeneoPimClientBuilder('http://akeneorepo.local.com/');
-        $client = $clientBuilder->buildAuthenticatedByPassword('7_4x6el698r4aooggs8wkcsk8k4co8cksgkco8o8c8c8o0gcg00s', '26fdmckc4n284ssw444ggwkkg0kg448ok0ksgws08swo88oo88', 'admin_9129', '2716469b2');
-      
-        $client->getCategoryApi()->upsert($filenamecode, [
-            'parent' => 'master',
-            'labels' => [
-                'en_US' => $filename,
-                'fr_FR' => $filename,
-                'de_DE' => $filename,
-            ]
-        ]);
-
-        $client->getFamilyApi()->upsert($filenamecode, [
-            'attributes'             => ['sku', 'name', 'description', 'short_description', 'brand', 'price', 'color', 'product_info'],
-            'attribute_requirements' => [
-                'ecommerce' => ['sku'],
-                'mobile' => ['sku'],
-                'print' =>  ['sku'],
-            ],
-            'labels'                 => [
-                'en_US' => $filename,
-                'fr_FR' => $filename,
-                'de_DE' => $filename,
-            ]
-       ]);
 
         if (null === $this->fileIterator) {
             $this->fileIterator = $this->fileIteratorFactory->create($filePath, $this->options);
@@ -163,14 +140,43 @@ class XlsxProductReader implements
                 unset($item[$attribute]);
         }
         $product_info_value = '';
+        $supported_attr = [];
         foreach(array_keys($item) as $attribute) {
             $attributes = $this->attributeRepository->findBy(['code' => $attribute]);
+
+            if(!empty($attributes)) {
+                array_push($supported_attr, $attribute);
+            }
 
             if($attribute !== 'sku' && $attribute !== 'Short_description-en_US-ecommerce') {
                 $product_info_value = $product_info_value.$attribute.':'.$item[$attribute].';';
                 unset($item[$attribute]);
             }   
         }
+        
+        $client->getCategoryApi()->upsert($filenamecode, [
+            'parent' => 'master',
+            'labels' => [
+                'en_US' => $filename,
+                'fr_FR' => $filename,
+                'de_DE' => $filename,
+            ]
+        ]);
+
+        $client->getFamilyApi()->upsert($filenamecode, [
+            'attributes'             => array_merge($supported_attr, ['product_info']),
+            'attribute_requirements' => [
+                'ecommerce' => ['sku'],
+                'mobile' => ['sku'],
+                'print' =>  ['sku'],
+            ],
+            'labels'                 => [
+                'en_US' => $filename,
+                'fr_FR' => $filename,
+                'de_DE' => $filename,
+            ]
+       ]);
+      
         $item['product_info'] = $product_info_value;
         $item['categories'] = $filenamecode;
         $item['family'] = $filenamecode;
