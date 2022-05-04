@@ -112,7 +112,7 @@ class XlsxProductReader implements
         }
 
         $item = array_combine($this->fileIterator->getHeaders(), $data);
-        
+
         if (isset($item['3M ID'])) {
             $item['sku'] = $item['3M ID'];
             unset($item['3M ID']);
@@ -121,6 +121,11 @@ class XlsxProductReader implements
         if (isset($item['short_description'])){
             $item['Short_description-en_US-ecommerce'] = $item['short_description'];
             unset($item['short_description']);
+        }
+
+        $brand_value = '';
+        if (isset($item['Brand'])){
+            $brand_value = preg_replace("/[^a-zA-Z0-9]/", "", $item['Brand']);
         }
 
         foreach(array_keys($item) as $attribute){
@@ -139,6 +144,7 @@ class XlsxProductReader implements
             if(!$item[$attribute])
                 unset($item[$attribute]);
         }
+
         $product_info_value = '';
         $supported_attr = [];
         foreach(array_keys($item) as $attribute) {
@@ -161,7 +167,8 @@ class XlsxProductReader implements
                 unset($item[$attribute]);
             }   
         }
-        
+        $item['brand'] = $brand_value;
+ 
         $client->getCategoryApi()->upsert($filenamecode, [
             'parent' => 'master',
             'labels' => [
@@ -184,11 +191,11 @@ class XlsxProductReader implements
                 'de_DE' => $filename,
             ]
        ]);
-      
+
         $item['product_info'] = $product_info_value;
         $item['categories'] = $filenamecode;
         $item['family'] = $filenamecode;
-
+      
         try {
             $item = $this->converter->convert($item, $this->getArrayConverterOptions());
         } catch (DataArrayConversionException $e) {
@@ -201,7 +208,7 @@ class XlsxProductReader implements
 
         $item['values'] = $this->mediaPathTransformer
             ->transform($item['values'], $this->fileIterator->getDirectoryPath());
-
+        
         return $item;
     }
 
